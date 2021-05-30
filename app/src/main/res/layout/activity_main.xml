@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1b8adb"
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteX="-8dp"
+    tools:layout_editor_absoluteY="2dp">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="291dp"
+        android:layout_height="399dp"
+        android:layout_marginStart="74dp"
+        android:layout_marginEnd="74dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="131dp"
+            android:layout_height="115dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="2"
+            android:contentDescription="@string/todo"
+            app:srcCompat="@drawable/notify_logo" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/sign_up_using_phone_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:background="@drawable/button_background"
+            android:text="@string/sign_up_using_phone_str"
+            android:textColor="@android:color/background_light" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/btn_login_facebook"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:background="@drawable/button_background"
+            android:text="@string/str_continue_with_facebook" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

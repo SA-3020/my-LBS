@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">Notify_Around</string>
+    <string name="logo_alt_text">LOGO</string>
+    <string name="continue_with_facebook">Continue with Facebook</string>
+    <string name="sign_up_using_phone_str">Sign Up using Phone Number</string>
+    <string name="todo">TODO</string>
+    <string name="dummy_phone_number">123 4567890</string>
+    <string name="str_enter_phone_number">Enter your phone number</string>
+    <string name="str_next">Next</string>
+    <string name="str_facebook_password">Facebook password</string>
+    <string name="str_mobile_number_or_email">Mobile number or email</string>
+    <string name="str_log_in">LOG IN</string>
+    <string name="str_enter_pin">Enter the 6-digit pin sent to your number</string>
+    <string name="str_resend_pin">Resend Pin</string>
+    <string name="str_call_me">Call Me</string>
+    <string name="str_welcome_to_dashboard">Welcome to Dashboard</string>
+    <string name="str_logout">Logout</string>
+    <string name="str_0">0</string>
+
+    //string for facebook sign-in
+    <string name="facebook_app_id">194385069205691</string>
+    <string name="fb_login_protocol_scheme">fb194385069205691</string>
+    <string name="str_continue_with_facebook">Continue with Facebook</string>
+    <string name="str_dummy_address">new york, usa</string>
+    <string name="str_Email">Email</string>
+    <string name="str_dummy_email">joey4478@notifyarount.com</string>
+    <string name="str_Contact">Contact</string>
+    <string name="str_facebook">Facebook</string>
+    <string name="str_facebook_username">John Doe</string>
+    <string name="str_Facebook">Facebook</string>
+    <string name="str_Location">Location</string>
+    <string name="str_dummy_username">John Doe</string>
+    <string name="str_Occupation">Occupation</string>
+    <string name="str_dummy_occu">MECHANIC</string>
+    <string name="str_Interests">Domestic</string>
+    <string name="str_dummy_interests">Domestic</string>
+    <string name="str_Interest">Interests</string>
+    <string name="str_edit">Edit</string>
+    <string name="str_dummy_number">453</string>
+    <string name="dummy_string">abc</string>
+    <string name="dummy_rating">4.7</string>
+    <string name="str_rating">rating</string>
+    <string name="alt_img">image not found</string>
+    <string name="str_First_Name">First Name</string>
+    <string name="str_Last_Name">Last Name</string>
+    <string name="str_Enter_Email">Email Address</string>
+    <string name="str_save">Save</string>
+    <string name="str_account_details">Account Details</string>
+    <string name="str_event_name">Event Name</string>
+    <string name="str_interest">Interest</string>
+    <string name="str_cancel">Cancel</string>
+
+</resources>

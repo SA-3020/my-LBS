@@ -1,63 +1,104 @@
 package com.example.notify_around
 
+import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.notify_around.Models.GeneralUser
+import com.example.notify_around.databinding.ActivityAddDetailsBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_add_details.*
+
 
 class AddDetails : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
+    private lateinit var binding: ActivityAddDetailsBinding
+
+    private lateinit var mAuth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private lateinit var userId: String
+    private lateinit var phoneNumber: String
+    private lateinit var docRef: DocumentReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_details)
+        binding = ActivityAddDetailsBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        auth = FirebaseAuth.getInstance()
+        mAuth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
-        userId = auth.currentUser?.uid.toString()
+        userId = mAuth.currentUser?.uid.toString()
+        phoneNumber = intent.getStringExtra("mobileno")!!
 
-        val docRef = db.collection("users").document("userID")
+        Log.d("TAG", "uid: $userId and phoneNo: $phoneNumber ")
 
-        btn_save.setOnClickListener {
-            when {
-                !(et_FirstName.text.isBlank() && et_LastName.text.isBlank() && et_email.text.isBlank()) -> {
-                    val first = et_FirstName.text.toString()
-                    val last = et_LastName.text.toString()
-                    val userEmail = et_email.text.toString()
+        docRef = db.collection("users").document(userId)
 
-                    // Create a new user with a first and last name
-                    val user = hashMapOf<String, Any>(
-                        "firstName" to first,
-                        "lastName" to last,
-                        "emailAddress" to userEmail
-                    )
+        /*supportFragmentManager.beginTransaction()
+            .replace(R.id.details_container, DetailsFragment())
+            .commit()*/
 
-                    //add a new document with a generated ID
-                    db.collection("users")
-                        .add(user)
-                        .addOnSuccessListener { docRef ->
-                            startActivity(Intent(applicationContext,UserDashboard::class.java));
-                            finish()
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(applicationContext, "Data is not inserted", Toast.LENGTH_SHORT).show()
-                        }
-
-                }
-                else -> {
-                    Toast.makeText(applicationContext, "All Fields are Required", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
     }
 
+    fun saveUser(v: View) {
+        //val docRef = db.collection("users").document("userID")
 
+        when {
+            !(binding.etFirstName1.text.isBlank() && binding.etLastName1.text.isBlank() && binding.etEmail.text.isBlank()) -> {
+                val first = binding.etFirstName1.text.toString()
+                val last = binding.etLastName1.text.toString()
+                val userEmail = binding.etEmail.text.toString()
+
+                // Create a new user with a first and last name
+                val user = GeneralUser(
+                    KEY_USERTYPE,
+                    phoneNumber,
+                    first,
+                    last,
+                    userEmail
+                )
+
+                docRef.set(user)
+                    .addOnSuccessListener {
+                        Log.d(TAG, "DocumentSnapshot successfully written!")
+                        startActivity(
+                            Intent(
+                                applicationContext,
+                                FollowInterestsActivity::class.java
+                            )
+                        )
+                        //startActivity(Intent(applicationContext, UserDashboard::class.java))
+                        //finish()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w(TAG, "Error writing document", e)
+                    }
+
+            }
+            else -> {
+                Toast.makeText(applicationContext, "All Fields are Required", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+
+        }
+
+    }
+
+    companion object {
+        private const val KEY_USERTYPE = "General"
+        private const val KEY_FIRSTNAME = "First Name"
+        private const val KEY_LASTNAME = "Last Name"
+        private const val KEY_PHONENUMBER = "Phone"
+        private const val KEY_EMAIL = "Email"
+    }
 }

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    tools:context=".PostEventActivity">
+
+    <RelativeLayout
+        android:id="@+id/rellay1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingVertical="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <com.anurag.multiselectionspinner.MultiSpinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginVertical="10dp"
+            android:layout_below="@id/et_Description"
+            android:layout_alignStart="@+id/et_Date"
+            android:layout_alignEnd="@+id/et_Time"
+            android:drawableStart="@drawable/ic_round_stars"
+            android:drawableEnd="@drawable/ic_arrow_drop_down"
+            android:drawablePadding="10dp"
+            android:gravity="start|center"
+            android:text="@string/str_Interest"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="10dp"
+            android:labelFor="@+id/et_title"
+            android:text="@string/str_title"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/et_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView2"
+            android:layout_marginBottom="10dp"
+            android:drawableStart="@drawable/ic_edit"
+            android:ems="15"
+            android:hint="  Event title here"
+            android:importantForAutofill="no"
+            android:inputType="textAutoCorrect"
+            android:minHeight="48dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_title"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="10dp"
+            android:labelFor="@+id/et_Description"
+            android:text="@string/str_description"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_Description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView3"
+            android:layout_alignStart="@+id/et_title"
+            android:layout_alignEnd="@+id/et_title"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="-3dp"
+            android:layout_marginBottom="10dp"
+            android:drawableStart="@drawable/ic_edit"
+            android:ems="15"
+            android:hint="  Event Description here"
+            android:inputType="text"
+            android:minHeight="48dp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spinner"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="10dp"
+            android:labelFor="@+id/et_Date"
+            android:text="Date: "
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/et_Date"
+            android:layout_width="151dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView4"
+            android:layout_alignStart="@+id/et_Description"
+            android:layout_marginStart="-3dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center|start"
+            android:hint=" Event date "
+            android:importantForAutofill="no"
+            android:inputType="date"
+            android:minHeight="48dp"
+            android:minEms="6"
+            android:onClick="getDateFromUser"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:drawableStartCompat="@drawable/ic_edit"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spinner"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/et_Date"
+            android:labelFor="@+id/et_Time"
+            android:text="Time: "
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/et_Time"
+            android:layout_width="155dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView5"
+            android:layout_alignEnd="@+id/et_Description"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@id/et_Date"
+            android:focusable="true"
+            android:gravity="start|center"
+            android:hint=" Event time"
+            android:importantForAutofill="no"
+            android:minHeight="48dp"
+            android:minEms="6"
+            android:onClick="getTimeFromUser"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:drawableStartCompat="@drawable/ic_edit" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_Date"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/str_location"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/et_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView6"
+            android:layout_alignStart="@+id/textView6"
+            android:layout_alignEnd="@+id/et_Time"
+            android:layout_marginBottom="10dp"
+            android:drawableStart="@drawable/ic_location"
+            android:ems="15"
+            android:gravity="start|center"
+            android:hint="  Tap here to select your location"
+            android:minHeight="48dp"
+            android:textSize="18sp" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="Event Details"
+        android:textColor="@color/black"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/rellay1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:backgroundTint="@color/dark_blue"
+        android:onClick="postNewEvent"
+        android:text="Post"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tv1"
+        app:layout_constraintStart_toStartOf="@+id/tv1"
+        app:layout_constraintTop_toBottomOf="@+id/rellay1" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,13 +7,13 @@
     tools:context=".CreateEvent">
 
     <Button
-        android:id="@+id/btn_cancel"
+        android:id="@+id/btn_next1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="48dp"
         android:layout_marginBottom="52dp"
         android:text="@string/str_cancel"
-        app:background="@drawable/button_background"
+        android:background="@drawable/button_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_save"
@@ -26,11 +26,11 @@
         android:layout_marginStart="47dp"
         android:layout_marginEnd="88dp"
         android:text="@string/str_save"
-        app:background="@drawable/button_background"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_cancel"
-        app:layout_constraintEnd_toStartOf="@+id/btn_cancel"
+        android:background="@drawable/button_background"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_next1"
+        app:layout_constraintEnd_toStartOf="@+id/btn_next1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btn_cancel"
+        app:layout_constraintTop_toTopOf="@+id/btn_next1"
         app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
@@ -54,11 +54,11 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/editTextPhone"
+            android:id="@+id/et_event_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="phone" />
+            android:inputType="text" />
     </LinearLayout>
 
     <LinearLayout
@@ -81,7 +81,7 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/et_event_interest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -108,11 +108,11 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress"
+            android:id="@+id/et_event_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textEmailAddress" />
+            android:inputType="date" />
     </LinearLayout>
 
     <LinearLayout
@@ -135,11 +135,11 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/editTextDate2"
+            android:id="@+id/et_event_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="date" />
+            android:inputType="time" />
     </LinearLayout>
 
     <LinearLayout
@@ -150,7 +150,7 @@
         android:layout_marginEnd="47dp"
         android:layout_marginBottom="128dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/btn_cancel"
+        app:layout_constraintBottom_toTopOf="@+id/btn_next1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
@@ -163,11 +163,11 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/editTextTime"
+            android:id="@+id/et_event_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="time" />
+            android:inputType="number|textEmailAddress|phone|time" />
     </LinearLayout>
 
     <TextView

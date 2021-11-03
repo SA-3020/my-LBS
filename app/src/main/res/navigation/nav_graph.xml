@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/otpAuthActivity">
+
+    <activity
+        android:id="@+id/otpAuthActivity"
+        android:name="com.example.notify_around.OtpAuthActivity"
+        android:label="activity_otp_auth"
+        tools:layout="@layout/activity_otp_auth">
+        <action
+            android:id="@+id/action_otpAuthActivity_to_addDetails"
+            app:destination="@id/addDetails" />
+    </activity>
+    <activity
+        android:id="@+id/addDetails"
+        android:name="com.example.notify_around.AddDetails"
+        android:label="activity_add_details"
+        tools:layout="@layout/activity_add_details" />
+</navigation>

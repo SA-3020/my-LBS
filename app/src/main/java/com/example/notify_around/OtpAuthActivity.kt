@@ -2,123 +2,136 @@ package com.example.notify_around
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.FirebaseException
+import com.example.notify_around.businessUser.activities.BUserDashboard
+import com.example.notify_around.databinding.ActivityOtpAuthBinding
 import com.google.firebase.auth.*
-import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_get_phone_no.*
-import kotlinx.android.synthetic.main.activity_otp_auth.*
-import java.util.concurrent.TimeUnit
+import com.google.firebase.ktx.Firebase
 
 
 class OtpAuthActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityOtpAuthBinding
 
-//    var t2: EditText? = null
-//    var b2: Button? = null
-    private lateinit var phoneNumber: String
-    private lateinit var otpId: String
     private lateinit var mAuth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
-    private lateinit var callbacks: OnVerificationStateChangedCallbacks
-
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    private lateinit var vfId: String
+    private lateinit var credential: PhoneAuthCredential
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_otp_auth)
+        binding = ActivityOtpAuthBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        phoneNumber = intent.getStringExtra("mobileno").toString()
+        mAuth = Firebase.auth
+        /* unpacking the intent and getting verificationId*/
+        vfId = intent.getStringExtra("verificationId").toString()
+        binding.tvPhoneno.text = mAuth.currentUser?.phoneNumber
+    }
 
-        tv_phoneno.text = phoneNumber
-
-        mAuth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
-
-        callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
-            override fun onCodeSent(s: String, forceResendingToken: PhoneAuthProvider.ForceResendingToken) {
-                otpId = s
-            }
-
-            override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-                signInWithPhoneAuthCredential(phoneAuthCredential)
-            }
-
-            override fun onVerificationFailed(e: FirebaseException) {
-                Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
-            }
-        }
-        initiateOtp()
-
-        btn_cancel.setOnClickListener {
-            when {
-                et_otp.text.toString().isEmpty() -> Toast.makeText(
-                    applicationContext,
-                    "Blank Field can not be processed",
-                    Toast.LENGTH_LONG
-                ).show()
-                et_otp.text.toString().length != 6 -> Toast.makeText(
-                    applicationContext, "Invalid OTP", Toast.LENGTH_LONG
-                ).show()
-                else -> {
-                    val credential = PhoneAuthProvider.getCredential(otpId, et_otp!!.text.toString())
-                    signInWithPhoneAuthCredential(credential)
-                }
+    fun nextBtnOnClick(view: View) {
+        when {
+            binding.etOtp.text.toString().isEmpty() ->
+                showMessage("Blank Field can not be processed")
+            binding.etOtp.text.toString().length != 6 ->
+                showMessage("Invalid OTP")
+            else -> {
+                credential = PhoneAuthProvider.getCredential(vfId, binding.etOtp!!.text.toString())
+                signInWithPhoneAuthCredential(credential)
+                //in here FirebaseAuthException is raised
+                //when the user enters the code after the set timeout
             }
         }
     }
 
-    private fun initiateOtp() {
-        val options = PhoneAuthOptions.newBuilder(mAuth)
-            .setPhoneNumber(phoneNumber)       // Phone number to verify
-            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-            .setActivity(this)                 // Activity (for callback binding)
-            .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
-            .build()
-        PhoneAuthProvider.verifyPhoneNumber(options)
-    }
-
-    override fun onStart() {
+    // [START on_start_check_user]
+    /*override fun onStart() {
         super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = mAuth.currentUser
+        if(mAuth.currentUser!=null){
+            startActivity(Intent(applicationContext, UserDashboard::class.java))
+        }
 
-        if(mAuth.currentUser!=null)
-            checkUserProfile()
-    }
+    }*/
+    // [END on_start_check_user]
 
+    // [START sign_in_with_phone]
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
         mAuth.signInWithCredential(credential)
-            .addOnCompleteListener(
-                this
-            ) { task ->
+            .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    checkUserProfile();
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithCredential:success")
 
-                    /*val user = task.result?.user
+                    val user = task.result?.user
                     updateUI(user)
-                    startActivity(Intent(this@OtpAuthActivity, AddDetails::class.java))
-                    finish()*/
                 } else {
-                    Toast.makeText(applicationContext, "Signin Code Error", Toast.LENGTH_LONG)
-                        .show()
+                    // Sign in failed, display a message and update the UI
+                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                        // The verification code entered was invalid
+                        //resendVerificationToken code
+                    }
+
                 }
             }
     }
 
-    private fun checkUserProfile() {
-        val docRef = mAuth.currentUser?.let { db.collection("users").document(it.uid) }
-        docRef?.get()?.addOnSuccessListener{ documentSnaphot ->
+    private fun showMessage(message: String) {
+        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
+    }
 
-            if(documentSnaphot.exists()){
-                updateUI(mAuth.currentUser)
+    private fun updateUI(user: FirebaseUser? = mAuth.currentUser) {
+        Log.d(TAG, "-----------------------${user?.phoneNumber.toString()}")
+
+        //check from database if user already exists
+        val db = FirebaseFirestore.getInstance()
+        val docRef = db.collection("users").document(user?.uid.toString())
+        //Log.d(TAG, "Inside usr exists ${docRef.path}")
+        docRef.get()
+            .addOnSuccessListener { documentSnapshot ->
+                Log.d(TAG, "doc ref . get ")
+                if (documentSnapshot.exists()) {
+//                    Log.d(TAG, "Inside usr exists if ")
+//                    Log.d(TAG,"DocumentSnapshot data: ${documentSnapshot.getString(KEY_FIRSTNAME)}")
+//                    Log.d(TAG,"DocumentSnapshot data: ${documentSnapshot.getString("UserType")}")
+//                    //change from here to open business user dashboard
+                    if (documentSnapshot.getString("UserType").equals("Business")) {
+                        Log.d(TAG, "busssssss")
+                        startActivity(Intent(applicationContext, BUserDashboard::class.java))
+                        finish()
+                    } else
+                        startActivity(Intent(applicationContext, UserDashboard::class.java))
+                    finish()
+                } else {
+//                    Log.d(TAG, "Inside usr exists else")
+//                    Log.d(TAG, "No such document")
+                    startActivity(
+                        Intent(
+                            applicationContext,
+                            AddDetails::class.java
+                        ).putExtra("mobileno", user?.phoneNumber)
+                    )
+                    finish()
+                }
             }
-            else
-                startActivity(Intent(this@OtpAuthActivity, AddDetails::class.java))
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "get failed with ", exception)
+            }
+    }
+    // [END sign_in_with_phone]
 
-        }
+    companion object {
+        private const val TAG = "PhoneAuthActivity"
+        private const val KEY_FIRSTNAME = "First Name"
+        private const val KEY_LASTNAME = "Last Name"
+        private const val KEY_PHONENUMBER = "Phone No"
+        private const val KEY_EMAIL = "Email"
     }
 
-    private fun updateUI(user: FirebaseUser? = mAuth.currentUser){
-        startActivity(Intent(this@OtpAuthActivity, UserDashboard::class.java))
-        finish()
-    }
+
 }

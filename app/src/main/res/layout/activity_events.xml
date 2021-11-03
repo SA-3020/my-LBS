@@ -12,14 +12,15 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        app:background="@drawable/button_background"
+        app:backgroundTint="@color/dark_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/EventActivityTab"
         app:layout_constraintVertical_bias="0.973"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        app:srcCompat="@drawable/ic_add"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/EventActivityTab"
@@ -30,8 +31,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.026"
-        >
+        app:layout_constraintVertical_bias="0.0"
+        app:tabGravity="fill">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/MyEventTab"

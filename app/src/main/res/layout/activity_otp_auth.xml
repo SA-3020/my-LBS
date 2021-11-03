@@ -19,17 +19,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_cancel"
+        android:id="@+id/btn_next1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
-        android:text="@string/str_next"
+        android:onClick="nextBtnOnClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/et_otp"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="@+id/et_otp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.726" />
+        app:layout_constraintVertical_bias="0.726"
+        android:text="@string/str_next"
+        android:textColor="@color/white"
+        android:paddingHorizontal="15dp" />
 
     <TextView
         android:id="@+id/tv_phoneno"
@@ -47,8 +50,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:importantForAutofill="no"
-        android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/btn_cancel"
+        android:inputType="numberPassword"
+        app:layout_constraintBottom_toTopOf="@+id/btn_next1"
         app:layout_constraintEnd_toEndOf="@+id/tv_phoneno"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="@+id/tv_phoneno"

@@ -3,6 +3,8 @@
     package="com.example.notify_around">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -11,15 +13,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Interests"></activity>
+        <activity
+            android:name=".PostEventActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddNewItem"
+            android:exported="false" />
+        <activity
+            android:name=".FollowInterestsActivity"
+            android:exported="false" />
+        <activity android:name=".businessUser.activities.BUserDetailsActivity" />
+        <activity android:name=".businessUser.activities.BUserDashboard" />
+        <activity android:name=".ChatsActivity" />
+        <activity android:name=".DrawerActivities.MyInterestsActivity" />
         <activity android:name=".Events" />
         <activity android:name=".CreateEvent" />
         <activity android:name=".AddDetails" />
-        <activity android:name=".UserProfile" />
+        <activity android:name=".DrawerActivities.UserProfile" />
         <activity android:name=".GetPhoneNoActivity" />
         <activity android:name=".OtpAuthActivity" />
         <activity android:name=".UserDashboard" />
-        <activity android:name=".FacebookSignUpActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

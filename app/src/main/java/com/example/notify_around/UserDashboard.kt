@@ -10,24 +10,27 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import com.example.notify_around.drawerActivities.MyInterestsActivity
 import com.example.notify_around.businessUser.activities.BUserDetailsActivity
-import com.example.notify_around.DrawerActivities.UserProfile
-import com.example.notify_around.Fragments.*
+import com.example.notify_around.drawerActivities.UserProfile
+import com.example.notify_around.fragments.*
 import com.example.notify_around.Models.GeneralUser
 import com.example.notify_around.databinding.ActivityUserDashboardBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
+import java.io.Serializable
 
 class UserDashboard : AppCompatActivity() {
     private lateinit var binding: ActivityUserDashboardBinding
 
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
+    private lateinit var firestore: FirebaseFirestore
     private lateinit var docRef: DocumentReference
     private var currentUser = GeneralUser()
+    //private var myInterests = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +38,25 @@ class UserDashboard : AppCompatActivity() {
         val view = binding.root
 
         initializeFirebase()
-        GlobalScope.launch(Dispatchers.IO) {
-            currentUser = getCurrentUser(auth.currentUser?.uid.toString())
-        }
-        setContentView(view)
 
-//        Log.d(TAG, "sali sali $currentUser")
+        var header = binding.naview.getHeaderView(0)
+
+        Thread {
+            docRef.get()
+                .addOnSuccessListener {
+                    Log.d(TAG, "Hello Hello $docRef")
+                    currentUser = it.toObject(GeneralUser::class.java)!!
+                    runOnUiThread {
+                        "${currentUser.FirstName} ${currentUser.LastName}".also {
+                            header.findViewById<TextView>(
+                                R.id.tv_username
+                            ).text = it
+                        }
+                        header.findViewById<TextView>(R.id.tv_location).text = currentUser.PhoneNo
+                    }
+                }
+        }.start()
+        setContentView(view)
 
         /* This method sets the toolbar as the app bar for the activity. */
         setSupportActionBar(binding.toolbar)
@@ -58,11 +74,10 @@ class UserDashboard : AppCompatActivity() {
         //to override the default icon colors with the customised colors
         binding.naview.itemIconTintList = null
 
-        var header = binding.naview.getHeaderView(0)
 
         //for opening default fragment on user dashboard
         supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, HomeFragment())
+            .replace(R.id.main_container, EventsFragment())
             .commit()
 
         /* Called when an item in the navigation menu is selected.*/
@@ -74,7 +89,12 @@ class UserDashboard : AppCompatActivity() {
                     startActivity(Intent(applicationContext, UserProfile::class.java))
                 }
                 R.id.menu_myinterests -> {
-                    startActivity(Intent(applicationContext, FollowInterestsActivity::class.java))
+                    startActivity(
+                        Intent(
+                            applicationContext,
+                            MyInterestsActivity::class.java
+                        ).putExtra("currentuser", currentUser.interests as Serializable)
+                    )
                     Toast.makeText(
                         applicationContext,
                         "My Interests Panel is Open",
@@ -135,8 +155,8 @@ class UserDashboard : AppCompatActivity() {
 
     private fun initializeFirebase() {
         auth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
-        docRef = db.collection("users").document(auth.currentUser?.uid.toString())
+        firestore = FirebaseFirestore.getInstance()
+        docRef = firestore.collection("users").document(auth.currentUser?.uid.toString())
     }
 
     private fun showMessage(message: String) {

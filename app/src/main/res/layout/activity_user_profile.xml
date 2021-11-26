@@ -7,7 +7,7 @@
     android:overScrollMode="ifContentScrolls"
     android:scrollbarStyle="outsideInset"
     android:verticalScrollbarPosition="right"
-    tools:context=".DrawerActivities.UserProfile">
+    tools:context=".drawerActivities.UserProfile">
 
     <RelativeLayout
         android:id="@+id/rellay1"

@@ -13,7 +13,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:background="#0080ff"
+        android:background="@color/colorAccent"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:title="Add New"
         app:titleTextColor="@color/white" />

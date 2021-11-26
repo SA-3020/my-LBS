@@ -16,7 +16,7 @@ class Events : AppCompatActivity() {
         setContentView(view)
 
         binding.btnAddEvent.setOnClickListener {
-            startActivity(Intent(applicationContext, CreateEvent::class.java))
+            startActivity(Intent(applicationContext, Events::class.java))
             finish()
         }
 

@@ -7,10 +7,10 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
-import com.example.notify_around.CreateEvent
-import com.example.notify_around.DrawerActivities.UserProfile
+import com.example.notify_around.drawerActivities.MyInterestsActivity
+import com.example.notify_around.drawerActivities.UserProfile
 import com.example.notify_around.Events
-import com.example.notify_around.Fragments.HomeFragment
+import com.example.notify_around.fragments.HomeFragment
 import com.example.notify_around.MainActivity
 import com.example.notify_around.R
 import com.example.notify_around.databinding.ActivityBusinessUserDashboardBinding
@@ -61,7 +61,7 @@ class BUserDashboard : AppCompatActivity() {
                     startActivity(Intent(applicationContext, UserProfile::class.java))
                 }
                 R.id.menu_myinterests -> {
-                    startActivity(Intent(applicationContext, CreateEvent::class.java))
+                    startActivity(Intent(applicationContext, MyInterestsActivity::class.java))
                     Toast.makeText(
                         applicationContext,
                         "My Interests Panel is Open",

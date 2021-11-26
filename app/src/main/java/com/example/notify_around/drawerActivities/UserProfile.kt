@@ -1,19 +1,14 @@
-package com.example.notify_around.DrawerActivities
+package com.example.notify_around.drawerActivities
 
 import android.content.ContentValues.TAG
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.notify_around.Fragments.UserInfoFragment
-import com.example.notify_around.MainActivity
+import com.example.notify_around.fragments.UserInfoFragment
 import com.example.notify_around.Models.GeneralUser
 import com.example.notify_around.R
-import com.example.notify_around.databinding.ActivityAddDetailsBinding
-import com.example.notify_around.databinding.ActivityMyInterestsBinding
 import com.example.notify_around.databinding.ActivityUserProfileBinding
-import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference

@@ -8,56 +8,45 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.anurag.multiselectionspinner.MultiSelectionSpinnerDialog
+import com.example.notify_around.Models.EventModel
 import com.example.notify_around.databinding.ActivityPostEventBinding
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
-class PostEventActivity : AppCompatActivity(),
-    MultiSelectionSpinnerDialog.OnMultiSpinnerSelectionListener {
+class PostEventActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPostEventBinding
-    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private var db = FirebaseFirestore.getInstance()
-    private lateinit var docRef: DocumentReference
+    private lateinit var db: FirebaseFirestore
+    lateinit var interestsArray: MutableList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPostEventBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val contentList: MutableList<String> = ArrayList()
-
-        db.collection("interests")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d(TAG, "${document.get("title")} => ${document.data}")
-//                    contentList.add(document.get("title") as String)
+        binding.etDate.inputType = 0; binding.etTime.inputType = 0; binding.tvInterests.inputType =
+            0
+        binding.etLocation.inputType = 0
+        db = FirebaseFirestore.getInstance()
+        Thread {
+            interestsArray = ArrayList()
+            db.collection("interests")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+//                        Log.d("dialoglog","inside for")
+//                        Log.d(TAG, "${document.get("Title")} => ${document.data}")
+                        interestsArray.add(document.get("Title").toString())
+                    }
                 }
-            }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, "Error getting documents: ", exception)
-            }
+                .addOnFailureListener { exception ->
+                    Log.d(TAG, "Error getting documents: ", exception)
+                }
+        }.start()
 
-        contentList.add("One")
-        contentList.add("Two")
-        contentList.add("Three")
-        contentList.add("Four")
-        contentList.add("Five")
 
-        binding.spinner.setAdapterWithOutImage(this, contentList, this)
-
-    }
-
-    override fun OnMultiSpinnerItemSelected(chosenItems: MutableList<String>?) {
-        //This is where you get all your items selected from the Multi Selection Spinner :)
-        for (i in chosenItems!!.indices) {
-
-            Log.e("chosenItems", chosenItems[i])
-        }
     }
 
     fun getDateFromUser(view: android.view.View) {
@@ -72,7 +61,7 @@ class PostEventActivity : AppCompatActivity(),
             { view, year, monthOfYear, dayOfMonth ->
 
                 // Display Selected date in textbox
-                binding.etDate.text = "$dayOfMonth/ $monthOfYear/ $year"
+                binding.etDate.setText("$dayOfMonth/ $monthOfYear/ $year")
 
             }, year, month, day
         )
@@ -85,7 +74,7 @@ class PostEventActivity : AppCompatActivity(),
         val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
             cal.set(Calendar.HOUR_OF_DAY, hour)
             cal.set(Calendar.MINUTE, minute)
-            binding.etTime.text = SimpleDateFormat("HH:mm").format(cal.time)
+            binding.etTime.setText(SimpleDateFormat("HH:mm").format(cal.time))
         }
         TimePickerDialog(
             this,
@@ -108,12 +97,46 @@ class PostEventActivity : AppCompatActivity(),
             showMessage("Please select a location for the event")
         if (binding.etTitle.text.isBlank() && binding.etDescription.text.isBlank() && binding.etDate.text.isBlank() && binding.etTime.text.isBlank() && binding.etLocation.text.isBlank())
             showMessage("All fields are required")
+        if (!binding.etTitle.text.isBlank() && !binding.etDescription.text.isBlank() && !binding.etDate.text.isBlank() && !binding.etTime.text.isBlank()/* && !binding.etLocation.text.isBlank()*/) {
+            Thread {
+                val newEventRef = db.collection("events").document()
+                var eventid = newEventRef.id
 
-        FirebaseFirestore.getInstance().collection("events")
+                val event = EventModel(
+                    binding.etTitle.text.toString(),
+                    binding.etDescription.text.toString(),
+                    null, Timestamp.now(),
+                    FirebaseAuth.getInstance().currentUser?.uid.toString(),
+                    MultiselectDialog.selectedInterestsArray,
+                    binding.etDate.text.toString(),
+                    binding.etTime.text.toString()
+                )
+                newEventRef.set(event)
+                    .addOnSuccessListener {
+                        runOnUiThread {
+                            showMessage("Event Uploaded successfully")
+                        }
+                    }
+                val currentUser = FirebaseAuth.getInstance().currentUser?.uid
+                val userRef = db
+                    .collection("users")
+                    .document(currentUser.toString())
+
+            }.start()
+        }
+
 
     }
 
     private fun showMessage(m: String) {
         Toast.makeText(applicationContext, m, Toast.LENGTH_SHORT).show()
     }
+
+    fun showDialog(view: android.view.View) {
+        MultiselectDialog(interestsArray, binding.tvInterests, "OK").show(
+            supportFragmentManager,
+            "interestDialog"
+        )
+    }
+
 }

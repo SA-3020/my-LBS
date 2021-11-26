@@ -1,4 +1,4 @@
-package com.example.notify_around.Fragments
+package com.example.notify_around.fragments
 
 import android.content.ContentValues.TAG
 import android.os.Bundle

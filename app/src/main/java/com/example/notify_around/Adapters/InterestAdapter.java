@@ -63,6 +63,7 @@ public class InterestAdapter extends FirestoreRecyclerAdapter<InterestsModel, In
                 String action = (String) btnFollow.getText();
                 int position = getBindingAdapterPosition();
                 if (position != RecyclerView.NO_POSITION && listener != null) {
+                    //action is string that is either follow or unfollow
                     listener.onInterestItemClick(getSnapshots().getSnapshot(position), position, action);
                 }
                 if (action.equalsIgnoreCase("follow")) btnFollow.setText("unfollow");

@@ -1,21 +1,17 @@
-package com.example.notify_around.Fragments
+package com.example.notify_around.fragments
 
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.notify_around.MainActivity
 import com.example.notify_around.Models.GeneralUser
 import com.example.notify_around.databinding.FragmentUserInfoBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 

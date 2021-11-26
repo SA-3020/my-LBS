@@ -14,21 +14,21 @@
         android:paddingVertical="8dp">
 
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_eventtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Event Title"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold"
             app:drawableEndCompat="@drawable/ic_navigate_next"
-            app:drawableTint="@color/light_grey"
-            android:textColor="@color/black" />
+            app:drawableTint="@color/light_grey" />
 
         <View
             android:id="@+id/divider"
             android:layout_width="wrap_content"
             android:layout_height="1dp"
-            android:layout_below="@id/tv_title"
+            android:layout_below="@id/tv_eventtitle"
             android:layout_marginVertical="8dp"
             android:background="?android:attr/listDivider" />
 
@@ -49,6 +49,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_event_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Event location goes here"
@@ -72,6 +73,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_event_dnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Event date and time goes here"

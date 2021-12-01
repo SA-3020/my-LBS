@@ -1,8 +1,7 @@
 package com.example.notify_around.drawerActivities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
+import androidx.appcompat.app.AppCompatActivity
 import com.example.notify_around.databinding.ActivityMyEventsBinding
 
 class MyEventsActivity : AppCompatActivity() {
@@ -11,5 +10,6 @@ class MyEventsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         b = ActivityMyEventsBinding.inflate(layoutInflater)
         setContentView(b.root)
+
     }
 }

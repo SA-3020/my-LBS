@@ -36,11 +36,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener,
     GoogleMap.OnCameraIdleListener {
     private var mMap: GoogleMap? = null
     private lateinit var mapView: MapView
-    private val MAP_VIEW_BUNDLE_KEY =
-        "MapViewBundleKey" //bundles for passing data from one activity to another
+
+    //bundles for passing data from one activity to another
+    private val MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey"
     private val DEFAULT_ZOOM = 15f
-    private var fusedLocationProviderClient: FusedLocationProviderClient? =
-        null //to retrieve the device's last known location. The fused location provider is one of the location APIs in Google Play services
+
+    //to retrieve the device's last known location. The fused location provider is one of the location APIs in Google Play services
+    private var fusedLocationProviderClient: FusedLocationProviderClient? = null
     private lateinit var tvCurrentAddress: TextView
     private lateinit var okBtn: Button
     private var currentAd = " "
@@ -160,10 +162,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener,
     }
 
     private fun askPermissionLocation() {
-        /*askPermission(
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) { getCurrentLocation() }.onDeclined { e ->
+        /*askPermission(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
+        { getCurrentLocation() }.onDeclined { e ->
             if (e.hasDenied()) {
                 e.denied.forEach1 {
                 }
@@ -184,8 +184,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener,
                 e.goToSettings()
             }
         }*/
-
+        //getCurrentLocation()
     }
+
 
     @SuppressLint("MissingPermission")
     private fun getCurrentLocation() {

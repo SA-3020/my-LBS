@@ -35,11 +35,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
+            android:name=".PostProblemActivity"
+            android:exported="false" />
+        <activity
             android:name=".drawerActivities.MyEventsActivity"
             android:exported="false"
             android:label="@string/title_activity_my_events"
             android:theme="@style/NoActionBar" />
-
         <activity
             android:name=".MapActivity"
             android:exported="false" />

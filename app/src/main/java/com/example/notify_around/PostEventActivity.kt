@@ -1,12 +1,16 @@
 package com.example.notify_around
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notify_around.Models.EventModel
 import com.example.notify_around.databinding.ActivityPostEventBinding
@@ -21,6 +25,7 @@ class PostEventActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPostEventBinding
     private lateinit var db: FirebaseFirestore
     lateinit var interestsArray: MutableList<String>
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +51,14 @@ class PostEventActivity : AppCompatActivity() {
                 }
         }.start()
 
-
+        resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    // There are no request codes
+                    val data: Intent? = result.data
+                    //handle the data here
+                }
+            }
     }
 
     fun getDateFromUser(view: android.view.View) {
@@ -55,17 +67,14 @@ class PostEventActivity : AppCompatActivity() {
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-
         val dpd = DatePickerDialog(
             this@PostEventActivity, R.style.my_dialog_theme,
             { view, year, monthOfYear, dayOfMonth ->
 
                 // Display Selected date in textbox
                 binding.etDate.setText("$dayOfMonth/ $monthOfYear/ $year")
-
             }, year, month, day
         )
-
         dpd.show()
     }
 
@@ -121,11 +130,13 @@ class PostEventActivity : AppCompatActivity() {
                 val userRef = db
                     .collection("users")
                     .document(currentUser.toString())
+                //continue working from here
 
             }.start()
+
+            startActivity(Intent(this, UserDashboard::class.java))
+            finish()
         }
-
-
     }
 
     private fun showMessage(m: String) {
@@ -139,4 +150,8 @@ class PostEventActivity : AppCompatActivity() {
         )
     }
 
+    fun openMapActivity(view: android.view.View) {
+        val intent = Intent(this, MapActivity::class.java)
+        resultLauncher.launch(intent)
+    }
 }

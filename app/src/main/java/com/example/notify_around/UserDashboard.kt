@@ -103,7 +103,7 @@ class UserDashboard : AppCompatActivity() {
                         .show()
                 }
                 R.id.menu_myevents -> {
-                    startActivity(Intent(applicationContext, Events::class.java))
+                    //startActivity(Intent(applicationContext, Events::class.java))
                     showMessage("My Events panel is open")
                 }
                 R.id.menu_chats -> {

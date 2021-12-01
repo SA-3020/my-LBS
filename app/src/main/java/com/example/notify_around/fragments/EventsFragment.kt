@@ -51,8 +51,6 @@ class EventsFragment : Fragment() {
         binding.eventsRecview.layoutManager = LinearLayoutManager(context)
         binding.eventsRecview.adapter = adapter
 
-
-
         return binding.root
     }
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="left"
-    tools:context=".PostEventActivity">
+    tools:context=".PostProblemActivity">
 
     <RelativeLayout
         android:id="@+id/rellay1"
@@ -34,11 +34,11 @@
             android:drawablePadding="10dp"
             android:focusable="true"
             android:gravity="start|center"
-            android:hint="@string/str_Interest"
+            android:hint="Level of Emergency"
             android:onClick="showDialog"
             android:textSize="18sp"
             app:drawableEndCompat="@drawable/ic_arrow_drop_down"
-            app:drawableStartCompat="@drawable/ic_round_stars" />
+            app:drawableStartCompat="@drawable/ic_error" />
 
         <EditText
             android:id="@+id/et_title"
@@ -47,7 +47,7 @@
             android:layout_marginVertical="25dp"
             android:drawableStart="@drawable/ic_edit"
             android:ems="15"
-            android:hint="  Event title here"
+            android:hint="  Problem title here"
             android:importantForAutofill="no"
             android:inputType="textAutoCorrect"
             android:minHeight="48dp" />
@@ -60,12 +60,12 @@
             android:layout_below="@id/et_title"
             android:layout_alignStart="@+id/et_title"
             android:layout_alignEnd="@+id/et_title"
-            android:layout_marginBottom="25dp"
             android:layout_marginStart="3dp"
             android:layout_marginEnd="-3dp"
+            android:layout_marginBottom="25dp"
             android:drawableStart="@drawable/ic_edit"
             android:ems="15"
-            android:hint="  Event Description here"
+            android:hint="  Problem Description here"
             android:inputType="text"
             android:minHeight="48dp" />
 
@@ -75,12 +75,12 @@
             android:layout_height="48dp"
             android:layout_below="@id/tv_interests"
             android:layout_alignStart="@+id/et_Description"
-            android:layout_marginBottom="25dp"
             android:layout_marginStart="-3dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="25dp"
             android:focusable="true"
             android:gravity="center|start"
-            android:hint=" Event date "
+            android:hint=" Date "
             android:importantForAutofill="no"
             android:minHeight="48dp"
             android:minEms="6"
@@ -101,7 +101,7 @@
             android:layout_toEndOf="@id/et_Date"
             android:focusable="true"
             android:gravity="start|center"
-            android:hint=" Event time"
+            android:hint=" Time"
             android:importantForAutofill="no"
             android:minHeight="48dp"
             android:minEms="6"
@@ -142,7 +142,7 @@
         android:navigationIcon="@drawable/ic_arrow_back"
         android:textSize="35sp"
         android:textStyle="bold"
-        android:title="Event Details"
+        android:title="Problem Details"
         android:titleTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

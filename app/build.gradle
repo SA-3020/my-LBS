@@ -103,5 +103,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:18.0.0'
     implementation 'com.google.android.gms:play-services-location:18.0.0'
 
-    //implementation 'com.github.florent37:runtime-permission-kotlin:1.1.2'
+
 }

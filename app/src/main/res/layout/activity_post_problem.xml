@@ -24,7 +24,7 @@
 
         <EditText
 
-            android:id="@+id/tv_interests"
+            android:id="@+id/tv_emergencyLevel"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_below="@id/et_Description"
@@ -73,7 +73,7 @@
             android:id="@+id/et_Date"
             android:layout_width="184dp"
             android:layout_height="48dp"
-            android:layout_below="@id/tv_interests"
+            android:layout_below="@id/tv_emergencyLevel"
             android:layout_alignStart="@+id/et_Description"
             android:layout_marginStart="-3dp"
             android:layout_marginEnd="10dp"
@@ -95,7 +95,7 @@
             android:id="@+id/et_Time"
             android:layout_width="153dp"
             android:layout_height="48dp"
-            android:layout_below="@id/tv_interests"
+            android:layout_below="@id/tv_emergencyLevel"
             android:layout_alignEnd="@+id/et_Description"
             android:layout_marginBottom="25dp"
             android:layout_toEndOf="@id/et_Date"
@@ -153,7 +153,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
         android:backgroundTint="@color/dark_blue"
-        android:onClick="postNewEvent"
+        android:onClick="postProblem"
         android:text="Post"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

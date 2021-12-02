@@ -23,6 +23,7 @@
         <entry key="..\:/Notify_Around/app/src/main/res/layout/activity_my_events.xml" value="0.25" />
         <entry key="..\:/Notify_Around/app/src/main/res/layout/activity_my_interests.xml" value="0.209375" />
         <entry key="..\:/Notify_Around/app/src/main/res/layout/activity_post_event.xml" value="0.22752808988764045" />
+        <entry key="..\:/Notify_Around/app/src/main/res/layout/activity_post_problem.xml" value="0.25" />
         <entry key="..\:/Notify_Around/app/src/main/res/layout/activity_test.xml" value="0.1" />
         <entry key="..\:/Notify_Around/app/src/main/res/layout/activity_user_dashboard.xml" value="0.25" />
         <entry key="..\:/Notify_Around/app/src/main/res/layout/content_my_events.xml" value="0.33" />
@@ -35,8 +36,10 @@
         <entry key="..\:/Notify_Around/app/src/main/res/layout/fragment_home.xml" value="0.209375" />
         <entry key="..\:/Notify_Around/app/src/main/res/layout/fragment_interests.xml" value="0.1" />
         <entry key="..\:/Notify_Around/app/src/main/res/layout/fragment_post_event.xml" value="0.25" />
+        <entry key="..\:/Notify_Around/app/src/main/res/layout/fragment_problems.xml" value="0.209375" />
         <entry key="..\:/Notify_Around/app/src/main/res/layout/single_row_event.xml" value="0.33633633633633636" />
         <entry key="..\:/Notify_Around/app/src/main/res/layout/single_row_interest.xml" value="0.3105110896817743" />
+        <entry key="..\:/Notify_Around/app/src/main/res/layout/single_row_problem.xml" value="0.5794251134644478" />
         <entry key="..\:/Notify_Around/app/src/main/res/menu/mainmenu.xml" value="0.209375" />
       </map>
     </option>

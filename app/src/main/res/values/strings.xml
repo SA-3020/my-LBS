@@ -70,4 +70,12 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
+    <array name="emergencyLevelArr">
+        <item>Crisis</item>
+        <item>Disaster</item>
+        <item>Domestic</item>
+        <item>Emergency</item>
+        <item>Problem</item>
+    </array>
+
 </resources>

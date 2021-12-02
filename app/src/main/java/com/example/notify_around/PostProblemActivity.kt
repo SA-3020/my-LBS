@@ -86,10 +86,10 @@ class PostProblemActivity : AppCompatActivity() {
             MethodsUtils.makeToast(this, "Please select a location of the problem")
         if (b.etTitle.text.isBlank() && b.etDescription.text.isBlank() && b.etDate.text.isBlank() && b.etTime.text.isBlank() && b.etLocation.text.isBlank())
             MethodsUtils.makeToast(this, "All fields are required")
-        if (!b.etTitle.text.isBlank() && !b.etDescription.text.isBlank() && !b.etDate.text.isBlank() && !b.etTime.text.isBlank()/* && !b.etLocation.text.isBlank()*/) {
+        if (b.etTitle.text.isNotBlank() && b.etDescription.text.isNotBlank() && b.etDate.text.isNotBlank() && b.etTime.text.isNotBlank()/* && !b.etLocation.text.isBlank()*/) {
             Thread {
                 val newEventRef = db.collection("events").document()
-                var eventid = newEventRef.id
+                //var eventid = newEventRef.id
 
                 val problem = ProblemModel(
                     b.etTitle.text.toString(),

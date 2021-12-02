@@ -27,7 +27,14 @@ class PostProblemActivity : AppCompatActivity() {
     }
 
     fun showDialog(view: android.view.View) {
-
+        MultiselectDialog(
+            resources.getStringArray(R.array.emergencyLevelArr) as MutableList<String>,
+            b.tvEmergencyLevel,
+            "OK"
+        ).show(
+            supportFragmentManager,
+            "interestDialog"
+        )
     }
 
     fun getDateFromUser(view: android.view.View) {

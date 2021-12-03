@@ -35,6 +35,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
+            android:name=".ProblemDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".PostProblemActivity"
             android:exported="false" />
         <activity
@@ -58,7 +61,6 @@
         <activity android:name=".businessUser.activities.BUserDashboard" />
         <activity android:name=".ChatsActivity" />
         <activity android:name=".drawerActivities.MyInterestsActivity" />
-        <activity android:name=".Events" />
         <activity android:name=".AddDetails" />
         <activity android:name=".drawerActivities.UserProfile" />
         <activity android:name=".GetPhoneNoActivity" />

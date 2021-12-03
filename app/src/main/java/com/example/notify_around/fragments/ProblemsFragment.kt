@@ -1,27 +1,28 @@
 package com.example.notify_around.fragments
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.notify_around.Adapters.ProblemAdapter
+import com.example.notify_around.Models.ProblemModel
+import com.example.notify_around.ProblemDetailsActivity
 import com.example.notify_around.databinding.FragmentProblemsBinding
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ProblemsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ProblemsFragment : Fragment() {
+class ProblemsFragment : Fragment(), ProblemAdapter.OnProblemItemClickListener {
     private var _binding: FragmentProblemsBinding? = null
     private val binding get() = _binding!!
+    private lateinit var adapter: ProblemAdapter
 
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
@@ -39,24 +40,36 @@ class ProblemsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentProblemsBinding.inflate(inflater, container, false)
+
+        val query = FirebaseFirestore.getInstance()
+            .collection("problems")
+            .orderBy("dateAt")
+
+        val options: FirestoreRecyclerOptions<ProblemModel> =
+            FirestoreRecyclerOptions.Builder<ProblemModel>()
+                .setQuery(query, ProblemModel::class.java).build()
+        adapter = ProblemAdapter(options)
+        binding.problemsRecview.layoutManager = LinearLayoutManager(context)
+        binding.problemsRecview.adapter = adapter
+
+        Thread {
+            adapter.setOnProblemItemClickListener(this)
+        }.start()
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        adapter?.startListening()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        adapter?.stopListening()
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProblemsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             ProblemsFragment().apply {
@@ -65,5 +78,13 @@ class ProblemsFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onProblemItemClick(ds: DocumentSnapshot?) {
+        val model = ds?.toObject(ProblemModel::class.java)
+
+        val intent = Intent(requireActivity(), ProblemDetailsActivity::class.java)
+        intent.putExtra("eventId", model?.id)
+        startActivity(intent)
     }
 }

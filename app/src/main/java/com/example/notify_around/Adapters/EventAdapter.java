@@ -77,7 +77,7 @@ public class EventAdapter extends FirestoreRecyclerAdapter<EventModel, EventAdap
     }
 
     public interface OnEventItemClickListener {
-        void onEventItemClick(DocumentSnapshot ds, int position, String action);
+        void onEventItemClick(DocumentSnapshot ds);
     }
 
 }

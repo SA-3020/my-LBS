@@ -50,7 +50,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_event_location"
+                android:id="@+id/tv_problem_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Event location goes here"
@@ -75,7 +75,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_event_dnt"
+                android:id="@+id/tv_problem_dnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Event date and time goes here"
@@ -103,7 +103,8 @@
                 android:id="@+id/tv_emergencylevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:hint="Emergency level goes here" />
 
         </LinearLayout>
 

@@ -5,7 +5,6 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.notify_around.Models.EventModel
 import com.example.notify_around.Models.ProblemModel
 import com.example.notify_around.Utils.MethodsUtils
 import com.example.notify_around.databinding.ActivityPostProblemBinding
@@ -28,7 +27,8 @@ class PostProblemActivity : AppCompatActivity() {
 
     fun showDialog(view: android.view.View) {
         MultiselectDialog(
-            resources.getStringArray(R.array.emergencyLevelArr) as MutableList<String>,
+            resources.getStringArray(R.array.emergencyLevelArr)
+                .toMutableList() as MutableList<String>,
             b.tvEmergencyLevel,
             "OK"
         ).show(
@@ -88,19 +88,21 @@ class PostProblemActivity : AppCompatActivity() {
             MethodsUtils.makeToast(this, "All fields are required")
         if (b.etTitle.text.isNotBlank() && b.etDescription.text.isNotBlank() && b.etDate.text.isNotBlank() && b.etTime.text.isNotBlank()/* && !b.etLocation.text.isBlank()*/) {
             Thread {
-                val newEventRef = db.collection("events").document()
-                //var eventid = newEventRef.id
+                val newproblemRef = db.collection("problems").document()
+                var problemid = newproblemRef.id
 
                 val problem = ProblemModel(
+                    problemid,
                     b.etTitle.text.toString(),
                     b.etDescription.text.toString(),
                     b.tvEmergencyLevel.text.toString(),
                     Timestamp.now(),
                     FirebaseAuth.getInstance().currentUser?.uid.toString(),
                     b.etDate.text.toString(),
-                    b.etTime.text.toString()
+                    b.etTime.text.toString(),
+                    b.etLocation.text.toString()
                 )
-                newEventRef.set(problem)
+                newproblemRef.set(problem)
                     .addOnSuccessListener {
                         runOnUiThread {
                             //showMessage("Event Uploaded successfully")

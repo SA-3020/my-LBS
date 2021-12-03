@@ -9,7 +9,7 @@ import java.util.*
 class EventModel(
     var title: String = "",
     var desc: String = "",
-    var locationAt: GeoPoint? = null,
+    var locationAt: String? = "",
     var postedOn: Timestamp? = null,// = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date()),
     var postedBy: String = "",
     var interests: MutableList<String> = arrayListOf(),

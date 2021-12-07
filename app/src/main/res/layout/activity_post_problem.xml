@@ -121,14 +121,18 @@
             android:layout_marginBottom="25dp"
             android:drawableStart="@drawable/ic_location"
             android:ems="15"
-            android:focusable="true"
-            android:onClick="openMapActivity"
             android:gravity="start|center"
             android:hint="  Tap here to select your location"
             android:importantForAutofill="no"
             android:inputType="text"
             android:minHeight="48dp"
-            android:textSize="18sp" />
+            android:onClick="openMapActivity"
+            android:textSize="18sp"
+            android:linksClickable="true"
+            android:autoLink="map" />
+        <!--
+                    android:focusable="true"
+        -->
 
 
     </RelativeLayout>

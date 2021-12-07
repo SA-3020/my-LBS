@@ -2,6 +2,8 @@ package com.example.notify_around.drawerActivities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notify_around.Adapters.InterestAdapter
@@ -22,13 +24,14 @@ class MyInterestsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         b = ActivityMyInterestsBinding.inflate(layoutInflater)
         setContentView(b.root)
+        var progress = ProgressBar(this)
+        progress.visibility = View.VISIBLE
+
         /*
         * Get the interests array of current user
         * Get all interests from interests collection where id = id from users interests array. This will give the interest ids that the user follows
         * Add title of the interests into arraylist named other interests
         * */
-
-
         firestore = FirebaseFirestore.getInstance()
         followedInterests =
             intent.getSerializableExtra("currentuser") as MutableList<String>
@@ -50,6 +53,7 @@ class MyInterestsActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener {
                 }
+            progress.visibility = View.INVISIBLE
         }.start()
 
         b.btnFollowNew.setOnClickListener {

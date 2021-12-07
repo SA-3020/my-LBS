@@ -1,83 +1,66 @@
-package com.example.notify_around.Adapters;
+package com.example.notify_around.Adapters
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.notify_around.Adapters.ProblemAdapter.pViewHolder
+import com.example.notify_around.Models.ProblemModel
+import com.example.notify_around.R
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.DocumentSnapshot
+import java.text.MessageFormat
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.notify_around.Models.ProblemModel;
-import com.example.notify_around.R;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.DocumentSnapshot;
-
-import java.text.MessageFormat;
-
-public class ProblemAdapter extends FirestoreRecyclerAdapter<ProblemModel, ProblemAdapter.pViewHolder> {
-    private OnProblemItemClickListener listener;
-
-    public ProblemAdapter(@NonNull FirestoreRecyclerOptions<ProblemModel> options) {
-        super(options);
+class ProblemAdapter(options: FirestoreRecyclerOptions<ProblemModel?>) :
+    FirestoreRecyclerAdapter<ProblemModel, pViewHolder>(options) {
+    private var listener: OnProblemItemClickListener? = null
+    override fun onBindViewHolder(holder: pViewHolder, position: Int, model: ProblemModel) {
+        Log.d("Adapter", "onBindViewHolder")
+        holder.tvProblemTitle.text = model.title
+        holder.tvProblemDatenTime.text =
+            MessageFormat.format("{0}  {1}", model.dateAt, model.timeAt)
+        holder.tvProblemLocation.text = model.locationAt
+        holder.tvEmergencyLevel.setText(model.levelOfEmergency);
     }
 
-    @Override
-    protected void onBindViewHolder(@NonNull ProblemAdapter.pViewHolder holder, int position, @NonNull ProblemModel model) {
-        Log.d("Adapter", "onBindViewHolder");
-        holder.tvProblemTitle.setText(model.getTitle());
-        holder.tvProblemDatenTime.setText(MessageFormat.format("{0}  {1}", model.getDateAt(), model.getTimeAt()));
-        holder.tvProblemLocation.setText((CharSequence) model.getLocationAt());
-//        holder.tvEmergencyLevel.setText(model.getLevelOfEmergency());
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): pViewHolder {
+        Log.d("Adapter", "onCreateViewHolder")
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.single_row_problem, parent, false)
+        return pViewHolder(view)
     }
 
-    @NonNull
-    @Override
-    public ProblemAdapter.pViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d("Adapter", "onCreateViewHolder");
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_row_problem, parent, false);
-        return new ProblemAdapter.pViewHolder(view);
+    fun setOnProblemItemClickListener(listener: OnProblemItemClickListener?) {
+        this.listener = listener
     }
 
-    public void setOnProblemItemClickListener(OnProblemItemClickListener listener) {
-        this.listener = listener;
-    }
+    inner class pViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var tvProblemTitle: TextView
+        var tvProblemLocation: TextView
+        var tvProblemDatenTime: TextView
+        var tvEmergencyLevel: TextView
 
+        init {
+            tvProblemTitle = itemView.findViewById(R.id.tv_problemtitle)
+            tvProblemLocation = itemView.findViewById(R.id.tv_problem_location)
+            tvProblemDatenTime = itemView.findViewById(R.id.tv_problem_dnt)
+            tvEmergencyLevel = itemView.findViewById(R.id.tv_emergency_level)
 
-    public class pViewHolder extends RecyclerView.ViewHolder {
-        TextView tvProblemTitle;
-        TextView tvProblemLocation;
-        TextView tvProblemDatenTime;
-        TextView tvEmergencyLevel;
+            itemView.setOnClickListener {
+                listener?.onProblemItemClick(
+                    snapshots.getSnapshot(
+                        bindingAdapterPosition
+                    )
+                )
+            }
 
-        public pViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            tvProblemTitle = itemView.findViewById(R.id.tv_problemtitle);
-            tvProblemLocation = itemView.findViewById(R.id.tv_problem_location);
-            tvProblemDatenTime = itemView.findViewById(R.id.tv_problem_dnt);
-            tvEmergencyLevel = itemView.findViewById(R.id.tv_emergencyLevel);
-
-/*
-            btnFollow.setOnClickListener(view -> {
-                String action = (String) btnFollow.getText();
-                int position = getBindingAdapterPosition();
-                if (position != RecyclerView.NO_POSITION && listener != null) {
-                    listener.onEventItemClick(getSnapshots().getSnapshot(position), position, action);
-                }
-                if (action.equalsIgnoreCase("follow")) btnFollow.setText("unfollow");
-                else if (action.equalsIgnoreCase("unfollow")) btnFollow.setText("follow");
-            });*/
         }
-
     }
 
-    public interface OnProblemItemClickListener {
-        void onProblemItemClick(DocumentSnapshot ds);
+    interface OnProblemItemClickListener {
+        fun onProblemItemClick(ds: DocumentSnapshot?)
     }
-
 }
-

@@ -1,7 +1,9 @@
 package com.example.notify_around.fragments
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +47,7 @@ class ProblemsFragment : Fragment(), ProblemAdapter.OnProblemItemClickListener {
             .collection("problems")
             .orderBy("dateAt")
 
-        val options: FirestoreRecyclerOptions<ProblemModel> =
+        val options: FirestoreRecyclerOptions<ProblemModel?> =
             FirestoreRecyclerOptions.Builder<ProblemModel>()
                 .setQuery(query, ProblemModel::class.java).build()
         adapter = ProblemAdapter(options)
@@ -63,10 +65,25 @@ class ProblemsFragment : Fragment(), ProblemAdapter.OnProblemItemClickListener {
         adapter?.startListening()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        adapter?.stopListening()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        adapter?.stopListening()
+
+    }
+
+
+    override fun onProblemItemClick(ds: DocumentSnapshot?) {
+        Log.d(TAG, "this is called")
+        val model = ds?.toObject(ProblemModel::class.java)
+
+        val intent = Intent(requireActivity(), ProblemDetailsActivity::class.java)
+        intent.putExtra("problemId", model?.id)
+        startActivity(intent)
     }
 
     companion object {
@@ -78,13 +95,5 @@ class ProblemsFragment : Fragment(), ProblemAdapter.OnProblemItemClickListener {
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }
-
-    override fun onProblemItemClick(ds: DocumentSnapshot?) {
-        val model = ds?.toObject(ProblemModel::class.java)
-
-        val intent = Intent(requireActivity(), ProblemDetailsActivity::class.java)
-        intent.putExtra("eventId", model?.id)
-        startActivity(intent)
     }
 }

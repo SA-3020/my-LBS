@@ -4,16 +4,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.notify_around.Models.EventModel;
-import com.example.notify_around.Models.InterestsModel;
 import com.example.notify_around.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -59,7 +55,7 @@ public class EventAdapter extends FirestoreRecyclerAdapter<EventModel, EventAdap
             super(itemView);
 
             tvEventTitle = itemView.findViewById(R.id.tv_eventtitle);
-            tvEventLocation = itemView.findViewById(R.id.tv_event_location);
+            tvEventLocation = itemView.findViewById(R.id.tv_problem_desc);
             tvEventDatenTime = itemView.findViewById(R.id.tv_event_dnt);
 
 /*

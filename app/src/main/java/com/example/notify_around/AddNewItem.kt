@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.notify_around.Utils.MethodsUtils
 import com.example.notify_around.databinding.ActivityAddNewItemBinding
 
 class AddNewItem : AppCompatActivity() {
@@ -21,19 +22,21 @@ class AddNewItem : AppCompatActivity() {
     }
 
     fun postNewEvent(v: View) {
-        goTo(PostEventActivity())
+        MethodsUtils.goToActivity(this, PostEventActivity()); finish()
     }
 
     fun postNewProblem(v: View) {
-        goTo(PostProblemActivity())
+        MethodsUtils.goToActivity(this, PostProblemActivity()); finish()
     }
 
     fun postNewSkill(v: View) {
     }
 
+/*
     private fun goTo(activity: AppCompatActivity) {
         startActivity(Intent(applicationContext, activity::class.java))
         finish()
     }
+*/
 
 }

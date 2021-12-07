@@ -23,6 +23,10 @@ class PostProblemActivity : AppCompatActivity() {
         b = ActivityPostProblemBinding.inflate(layoutInflater)
         setContentView(b.root)
         db = FirebaseFirestore.getInstance()
+
+        b.toolbar.setNavigationOnClickListener {
+            MethodsUtils.goToActivity(applicationContext, AddNewItem()); finish()
+        }
     }
 
     fun showDialog(view: android.view.View) {
@@ -77,15 +81,15 @@ class PostProblemActivity : AppCompatActivity() {
 
     fun postProblem(view: android.view.View) {
         if (b.etTitle.text.isBlank())
-            MethodsUtils.makeToast(this, "Please enter event title")
+            MethodsUtils.makeShortToast(this, "Please enter event title")
         if (b.etDescription.text.isBlank())
-            MethodsUtils.makeToast(this, "Please enter event description")
+            MethodsUtils.makeShortToast(this, "Please enter event description")
         if (b.etDate.text.isBlank() || b.etTime.text.isBlank())
-            MethodsUtils.makeToast(this, "Problem date and time are required")
+            MethodsUtils.makeShortToast(this, "Problem date and time are required")
         if (b.etLocation.text.isBlank())
-            MethodsUtils.makeToast(this, "Please select a location of the problem")
+            MethodsUtils.makeShortToast(this, "Please select a location of the problem")
         if (b.etTitle.text.isBlank() && b.etDescription.text.isBlank() && b.etDate.text.isBlank() && b.etTime.text.isBlank() && b.etLocation.text.isBlank())
-            MethodsUtils.makeToast(this, "All fields are required")
+            MethodsUtils.makeShortToast(this, "All fields are required")
         if (b.etTitle.text.isNotBlank() && b.etDescription.text.isNotBlank() && b.etDate.text.isNotBlank() && b.etTime.text.isNotBlank()/* && !b.etLocation.text.isBlank()*/) {
             Thread {
                 val newproblemRef = db.collection("problems").document()
@@ -105,7 +109,7 @@ class PostProblemActivity : AppCompatActivity() {
                 newproblemRef.set(problem)
                     .addOnSuccessListener {
                         runOnUiThread {
-                            //showMessage("Event Uploaded successfully")
+                            MethodsUtils.makeShortToast(this, "Event uploaded")
                         }
                     }
                 val currentUser = FirebaseAuth.getInstance().currentUser?.uid

@@ -5,7 +5,9 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:elevation="8dp"
-    app:cardCornerRadius="3dp">
+    app:cardCornerRadius="3dp"
+    android:clickable="true"
+    android:focusable="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -100,7 +102,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_emergencylevel"
+                android:id="@+id/tv_emergency_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"

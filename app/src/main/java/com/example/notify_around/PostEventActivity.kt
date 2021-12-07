@@ -31,8 +31,9 @@ class PostEventActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPostEventBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.etDate.inputType = 0; binding.etTime.inputType = 0; binding.tvInterests.inputType =
-            0
+        binding.etDate.inputType = 0; binding.etTime.inputType =
+            0; binding.tvLevelOfEmer.inputType = 0
+
         binding.etLocation.inputType = 0
         db = FirebaseFirestore.getInstance()
         Thread {
@@ -144,7 +145,7 @@ class PostEventActivity : AppCompatActivity() {
     }
 
     fun showDialog(view: android.view.View) {
-        MultiselectDialog(interestsArray, binding.tvInterests, "OK").show(
+        MultiselectDialog(interestsArray, binding.tvLevelOfEmer, "OK").show(
             supportFragmentManager,
             "interestDialog"
         )

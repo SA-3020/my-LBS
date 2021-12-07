@@ -6,6 +6,10 @@
 
     <dist:module dist:instant="true" />
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -35,16 +39,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".ProblemDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PostProblemActivity"
-            android:exported="false" />
-        <activity
             android:name=".drawerActivities.MyEventsActivity"
             android:exported="false"
             android:label="@string/title_activity_my_events"
             android:theme="@style/NoActionBar" />
+
+
+        <activity
+            android:name=".EventDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".businessUser.activities.AdDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".businessUser.activities.PostAdd"
+            android:exported="false" />
+        <activity
+            android:name=".businessUser.activities.PopUp"
+            android:exported="false" />
+        <activity
+            android:name=".SearchLocation"
+            android:exported="false" />
         <activity
             android:name=".MapActivity"
             android:exported="false" />
@@ -61,6 +76,7 @@
         <activity android:name=".businessUser.activities.BUserDashboard" />
         <activity android:name=".ChatsActivity" />
         <activity android:name=".drawerActivities.MyInterestsActivity" />
+        <activity android:name=".Events" />
         <activity android:name=".AddDetails" />
         <activity android:name=".drawerActivities.UserProfile" />
         <activity android:name=".GetPhoneNoActivity" />
@@ -98,6 +114,16 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/paths" />
+        </provider>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.notify_around.Models
+package com.example.notify_around.models
 
 import android.icu.text.SimpleDateFormat
 import com.google.firebase.Timestamp
@@ -7,9 +7,11 @@ import java.sql.Time
 import java.util.*
 
 class EventModel(
+    var id:String="",
     var title: String = "",
     var desc: String = "",
-    var locationAt: String? = "",
+    var images:MutableList<String> = arrayListOf(),
+    var locationAt: String? = null,
     var postedOn: Timestamp? = null,// = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date()),
     var postedBy: String = "",
     var interests: MutableList<String> = arrayListOf(),

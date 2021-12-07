@@ -7,13 +7,9 @@
     android:layout_gravity="left"
     tools:context=".PostEventActivity">
 
-    <RelativeLayout
-        android:id="@+id/rellay1"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="10dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -22,9 +18,19 @@
         app:layout_constraintVertical_bias="0.0">
 
 
+    <RelativeLayout
+        android:id="@+id/rellay1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        >
+
+
         <EditText
 
-            android:id="@+id/tv_level_of_emer"
+            android:id="@+id/tv_interests"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_below="@id/et_Description"
@@ -60,9 +66,9 @@
             android:layout_below="@id/et_title"
             android:layout_alignStart="@+id/et_title"
             android:layout_alignEnd="@+id/et_title"
-            android:layout_marginBottom="25dp"
             android:layout_marginStart="3dp"
             android:layout_marginEnd="-3dp"
+            android:layout_marginBottom="25dp"
             android:drawableStart="@drawable/ic_edit"
             android:ems="15"
             android:hint="  Event Description here"
@@ -73,7 +79,7 @@
             android:id="@+id/et_Date"
             android:layout_width="184dp"
             android:layout_height="48dp"
-            android:layout_below="@id/tv_level_of_emer"
+            android:layout_below="@id/tv_interests"
             android:layout_alignStart="@+id/et_Description"
             android:layout_marginBottom="25dp"
             android:layout_marginStart="-3dp"
@@ -95,7 +101,7 @@
             android:id="@+id/et_Time"
             android:layout_width="153dp"
             android:layout_height="48dp"
-            android:layout_below="@id/tv_level_of_emer"
+            android:layout_below="@id/tv_interests"
             android:layout_alignEnd="@+id/et_Description"
             android:layout_marginBottom="25dp"
             android:layout_toEndOf="@id/et_Date"
@@ -121,8 +127,7 @@
             android:layout_marginBottom="25dp"
             android:drawableStart="@drawable/ic_location"
             android:ems="15"
-            android:focusable="true"
-            android:onClick="openMapActivity"
+            android:focusable="false"
             android:gravity="start|center"
             android:hint="  Tap here to select your location"
             android:importantForAutofill="no"
@@ -130,8 +135,48 @@
             android:minHeight="48dp"
             android:textSize="18sp" />
 
+        <LinearLayout
+            android:id="@+id/images"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_location"
+            android:orientation="horizontal"
+            >
+
+
+            <ImageView
+                android:id="@+id/img_view"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:src="@drawable/avat"/>
+
+            <ImageSwitcher
+                android:id="@+id/image_switcher"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="100dp"
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
+            android:backgroundTint="@color/dark_blue"
+            android:onClick="postNewEvent"
+            android:text="Post"
+            android:layout_below="@+id/images"
+            android:layout_marginVertical="50dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+             />
 
     </RelativeLayout>
+    </ScrollView>
 
     <Toolbar
         android:id="@+id/toolbar"
@@ -148,18 +193,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_background"
-        android:backgroundTint="@color/dark_blue"
-        android:onClick="postNewEvent"
-        android:text="Post"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rellay1" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

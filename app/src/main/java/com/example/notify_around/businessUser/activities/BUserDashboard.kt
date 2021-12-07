@@ -9,6 +9,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import com.example.notify_around.drawerActivities.MyInterestsActivity
 import com.example.notify_around.drawerActivities.UserProfile
+import com.example.notify_around.Events
 import com.example.notify_around.fragments.HomeFragment
 import com.example.notify_around.MainActivity
 import com.example.notify_around.R
@@ -69,7 +70,7 @@ class BUserDashboard : AppCompatActivity() {
                         .show()
                 }
                 R.id.menu_myevents -> {
-                    //startActivity(Intent(applicationContext, Events::class.java))
+                    startActivity(Intent(applicationContext, Events::class.java))
                 }
                 R.id.menu_chats -> {
 

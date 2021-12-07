@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true"
+    >
+
+
+    <RelativeLayout
+        android:id="@+id/rl1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        >
+
+        <Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:fontFamily="sans-serif"
+            android:navigationIcon="@drawable/ic_arrow_back"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:title="Post Details"
+            android:titleTextColor="@color/white"
+            />
+
+        <RelativeLayout
+            android:id="@+id/rellay1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:padding="20dp">
+
+            <EditText
+                android:id="@+id/et_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_edit"
+                android:ems="15"
+                android:hint="  Ad title" />
+
+
+            <EditText
+                android:id="@+id/et_Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_title"
+                android:layout_marginTop="25dp"
+                android:drawableStart="@drawable/ic_edit"
+                android:ems="15"
+                android:hint="  Ad description" />
+
+            <EditText
+                android:id="@+id/et_Interest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/et_Description"
+                android:layout_marginTop="25dp"
+                android:drawableStart="@drawable/ic_baseline_business_center_24"
+                android:ems="15"
+                android:focusable="true"
+                android:hint="  Interests"
+                app:drawableEndCompat="@drawable/ic_arrow_drop_down"
+                app:drawableStartCompat="@drawable/ic_round_stars" />
+
+
+            <EditText
+                android:id="@+id/et_Address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_Interest"
+                android:layout_marginTop="25dp"
+                android:drawableStart="@drawable/ic_location"
+                android:ems="15"
+                android:focusable="false"
+                android:hint="  Tap here to select your location" />
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/images"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rellay1"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="20dp"
+           >
+
+
+            <ImageView
+                android:id="@+id/img_view"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:src="@drawable/avat"/>
+
+            <ImageSwitcher
+                android:id="@+id/image_switcher"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="100dp"
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/images"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_round"
+            android:padding="5dp"
+            android:text="Post"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+</ScrollView>

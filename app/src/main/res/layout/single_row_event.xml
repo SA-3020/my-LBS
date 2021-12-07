@@ -7,9 +7,27 @@
     android:elevation="8dp"
     app:cardCornerRadius="3dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+    <LinearLayout
+        android:background="@drawable/image_bg"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="0dp"
+        android:orientation="vertical"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingHorizontal="10dp"
         android:paddingVertical="8dp">
 
@@ -49,7 +67,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_problem_desc"
+                android:id="@+id/tv_event_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Event location goes here"
@@ -82,6 +100,7 @@
         </LinearLayout>
 
     </RelativeLayout>
+    </LinearLayout>
 
 
 </androidx.cardview.widget.CardView>

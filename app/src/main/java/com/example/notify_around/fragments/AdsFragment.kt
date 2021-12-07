@@ -1,37 +1,62 @@
 package com.example.notify_around.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.notify_around.models.AdModel
+import com.example.notify_around.adapters.AdsAdapter
+import com.example.notify_around.businessUser.activities.AdDetailsActivity
 import com.example.notify_around.databinding.FragmentAdsBinding
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-class AdsFragment : Fragment() {
+class AdsFragment : Fragment(),AdsAdapter.OnEventItemClickListener {
     private var _binding: FragmentAdsBinding? = null
     private val binding get() = _binding!!
+    private lateinit var adapter: AdsAdapter
 
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAdsBinding.inflate(inflater, container, false)
+
+
+        val query = FirebaseFirestore.getInstance()
+            .collection("Business Ad")
+            .orderBy("postedOn")
+
+        val options: FirestoreRecyclerOptions<AdModel?> =
+            FirestoreRecyclerOptions.Builder<AdModel>()
+                .setQuery(query, AdModel::class.java).build()
+        adapter = AdsAdapter(options,requireContext())
+        adapter.setOnEventItemClickListener(this)
+        binding.adsRecyclerView.adapter = adapter
+
+
+
+
         return binding.root
+
+    }
+
+
+
+    override fun onStart() {
+        super.onStart()
+        adapter?.startListening()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        adapter.stopListening()
     }
 
     override fun onDestroyView() {
@@ -39,14 +64,15 @@ class AdsFragment : Fragment() {
         _binding = null
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AdsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onAdItemClick(ds: DocumentSnapshot?) {
+
+        val model=ds?.toObject(AdModel::class.java)
+
+        val intent=Intent(requireActivity(),AdDetailsActivity::class.java)
+        intent.putExtra("adId",model?.id)
+        startActivity(intent)
+
     }
+
+
 }

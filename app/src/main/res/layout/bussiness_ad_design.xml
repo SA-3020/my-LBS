@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="8dp"
+    app:cardCornerRadius="3dp"
+  >
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_margin="10dp">
+       <LinearLayout
+           android:background="@drawable/image_bg"
+           android:layout_width="80dp"
+           android:layout_height="80dp"
+           android:layout_marginLeft="0dp"
+           android:orientation="vertical"
+           >
+           <de.hdodenhof.circleimageview.CircleImageView
+               android:id="@+id/img_view"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               />
+       </LinearLayout>
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:layout_marginLeft="10dp">
+           <TextView
+               android:id="@+id/tv_ad_title"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:hint="Business Title"
+               android:textColor="@color/black"
+               android:textSize="14sp"
+               android:textStyle="bold"
+               app:drawableEndCompat="@drawable/ic_navigate_next"
+               app:drawableTint="@color/light_grey" />
+
+           <View
+               android:id="@+id/divider"
+               android:layout_width="wrap_content"
+               android:layout_height="1dp"
+               android:layout_below="@id/tv_ad_title"
+               android:layout_marginVertical="8dp"
+               android:background="?android:attr/listDivider" />
+           <LinearLayout
+               android:id="@+id/linearLayout"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/divider"
+               android:orientation="horizontal"
+               android:layout_marginBottom="5dp">
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Location: "
+                   android:textSize="12sp"
+                   android:layout_marginEnd="5sp"
+                   android:textStyle="bold" />
+
+               <TextView
+                   android:id="@+id/tv_ad_location"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:hint="Business location goes here"
+                   android:textSize="12sp" />
+
+           </LinearLayout>
+           <LinearLayout
+               android:id="@+id/linearLayout2"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/linearLayout"
+               android:orientation="horizontal">
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Contact:"
+                   android:textSize="12sp"
+                   android:layout_marginEnd="5sp"
+                   android:textStyle="bold" />
+
+               <TextView
+                   android:id="@+id/tv_contact"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:hint="   Contact details here"
+                   android:textSize="12sp" />
+
+           </LinearLayout>
+       </LinearLayout>
+
+
+   </LinearLayout>
+
+</androidx.cardview.widget.CardView>

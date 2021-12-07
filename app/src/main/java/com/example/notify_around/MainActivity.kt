@@ -120,21 +120,24 @@ class MainActivity : AppCompatActivity() {
                             "DocumentSnapshot data: ${documentSnapshot.getString("UserType")}"
                         )
                         //change from here to open business user dashboard
-                        if (documentSnapshot.getString("UserType").equals("Business")) {
+                       /* if (documentSnapshot.getString("UserType").equals("Business")) {
                             Log.d(TAG, "busssssss")
                             startActivity(Intent(applicationContext, BUserDashboard::class.java))
                             finish()
                         } else
                             startActivity(Intent(applicationContext, UserDashboard::class.java))
+                        finish()*/
 
+                        startActivity(Intent(applicationContext, UserDashboard::class.java))
+                        finish()
                     }
 
                 }
                 .addOnFailureListener { exception ->
                     Log.d(TAG, "get failed with ", exception)
+                    Toast.makeText(this,exception.message,Toast.LENGTH_LONG).show()
                 }
-            startActivity(Intent(applicationContext, UserDashboard::class.java))
-            finish()
+
         }
     }
 }

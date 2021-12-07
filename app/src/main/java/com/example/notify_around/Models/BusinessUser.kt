@@ -1,4 +1,4 @@
-package com.example.notify_around.Models
+package com.example.notify_around.models
 
 import com.google.firebase.firestore.GeoPoint
 
@@ -7,6 +7,6 @@ class BusinessUser(
     var businessEmail: String = "",
     var businessContact: String = "",
     var location: GeoPoint? = null
-) : GeneralUser() {
+) {
 
 }

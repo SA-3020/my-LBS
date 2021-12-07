@@ -5,16 +5,20 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import com.example.notify_around.models.BusinessUser
 import com.example.notify_around.drawerActivities.MyInterestsActivity
 import com.example.notify_around.businessUser.activities.BUserDetailsActivity
 import com.example.notify_around.drawerActivities.UserProfile
 import com.example.notify_around.fragments.*
-import com.example.notify_around.Models.GeneralUser
+import com.example.notify_around.models.GeneralUser
+import com.example.notify_around.businessUser.activities.BUserDashboard
 import com.example.notify_around.databinding.ActivityUserDashboardBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
@@ -30,6 +34,7 @@ class UserDashboard : AppCompatActivity() {
     private lateinit var firestore: FirebaseFirestore
     private lateinit var docRef: DocumentReference
     private var currentUser = GeneralUser()
+    private var businessDetails:BusinessUser?=null
     //private var myInterests = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,11 +51,16 @@ class UserDashboard : AppCompatActivity() {
                 .addOnSuccessListener {
                     Log.d(TAG, "Hello Hello $docRef")
                     currentUser = it.toObject(GeneralUser::class.java)!!
+                    businessDetails=currentUser.businessUser
+                    UserManager.user=currentUser
+
                     runOnUiThread {
                         "${currentUser.FirstName} ${currentUser.LastName}".also {
                             header.findViewById<TextView>(
                                 R.id.tv_username
                             ).text = it
+                            updateMenu()
+
                         }
                         header.findViewById<TextView>(R.id.tv_location).text = currentUser.PhoneNo
                     }
@@ -103,7 +113,7 @@ class UserDashboard : AppCompatActivity() {
                         .show()
                 }
                 R.id.menu_myevents -> {
-                    //startActivity(Intent(applicationContext, Events::class.java))
+                    startActivity(Intent(applicationContext, Events::class.java))
                     showMessage("My Events panel is open")
                 }
                 R.id.menu_chats -> {
@@ -111,7 +121,12 @@ class UserDashboard : AppCompatActivity() {
                 }
                 R.id.menu_gobusiness -> {
                     showMessage("Business user add Details")
-                    startActivity(Intent(applicationContext, BUserDetailsActivity::class.java))
+                    if(businessDetails!=null){
+                        startActivity(Intent(applicationContext, BUserDashboard::class.java))
+
+                    }
+                    else{
+                    startActivity(Intent(applicationContext, BUserDetailsActivity::class.java))}
                 }
                 R.id.menu_logout -> {
                     showMessage("You are logged out")
@@ -124,7 +139,27 @@ class UserDashboard : AppCompatActivity() {
             true
         }
 
+
+
+
     }
+
+    override fun onResume() {
+        super.onResume()
+        updateMenu()
+    }
+
+    private fun updateMenu(){
+
+        val menu: Menu = binding.naview.menu
+
+        val menuItem: MenuItem = menu.findItem(R.id.menu_gobusiness)
+
+        menuItem.isVisible = UserManager.user?.businessUser==null
+
+    }
+
+
 
     fun addNewBtnOnClick(view: android.view.View) {
         startActivity(Intent(applicationContext, AddNewItem::class.java))

@@ -1,10 +1,11 @@
-package com.example.notify_around.Models
+package com.example.notify_around.models
 
 open class GeneralUser(
-    var UserType: String = "General",
+    var userType: String = "General",
     var PhoneNo: String = "",
     var FirstName: String = "",
     var LastName: String = "",
     var Email: String = "",
+    var businessUser: BusinessUser?=null,
     var interests: ArrayList<String> = arrayListOf()//<InterestsModel> = arrayListOf()
 )

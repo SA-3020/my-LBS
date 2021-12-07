@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.notify_around.Adapters.InterestAdapter
-import com.example.notify_around.Models.InterestsModel
+import com.example.notify_around.adapters.InterestAdapter
+import com.example.notify_around.models.InterestsModel
 import com.example.notify_around.databinding.ActivityFollowInterestsBinding
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -26,7 +26,7 @@ class FollowInterestsActivity : AppCompatActivity(), InterestAdapter.OnInterestI
             .collection("interests")
             .orderBy("Title")
 
-        val options: FirestoreRecyclerOptions<InterestsModel> =
+        val options: FirestoreRecyclerOptions<InterestsModel?> =
             FirestoreRecyclerOptions.Builder<InterestsModel>()
                 .setQuery(query, InterestsModel::class.java)
                 .build()
@@ -56,7 +56,7 @@ class FollowInterestsActivity : AppCompatActivity(), InterestAdapter.OnInterestI
         adapter.stopListening()
     }
 
-    override fun onInterestItemClick(ds: DocumentSnapshot?, position: Int, action: String) {
+    override fun onInterestItemClick(ds: DocumentSnapshot?, position: Int, action: String?) {
         //for debugging
         //val inter = ds?.toObject(InterestsModel::class.java)
         val interestid = ds?.id

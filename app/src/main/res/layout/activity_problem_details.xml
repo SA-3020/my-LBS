@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ProblemDetailsActivity">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:progressTint="@color/dark_blue"
+        android:visibility="visible"
+        android:forceHasOverlappingRendering="true" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,12 +34,20 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginVertical="15dp"
+            android:layout_marginHorizontal="5dp" />
+
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="20dp">
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:layout_width="100dp"
@@ -44,7 +62,6 @@
                 android:id="@+id/tv_problem_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Description goes here"
                 android:textColorHint="@color/light_grey"
                 android:textSize="16sp" />
 
@@ -55,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_marginVertical="10dp">
 
             <TextView
                 android:layout_width="100dp"
@@ -70,7 +87,6 @@
                 android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Contact details here"
                 android:textColorHint="@color/light_grey"
                 android:textSize="16sp" />
 
@@ -80,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_marginVertical="10dp">
 
             <TextView
                 android:layout_width="100dp"
@@ -95,7 +111,6 @@
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Contact details here"
                 android:textColorHint="@color/light_grey"
                 android:textSize="16sp" />
 
@@ -105,7 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_marginVertical="10dp">
 
             <TextView
                 android:layout_width="100dp"
@@ -120,7 +135,6 @@
                 android:id="@+id/tv_prolem_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Contact details here"
                 android:textColorHint="@color/light_grey"
                 android:textSize="16sp" />
 
@@ -130,7 +144,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_marginVertical="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -145,7 +159,6 @@
                 android:id="@+id/tv_level_of_emer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Contact details here"
                 android:textColorHint="@color/light_grey"
                 android:textSize="16sp" />
 
@@ -156,7 +169,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_marginVertical="10dp">
 
             <TextView
                 android:layout_width="100dp"
@@ -171,7 +184,6 @@
                 android:id="@+id/tv_postedBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Contact details here"
                 android:textColorHint="@color/light_grey"
                 android:textSize="16sp" />
 
@@ -187,6 +199,10 @@
             android:layout_marginVertical="20dp"
             android:background="@drawable/button_background"
             android:src="@drawable/ic_call_white"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            android:visibility="invisible" />
+
+
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>

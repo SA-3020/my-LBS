@@ -2,8 +2,8 @@ package com.example.notify_around.Utils
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 
 object MethodsUtils {

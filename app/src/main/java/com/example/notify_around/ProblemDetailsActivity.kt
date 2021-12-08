@@ -5,7 +5,9 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.transition.Visibility
 import android.util.Log
+import android.view.View
 import com.example.notify_around.models.ProblemModel
 import com.example.notify_around.databinding.ActivityProblemDetailsBinding
 import com.google.firebase.firestore.FirebaseFirestore
@@ -25,47 +27,38 @@ class ProblemDetailsActivity : AppCompatActivity() {
 
         contact = "+921234567"
 
-        var model = ProblemModel()
         Thread {
             val query = FirebaseFirestore.getInstance()
                 .collection("problems").document(id!!)
 
 
             query.get().addOnSuccessListener {
-                model = it.toObject(ProblemModel::class.java)!!
-                Log.v(TAG, model.toString())
-
-                b.tvEventTitle.text = model.title
-                b.tvProblemDesc.text = model.description
-                b.tvDate.text = model.dateAt
-                b.tvTime.text = model.timeAt
-                b.tvProlemLocation.text = model.locationAt
-                b.tvPostedBy.text = model.postedBy
+                val model = it.toObject(ProblemModel::class.java)!!
 
 
-                builder = StringBuilder()
-
-                model.levelOfEmergency.forEach {
-
-                    builder.append(it)
-                        .append(", ")
-
-                }
-
-
-                b.tvLevelOfEmer.text = builder.toString()
-
-                var userid = model.postedBy.replace("/", "")
+                val userid = model.postedBy.replace("/", "")
                 Log.d(TAG, "phoeee $userid")
-                /*val query2 = FirebaseFirestore
+                FirebaseFirestore
                     .getInstance()
                     .collection("users")
-                    .document(userid)
+                    .document(userid).get().addOnSuccessListener {
+                        contact = it.get("phoneNo").toString()
+                        runOnUiThread {
+                            b.tvEventTitle.text = model.title
+                            b.tvProblemDesc.text = model.description
+                            b.tvDate.text = model.dateAt
+                            b.tvTime.text = model.timeAt
+                            b.tvProlemLocation.text = model.locationAt
+                            b.tvPostedBy.text =
+                                "${it.get("firstName").toString()} ${it.get("lastName").toString()}"
+                            b.tvLevelOfEmer.text = model.levelOfEmergency
 
-                query2.get().addOnSuccessListener {
-                    contact = it.get("PhoneNo").toString()
-                }*/
-//                        initAdapter()
+                            b.progressBar.visibility = View.INVISIBLE
+                            b.btnDialer.visibility = View.VISIBLE
+
+                        }
+
+                    }
 
             }.addOnFailureListener {
 

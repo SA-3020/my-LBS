@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.notify_around.Models.GeneralUser
+import com.example.notify_around.models.GeneralUser
 import com.example.notify_around.databinding.FragmentUserInfoBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference

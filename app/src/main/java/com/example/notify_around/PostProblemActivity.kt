@@ -1,22 +1,27 @@
 package com.example.notify_around
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.notify_around.Models.ProblemModel
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.notify_around.models.ProblemModel
 import com.example.notify_around.Utils.MethodsUtils
 import com.example.notify_around.databinding.ActivityPostProblemBinding
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
 class PostProblemActivity : AppCompatActivity() {
     private lateinit var b: ActivityPostProblemBinding
     private lateinit var db: FirebaseFirestore
+    private var selectedLatLng: GeoPoint? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +30,26 @@ class PostProblemActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         b.toolbar.setNavigationOnClickListener {
-            MethodsUtils.goToActivity(applicationContext, AddNewItem()); finish()
+            startActivity(Intent(applicationContext, AddNewItem::class.java)); finish()
+        }
+
+        val startForResult =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val intent = result.data
+                    if (intent != null) {
+
+                        b.etLocation.setText(intent.getStringExtra("location"))
+                        val lat = intent.getStringExtra("lat")
+                        val lng = intent.getStringExtra("lng")
+                        val latLng = GeoPoint(lat!!.toDouble(), lng!!.toDouble())
+                        selectedLatLng = latLng
+                    }
+
+                }
+            }
+        b.etLocation.setOnClickListener {
+            startForResult.launch(Intent(this, MapActivity::class.java))
         }
     }
 
@@ -73,10 +97,6 @@ class PostProblemActivity : AppCompatActivity() {
             cal.get(Calendar.MINUTE),
             false
         ).show()
-    }
-
-    fun openMapActivity(view: android.view.View) {
-
     }
 
     fun postProblem(view: android.view.View) {

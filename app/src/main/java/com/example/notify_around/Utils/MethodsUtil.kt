@@ -15,8 +15,4 @@ object MethodsUtils {
         Toast.makeText(context, text, Toast.LENGTH_LONG).show()
     }
 
-    fun goToActivity(context: Context?, activity: AppCompatActivity) {
-        startActivity(context!!, Intent(context, activity::class.java), null);
-
-    }
 }

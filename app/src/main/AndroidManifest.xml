@@ -82,6 +82,8 @@
         <activity android:name=".GetPhoneNoActivity" />
         <activity android:name=".OtpAuthActivity" />
         <activity android:name=".UserDashboard" />
+        <activity android:name=".ProblemDetailsActivity" />
+        <activity android:name=".PostProblemActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

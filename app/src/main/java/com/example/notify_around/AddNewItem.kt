@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.notify_around.Utils.MethodsUtils
 import com.example.notify_around.businessUser.activities.PostAdd
 import com.example.notify_around.databinding.ActivityAddNewItemBinding
 
@@ -19,6 +20,7 @@ class AddNewItem : AppCompatActivity() {
             binding.adCard.visibility=View.GONE
         }
 
+
     }
 
     fun postNewAd(v: View) {
@@ -30,6 +32,7 @@ class AddNewItem : AppCompatActivity() {
     }
 
     fun postNewProblem(v: View) {
+        startActivity(Intent(applicationContext, PostProblemActivity::class.java))
     }
 
     fun postNewSkill(v: View) {

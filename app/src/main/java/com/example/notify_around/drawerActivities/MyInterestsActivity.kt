@@ -6,9 +6,9 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.notify_around.Adapters.InterestAdapter
-import com.example.notify_around.Models.InterestsModel
+import com.example.notify_around.models.InterestsModel
 import com.example.notify_around.MultiselectDialog
+import com.example.notify_around.adapters.InterestAdapter
 import com.example.notify_around.databinding.ActivityMyInterestsBinding
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FieldPath

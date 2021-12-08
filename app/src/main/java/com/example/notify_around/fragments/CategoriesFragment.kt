@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notify_around.Adapters.CatAdapter
-import com.example.notify_around.Models.CategoriesModel
+import com.example.notify_around.models.CategoriesModel
 import com.example.notify_around.R
 import com.example.notify_around.databinding.FragmentCategoriesBinding
 import java.util.*

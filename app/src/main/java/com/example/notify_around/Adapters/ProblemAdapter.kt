@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notify_around.Adapters.ProblemAdapter.pViewHolder
-import com.example.notify_around.Models.ProblemModel
+import com.example.notify_around.models.ProblemModel
 import com.example.notify_around.R
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions

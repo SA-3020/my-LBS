@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".drawerActivities.MyEventsActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".drawerActivities.MyEventsActivity"
+    android:background="@color/white">
 
-    <androidx.appcompat.widget.Toolbar
+    <Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorAccent"
-        app:title="My Events"
-        app:titleTextColor="@color/white"
-        android:paddingStart="15dp"
-        app:titleTextAppearance="@style/TextStyle"
-        android:id="@+id/toolbar" />
+        android:titleTextAppearance="@style/TextStyle"
+        android:titleTextColor="@color/white"
+        android:title="My Events"
+        android:fontFamily="sans-serif"
+        android:navigationIcon="@drawable/ic_arrow_back"
+        android:textSize="35sp"
+        android:textStyle="normal" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/myevents_recview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
-        android:id="@+id/my_events_recview" />
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="6dp" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/my_dialog_theme"
+        android:layout_centerInParent="true"
+        android:visibility="visible" />
 
 </RelativeLayout>

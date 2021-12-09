@@ -1,15 +1,15 @@
 package com.example.notify_around
 
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.transition.Visibility
 import android.util.Log
 import android.view.View
-import com.example.notify_around.models.ProblemModel
+import androidx.appcompat.app.AppCompatActivity
 import com.example.notify_around.databinding.ActivityProblemDetailsBinding
+import com.example.notify_around.models.ProblemModel
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ProblemDetailsActivity : AppCompatActivity() {
@@ -25,7 +25,6 @@ class ProblemDetailsActivity : AppCompatActivity() {
         val id = intent.extras?.getString("problemId")
         Log.v("Details", id.toString())
 
-        contact = "+921234567"
 
         Thread {
             val query = FirebaseFirestore.getInstance()
@@ -52,7 +51,6 @@ class ProblemDetailsActivity : AppCompatActivity() {
                             b.tvPostedBy.text =
                                 "${it.get("firstName").toString()} ${it.get("lastName").toString()}"
                             b.tvLevelOfEmer.text = model.levelOfEmergency
-
                             b.progressBar.visibility = View.INVISIBLE
                             b.btnDialer.visibility = View.VISIBLE
 

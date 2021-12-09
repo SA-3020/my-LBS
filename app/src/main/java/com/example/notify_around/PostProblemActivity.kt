@@ -29,6 +29,9 @@ class PostProblemActivity : AppCompatActivity() {
         setContentView(b.root)
         db = FirebaseFirestore.getInstance()
 
+        b.etDate.inputType = 0; b.etTime.inputType = 0; b.tvEmergencyLevel.inputType =
+            0; b.etLocation.inputType = 0
+
         b.toolbar.setNavigationOnClickListener {
             startActivity(Intent(applicationContext, AddNewItem::class.java)); finish()
         }
@@ -48,6 +51,7 @@ class PostProblemActivity : AppCompatActivity() {
 
                 }
             }
+
         b.etLocation.setOnClickListener {
             startForResult.launch(Intent(this, MapActivity::class.java))
         }
@@ -132,12 +136,6 @@ class PostProblemActivity : AppCompatActivity() {
                             MethodsUtils.makeShortToast(this, "Event uploaded")
                         }
                     }
-                val currentUser = FirebaseAuth.getInstance().currentUser?.uid
-                /*val userRef = db
-                    .collection("users")
-                    .document(currentUser.toString())*/
-                //continue working from here
-
             }.start()
 
             startActivity(Intent(this, UserDashboard::class.java))

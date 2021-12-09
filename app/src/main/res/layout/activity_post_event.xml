@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="left"
+    android:layout_gravity="start"
     tools:context=".PostEventActivity">
 
     <ScrollView
@@ -165,15 +165,14 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/images"
+            android:layout_centerHorizontal="true"
+            android:layout_marginVertical="50dp"
             android:background="@drawable/button_background"
             android:backgroundTint="@color/dark_blue"
             android:onClick="postNewEvent"
             android:text="Post"
-            android:layout_below="@+id/images"
-            android:layout_marginVertical="50dp"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/white"
-             />
+            android:textColor="@color/white" />
 
     </RelativeLayout>
     </ScrollView>

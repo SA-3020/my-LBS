@@ -4,13 +4,14 @@ import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.content.DialogInterface
 import android.os.Bundle
+import com.example.notify_around.UserManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.notify_around.models.GeneralUser
 import com.example.notify_around.databinding.FragmentUserInfoBinding
+import com.example.notify_around.models.GeneralUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -46,16 +47,22 @@ class UserInfoFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         val user = auth.currentUser!!
 
-        docRef = db.collection("users").document(user.uid)
-        docRef.get()
-            .addOnSuccessListener {
-                var user = it.toObject(GeneralUser::class.java)
-                binding.tvEmail.text = user?.Email
-                binding.tvContact.text = user?.PhoneNo
+        /*Thread {
+            docRef = db.collection("users").document(user.uid)
+            docRef.get()
+                .addOnSuccessListener {
+                    var user = it.toObject(GeneralUser::class.java)*/
+        binding.tvEmail.text = UserManager.user!!.Email//user?.Email
+        binding.tvContact.text = UserManager.user!!.PhoneNo//user?.PhoneNo
 
-            }
-        /*val credential = PhoneAuthProvider.getCredential("+923348562181", "123807")
-        user.reauthenticate(credential)*/
+        val userInterests = UserManager.user!!.interests //as MutableList<String>
+        for (i in userInterests) {
+            binding.myinterests.text =
+                "${userInterests.toString()/*.subSequence(userInterests.indexOf("[")+1,userInterests.indexOf("]"))*/}"
+        }
+
+        /* }
+ }.start()*/
 
         binding.btnEdit.setOnClickListener {
             val nextFrag = EditUserInfoFragment()
@@ -73,8 +80,6 @@ class UserInfoFragment : Fragment() {
                     user!!
                         .delete()
                         .addOnCompleteListener {
-                            /*startActivity(Intent(requireActivity().baseContext, MainActivity::class.java))
-                            this.requireActivity().finish()*/
                         }
                         .addOnFailureListener {
                             Log.d(TAG, "$it ${auth.currentUser!!.uid}")

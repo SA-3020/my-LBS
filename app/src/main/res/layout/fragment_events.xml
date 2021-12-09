@@ -5,12 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.EventsFragment">
 
-    <!--<TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Events Panel"
-        android:gravity="center" />-->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/events_recview"
         android:layout_width="match_parent"

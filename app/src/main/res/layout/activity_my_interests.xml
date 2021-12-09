@@ -15,6 +15,14 @@
         android:background="@color/colorAccent"
         android:layout_alignParentTop="true" />
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:theme="@style/my_dialog_theme"
+        android:id="@+id/progress_bar"
+        android:visibility="visible" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/myinterests_recview"
         android:layout_width="match_parent"

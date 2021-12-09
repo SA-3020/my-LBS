@@ -60,6 +60,10 @@ class PostEventActivity : AppCompatActivity() {
             0
         binding.etLocation.inputType = 0
         db = FirebaseFirestore.getInstance()
+
+        binding.toolbar.setNavigationOnClickListener {
+            startActivity(Intent(applicationContext, AddNewItem::class.java)); finish()
+        }
         Thread {
             interestsArray = ArrayList()
             db.collection("interests")
@@ -240,32 +244,22 @@ class PostEventActivity : AppCompatActivity() {
     }
 
     private fun uploadData(){
-
-        if (binding.etTitle.text.isBlank())
-            showMessage("Please enter event title")
-        if (binding.etDescription.text.isBlank())
-            showMessage("Please enter event description")
-        if (binding.etDate.text.isBlank() || binding.etTime.text.isBlank())
-            showMessage("Event date and time are required")
-        if (binding.etLocation.text.isBlank())
-            showMessage("Please select a location for the event")
-        if (binding.etTitle.text.isBlank() && binding.etDescription.text.isBlank() && binding.etDate.text.isBlank() && binding.etTime.text.isBlank() && binding.etLocation.text.isBlank())
+        if (binding.etTitle.text.isBlank() || binding.etDescription.text.isBlank() || binding.etDate.text.isBlank() || binding.etTime.text.isBlank() || binding.etLocation.text.isBlank() || imagesList.isNullOrEmpty())
             showMessage("All fields are required")
-        if (!binding.etTitle.text.isBlank() && !binding.etDescription.text.isBlank() && !binding.etDate.text.isBlank() && !binding.etTime.text.isBlank()/* && !binding.etLocation.text.isBlank()*/) {
+        if (!binding.etTitle.text.isBlank() && !binding.etDescription.text.isBlank() && !binding.etDate.text.isBlank() && !binding.etTime.text.isBlank() && !binding.etLocation.text.isBlank() && !imagesList.isNullOrEmpty()) {
             Thread {
-
-
-
-                var eventid =db.collection("events").document().id
+                var eventid = db.collection("events").document().id
                 val newEventRef = db.collection("events").document(eventid)
+                val uid = FirebaseAuth.getInstance().currentUser?.uid
 
                 val event = EventModel(
                     eventid,
                     binding.etTitle.text.toString(),
                     binding.etDescription.text.toString(),
                     imagesList,
-                    binding.etLocation.text.toString(), Timestamp.now(),
-                    UserManager.user?.FirstName+" "+UserManager.user?.LastName,
+                    binding.etLocation.text.toString(),
+                    Timestamp.now(),
+                    uid!!,
                     MultiselectDialog.selectedInterestsArray,
                     binding.etDate.text.toString(),
                     binding.etTime.text.toString()
@@ -276,12 +270,11 @@ class PostEventActivity : AppCompatActivity() {
                             showMessage("Event Uploaded successfully")
                         }
                     }
-                val currentUser = FirebaseAuth.getInstance().currentUser?.uid
-                val userRef = db
-                    .collection("users")
-                    .document(currentUser.toString())
+
 
             }.start()
+            startActivity(Intent(this, UserDashboard::class.java))
+            finish()
         }
     }
 

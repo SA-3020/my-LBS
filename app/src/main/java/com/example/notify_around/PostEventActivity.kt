@@ -383,15 +383,17 @@ class PostEventActivity : AppCompatActivity() {
                 }
                 else{
                     //picked single image
-                    val imageUri= data.data
+                    val imageUri = data.data
                     //set image to image switcher
                     imageSwitcher?.setImageURI(imageUri)
-                    mUri=imageUri
+                    mUri = imageUri
                     imageUri?.let { images.add(it) }
                 }
             }
         }
     }
+
+    fun postNewSkill(view: View) {}
 
 
 }

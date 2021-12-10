@@ -6,10 +6,21 @@
     android:layout_gravity="center"
     tools:context=".fragments.UserInfoFragment">
 
-    <RelativeLayout
+    <ProgressBar
+        android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/dark_blue"
+        android:visibility="visible" />
+
+    <RelativeLayout
+        android:id="@+id/myrellay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -112,7 +123,6 @@
                 android:layout_marginTop="15dp"
                 android:orientation="horizontal">
 
-
                 <!--<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -149,8 +159,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
-                    android:textColor="@color/red"
-                    android:text="Delete Profile" />
+                    android:text="Delete Profile"
+                    android:textColor="@color/red" />
 
             </LinearLayout>
 

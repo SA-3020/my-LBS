@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    tools:context=".PostEventActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintVertical_bias="0.0">
+
+
+        <RelativeLayout
+            android:id="@+id/rellay1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp">
+
+
+            <EditText
+
+                android:id="@+id/tv_interests"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_below="@id/et_Description"
+                android:layout_alignStart="@+id/et_Date"
+                android:layout_alignEnd="@+id/et_Time"
+                android:layout_marginBottom="25dp"
+                android:drawablePadding="10dp"
+                android:focusable="true"
+                android:gravity="start|center"
+                android:hint="@string/str_Interest"
+                android:onClick="showDialog"
+                android:textSize="18sp"
+                app:drawableEndCompat="@drawable/ic_arrow_drop_down"
+                app:drawableStartCompat="@drawable/ic_round_stars" />
+
+            <EditText
+                android:id="@+id/et_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="25dp"
+                android:drawableStart="@drawable/ic_edit"
+                android:ems="15"
+                android:hint="  Skill title here"
+                android:importantForAutofill="no"
+                android:inputType="textAutoCorrect"
+                android:minHeight="48dp" />
+
+
+            <EditText
+                android:id="@+id/et_Description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_title"
+                android:layout_alignStart="@+id/et_title"
+                android:layout_alignEnd="@+id/et_title"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="-3dp"
+                android:layout_marginBottom="25dp"
+                android:drawableStart="@drawable/ic_edit"
+                android:ems="15"
+                android:hint="  Skill Description here"
+                android:inputType="text"
+                android:minHeight="48dp" />
+
+            <!--<EditText
+                android:id="@+id/et_Date"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_below="@id/tv_interests"
+                android:layout_alignStart="@+id/et_Description"
+                android:layout_alignEnd="@+id/et_Description"
+                android:layout_marginStart="-3dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="25dp"
+                android:focusable="true"
+                android:gravity="center|start"
+                android:hint=" Event date "
+                android:importantForAutofill="no"
+                android:minHeight="48dp"
+                android:minEms="6"
+                android:onClick="getDateFromUser"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:drawableStartCompat="@drawable/ic_edit"
+                tools:ignore="DuplicateSpeakableTextCheck" />-->
+
+
+            <EditText
+                android:id="@+id/et_location"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_below="@id/tv_interests"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="25dp"
+                android:drawableStart="@drawable/ic_location"
+                android:ems="15"
+                android:focusable="false"
+                android:gravity="start|center"
+                android:hint="  Tap here to select your location"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:textSize="18sp" />
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/et_location"
+                android:layout_centerHorizontal="true"
+                android:layout_marginVertical="50dp"
+                android:background="@drawable/button_background"
+                android:backgroundTint="@color/dark_blue"
+                android:onClick="postNewSkill"
+                android:text="Post"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:fontFamily="sans-serif"
+        android:navigationIcon="@drawable/ic_arrow_back"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:title="Skill Details"
+        android:titleTextColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

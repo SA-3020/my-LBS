@@ -36,7 +36,9 @@
                 android:layout_below="@id/textView2"
                 android:layout_marginBottom="10dp"
                 android:drawableStart="@drawable/ic_person"
-                android:ems="15" />
+                android:ems="15"
+                android:minHeight="48dp"
+                android:inputType="textShortMessage" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -58,7 +60,9 @@
                 android:layout_alignStart="@id/textView2"
                 android:layout_marginBottom="10dp"
                 android:drawableStart="@drawable/ic_person"
-                android:ems="15" />
+                android:ems="15"
+                android:inputType="textShortMessage"
+                android:minHeight="48dp" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -82,7 +86,8 @@
                 android:layout_marginBottom="10dp"
                 android:drawableStart="@drawable/ic_baseline_email_24"
                 android:ems="15"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -106,7 +111,8 @@
                 android:layout_marginBottom="10dp"
                 android:drawableStart="@drawable/ic_phone"
                 android:ems="15"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:minHeight="48dp" />
         </RelativeLayout>
 
         <Button

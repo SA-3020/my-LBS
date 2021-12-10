@@ -16,14 +16,21 @@
         <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/activity_post_add.xml" value="0.12771739130434784" />
         <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/activity_post_event.xml" value="0.20885416666666667" />
         <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/activity_post_problem.xml" value="0.20989583333333334" />
-        <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/activity_problem_details.xml" value="0.25" />
-        <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/activity_user_profile.xml" value="0.25" />
+        <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/activity_post_skill.xml" value="0.168141592920354" />
+        <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/activity_problem_details.xml" value="0.1" />
+        <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/activity_skill_details.xml" value="0.18385416666666668" />
+        <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/activity_user_dashboard.xml" value="0.16296296296296298" />
+        <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/activity_user_profile.xml" value="0.32592592592592595" />
+        <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/fragment_edit_user_info.xml" value="0.1" />
         <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/fragment_events.xml" value="0.209375" />
+        <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/fragment_problems.xml" value="0.18385416666666668" />
+        <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/fragment_skills.xml" value="0.18385416666666668" />
         <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/fragment_user_info.xml" value="0.209375" />
         <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/menuheader.xml" value="0.1" />
         <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/single_row_categories.xml" value="0.209375" />
         <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/single_row_event.xml" value="0.209375" />
-        <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/single_row_problem.xml" value="0.20989583333333334" />
+        <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/single_row_problem.xml" value="0.1" />
+        <entry key="..\:/FYP/Notify_Around/app/src/main/res/layout/single_row_skill.xml" value="0.18385416666666668" />
         <entry key="..\:/FYP/Notify_Around/app/src/main/res/menu/mainmenu.xml" value="0.1" />
         <entry key="..\:/Notify_Around/app/src/main/res/drawable-v24/ic_people.xml" value="0.240625" />
         <entry key="..\:/Notify_Around/app/src/main/res/drawable/button_background.xml" value="0.22552083333333334" />

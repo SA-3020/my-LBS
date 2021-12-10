@@ -85,10 +85,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:clickable="true"
+                        android:focusable="true"
                         android:gravity="center"
+                        android:minWidth="48dp"
                         android:onClick="openEvents"
-                        android:orientation="vertical"
-                        android:focusable="true">
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="45dp"
@@ -118,6 +119,7 @@
                         android:layout_height="match_parent"
                         android:clickable="true"
                         android:gravity="center"
+                        android:minWidth="48dp"
                         android:onClick="openAds"
                         android:orientation="vertical">
 
@@ -209,14 +211,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
-                    android:paddingHorizontal="5dp">
+                    android:paddingHorizontal="5dp"
+                    android:background="@color/white">
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/btn_Addnew"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:layout_gravity="end|bottom"
                         android:clickable="true"
+                        app:elevation="15dp"
                         android:focusable="true"
                         android:foreground="@drawable/ic_add"
                         android:elevation="5dp"

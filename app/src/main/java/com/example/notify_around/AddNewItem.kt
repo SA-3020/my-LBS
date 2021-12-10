@@ -14,11 +14,13 @@ class AddNewItem : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddNewItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        if(UserManager.user?.businessUser==null){
-            binding.adCard.visibility=View.GONE
+        binding.toolbar.setNavigationOnClickListener {
+            startActivity(Intent(applicationContext, UserDashboard::class.java)); finish()
         }
+        if (UserManager.user?.businessUser == null) {
+            binding.adCard.visibility = View.GONE
 
+        }
     }
 
     fun postNewAd(v: View) {
@@ -30,6 +32,7 @@ class AddNewItem : AppCompatActivity() {
     }
 
     fun postNewProblem(v: View) {
+        startActivity(Intent(applicationContext, PostProblemActivity::class.java))
     }
 
     fun postNewSkill(v: View) {

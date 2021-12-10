@@ -24,17 +24,21 @@
 
         <RelativeLayout
             android:id="@+id/imgUser"
-            android:layout_width="111dp"
+            android:layout_width="115dp"
             android:layout_height="115dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/circle_border">
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/img_user"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_margin="9dp"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="9dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginBottom="9dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/circle"
                 android:contentDescription="@string/alt_img"
@@ -52,9 +56,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15sp"
             android:fontFamily="sans-serif-light"
+            android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="32sp"
-            android:textAlignment="center" />
+            android:textSize="32sp" />
 
         <TextView
             android:id="@+id/tv_address"

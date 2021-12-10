@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.notify_around.Models.CategoriesModel;
+import com.example.notify_around.models.CategoriesModel;
 import com.example.notify_around.R;
 
 import org.jetbrains.annotations.NotNull;

@@ -1,4 +1,4 @@
-package com.example.notify_around.Models
+package com.example.notify_around.models
 
 import android.icu.text.SimpleDateFormat
 import com.google.firebase.Timestamp

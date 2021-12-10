@@ -7,6 +7,7 @@ import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -132,15 +133,6 @@ class MainActivity : AppCompatActivity() {
                             TAG,
                             "DocumentSnapshot data: ${documentSnapshot.getString("UserType")}"
                         )
-                        //change from here to open business user dashboard
-                       /* if (documentSnapshot.getString("UserType").equals("Business")) {
-                            Log.d(TAG, "busssssss")
-                            startActivity(Intent(applicationContext, BUserDashboard::class.java))
-                            finish()
-                        } else
-                            startActivity(Intent(applicationContext, UserDashboard::class.java))
-                        finish()*/
-
                         startActivity(Intent(applicationContext, UserDashboard::class.java))
                         finish()
                     }
@@ -148,9 +140,13 @@ class MainActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener { exception ->
                     Log.d(TAG, "get failed with ", exception)
-                    Toast.makeText(this,exception.message,Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, exception.message, Toast.LENGTH_LONG).show()
                 }
 
+        } else {
+            binding.progressBar.visibility = View.INVISIBLE
+            binding.btnLoginFacebook.visibility = View.VISIBLE
+            binding.signUpUsingPhoneBtn.visibility = View.VISIBLE
         }
     }
 

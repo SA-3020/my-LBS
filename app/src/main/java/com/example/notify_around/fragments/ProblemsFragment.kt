@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notify_around.Adapters.ProblemAdapter
-import com.example.notify_around.Models.ProblemModel
+import com.example.notify_around.models.ProblemModel
 import com.example.notify_around.ProblemDetailsActivity
 import com.example.notify_around.databinding.FragmentProblemsBinding
 import com.firebase.ui.firestore.FirestoreRecyclerOptions

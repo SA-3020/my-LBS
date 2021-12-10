@@ -1,14 +1,16 @@
 package com.example.notify_around.drawerActivities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.notify_around.Adapters.InterestAdapter
-import com.example.notify_around.Models.InterestsModel
+import com.example.notify_around.models.InterestsModel
 import com.example.notify_around.MultiselectDialog
+import com.example.notify_around.UserDashboard
+import com.example.notify_around.adapters.InterestAdapter
 import com.example.notify_around.databinding.ActivityMyInterestsBinding
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FieldPath
@@ -20,12 +22,15 @@ class MyInterestsActivity : AppCompatActivity() {
     private lateinit var followedInterests: MutableList<String>
     private lateinit var otherInterestsArr: MutableList<String>
     private lateinit var firestore: FirebaseFirestore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         b = ActivityMyInterestsBinding.inflate(layoutInflater)
         setContentView(b.root)
-        var progress = ProgressBar(this)
-        progress.visibility = View.VISIBLE
+
+        b.toolbar.setNavigationOnClickListener {
+            startActivity(Intent(this, UserDashboard::class.java)); finish();
+        }
 
         /*
         * Get the interests array of current user
@@ -38,6 +43,7 @@ class MyInterestsActivity : AppCompatActivity() {
 
         Thread {
             otherInterestsArr = ArrayList()
+            // for interests that a user is noot following
             firestore
                 .collection("interests")
                 .whereNotIn(FieldPath.documentId(), followedInterests)
@@ -53,7 +59,6 @@ class MyInterestsActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener {
                 }
-            progress.visibility = View.INVISIBLE
         }.start()
 
         b.btnFollowNew.setOnClickListener {
@@ -68,6 +73,7 @@ class MyInterestsActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         if (followedInterests.isNotEmpty()) {
+            //for interests that a user is following
             val query = firestore
                 .collection("interests")
                 .whereIn(FieldPath.documentId(), followedInterests)
@@ -76,7 +82,7 @@ class MyInterestsActivity : AppCompatActivity() {
             val options = FirestoreRecyclerOptions.Builder<InterestsModel>()
                 .setQuery(query, InterestsModel::class.java)
                 .build()//? = null
-
+            b.progressBar.visibility = View.INVISIBLE
             mIAdapter = InterestAdapter(options)
             b.myinterestsRecview.layoutManager = LinearLayoutManager(baseContext)
             b.myinterestsRecview.adapter = mIAdapter

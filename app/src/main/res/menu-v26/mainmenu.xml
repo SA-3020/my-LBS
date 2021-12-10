@@ -9,7 +9,7 @@
         android:title="My Interests"
         android:icon="@drawable/ic_round_stars" />
     <item
-        android:id="@+id/my_myevents"
+        android:id="@+id/menu_myevents"
         android:title="My Events"
         android:icon="@drawable/ic_history" />
     <item

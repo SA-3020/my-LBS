@@ -20,6 +20,7 @@ import com.example.notify_around.fragments.*
 import com.example.notify_around.models.GeneralUser
 import com.example.notify_around.businessUser.activities.BUserDashboard
 import com.example.notify_around.databinding.ActivityUserDashboardBinding
+import com.example.notify_around.drawerActivities.MyEventsActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -113,7 +114,7 @@ class UserDashboard : AppCompatActivity() {
                         .show()
                 }
                 R.id.menu_myevents -> {
-                    startActivity(Intent(applicationContext, Events::class.java))
+                    startActivity(Intent(applicationContext, MyEventsActivity::class.java))
                     showMessage("My Events panel is open")
                 }
                 R.id.menu_chats -> {

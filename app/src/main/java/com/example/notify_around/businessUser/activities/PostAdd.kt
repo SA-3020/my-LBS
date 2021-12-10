@@ -22,12 +22,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import com.example.notify_around.MapActivity
-import com.example.notify_around.MultiselectDialog
+import com.example.notify_around.*
 import com.example.notify_around.models.AdModel
 import com.example.notify_around.models.BusinessUser
 import com.example.notify_around.models.GeneralUser
-import com.example.notify_around.R
+import com.example.notify_around.databinding.ActivityPostAddBinding
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
@@ -39,7 +38,7 @@ import java.io.File
 import java.io.IOException
 
 class PostAdd : AppCompatActivity() {
-
+    private lateinit var b: ActivityPostAddBinding
     private lateinit var et_title: EditText
     private lateinit var et_Interest: EditText
     private lateinit var et_Description: EditText
@@ -71,9 +70,13 @@ class PostAdd : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_add)
-
+        b = ActivityPostAddBinding.inflate(layoutInflater)
         db = FirebaseFirestore.getInstance()
         mAuth = FirebaseAuth.getInstance()
+
+        b.toolbar.setNavigationOnClickListener {
+            startActivity(Intent(applicationContext, AddNewItem::class.java)); finish()
+        }
 
         Thread {
             interestsArray = ArrayList()
@@ -209,17 +212,18 @@ class PostAdd : AppCompatActivity() {
 
             //Log.d(TAG, "User Id "+uid.toString())
 
-            if (interest == "" ||  description == "" || adress == ""|| title == "") {
+            if (interest == "" || description == "" || adress == "" || title == "" || imagesList.isNullOrEmpty()) {
                 Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show()
 
             } else {
 
-                if(mUri!=null) {
+                if (mUri != null) {
 
-                    for((index,item) in images.withIndex()){
+                    for ((index, item) in images.withIndex()) {
 
                         val storageReference: StorageReference =
-                            FirebaseStorage.getInstance().getReference().child("image" + System.currentTimeMillis() + ".png")
+                            FirebaseStorage.getInstance().getReference()
+                                .child("image" + System.currentTimeMillis() + ".png")
 
                         storageReference.putFile(item).addOnSuccessListener { taskSnapshot ->
                             val uri = taskSnapshot.storage.downloadUrl
@@ -269,8 +273,6 @@ class PostAdd : AppCompatActivity() {
 
 
     fun getUser() {
-        //delay(500L)
-
         docRef = db.collection("users").document(FirebaseAuth.getInstance().currentUser!!.uid)
         docRef
             .get()
@@ -426,6 +428,7 @@ class PostAdd : AppCompatActivity() {
         docRef.set(model)
                 .addOnSuccessListener {
                     Toast.makeText(this,"Ad Posted!", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(applicationContext, UserDashboard::class.java))
                     finish()
                 }
                 .addOnFailureListener{ e->
@@ -435,7 +438,6 @@ class PostAdd : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                     ).show()
                 }
-
     }
 
 

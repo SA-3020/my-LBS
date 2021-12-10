@@ -6,7 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notify_around.fragments.UserInfoFragment
-import com.example.notify_around.Models.GeneralUser
+import com.example.notify_around.models.GeneralUser
 import com.example.notify_around.R
 import com.example.notify_around.databinding.ActivityUserProfileBinding
 import com.google.firebase.auth.FirebaseAuth

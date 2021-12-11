@@ -24,7 +24,7 @@ class AddNewItem : AppCompatActivity() {
     }
 
     fun postNewAd(v: View) {
-        startActivity(Intent(applicationContext, PostAdd::class.java))
+        goTo(PostAdd())
     }
 
     fun postNewEvent(v: View) {
@@ -32,10 +32,11 @@ class AddNewItem : AppCompatActivity() {
     }
 
     fun postNewProblem(v: View) {
-        startActivity(Intent(applicationContext, PostProblemActivity::class.java))
+        goTo(PostProblemActivity())
     }
 
     fun postNewSkill(v: View) {
+        goTo(PostSkillActivity())
     }
 
     private fun goTo(activity: AppCompatActivity) {

@@ -40,7 +40,6 @@ class ProblemsFragment : Fragment(), ProblemAdapter.OnProblemItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentProblemsBinding.inflate(inflater, container, false)
 
         val query = FirebaseFirestore.getInstance()
@@ -78,7 +77,7 @@ class ProblemsFragment : Fragment(), ProblemAdapter.OnProblemItemClickListener {
 
 
     override fun onProblemItemClick(ds: DocumentSnapshot?) {
-        Log.d(TAG, "this is called")
+        //Log.d(TAG, "this is called")
         val model = ds?.toObject(ProblemModel::class.java)
 
         val intent = Intent(requireActivity(), ProblemDetailsActivity::class.java)

@@ -39,6 +39,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
+            android:name=".SkillDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PostSkillActivity"
+            android:exported="false" />
+        <activity
             android:name=".drawerActivities.MyEventsActivity"
             android:exported="false"
             android:label="@string/title_activity_my_events" />

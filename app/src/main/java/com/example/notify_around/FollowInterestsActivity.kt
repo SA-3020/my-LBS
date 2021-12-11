@@ -59,7 +59,7 @@ class FollowInterestsActivity : AppCompatActivity(), InterestAdapter.OnInterestI
     override fun onInterestItemClick(ds: DocumentSnapshot?, position: Int, action: String?) {
         //for debugging
         //val inter = ds?.toObject(InterestsModel::class.java)
-        val interestid = ds?.id
+        val interestid = ds?.data?.get("Title")
         val userRef = FirebaseFirestore
             .getInstance()
             .collection("users")

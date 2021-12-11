@@ -5,7 +5,7 @@ import android.util.Log
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.example.notify_around.models.EventModel
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
-import com.example.notify_around.Adapters.EventAdapter.eViewHolder
+import com.example.notify_around.Adapters.MyEventAdapter.eViewHolder
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
@@ -17,13 +17,11 @@ import com.bumptech.glide.Glide
 import com.google.firebase.firestore.DocumentSnapshot
 import java.text.MessageFormat
 
-class EventAdapter(val eventsList:List<EventModel>,val context:Context) :
-   RecyclerView.Adapter<eViewHolder>() {
+class MyEventAdapter(options: FirestoreRecyclerOptions<EventModel?>, val context:Context) :
+    FirestoreRecyclerAdapter<EventModel, eViewHolder>(options) {
     private var listener: OnEventItemClickListener? = null
-    override fun onBindViewHolder(holder: eViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: eViewHolder, position: Int, model: EventModel) {
         Log.d("Adapter", "onBindViewHolder")
-
-        val model= eventsList[position]
         holder.tvEventTitle.text = model.title
         holder.tvEventDatenTime.text = MessageFormat.format("{0}  {1}", model.dateAt, model.timeAt)
         holder.tvEventLocation.text = model.locationAt as CharSequence?
@@ -57,7 +55,7 @@ class EventAdapter(val eventsList:List<EventModel>,val context:Context) :
             adImageView = itemView.findViewById(R.id.img_view)
 
 
-            itemView.setOnClickListener { listener?.onEventItemClick(absoluteAdapterPosition) }
+            itemView.setOnClickListener { listener?.onEventItemClick(snapshots.getSnapshot(bindingAdapterPosition)) }
 
 
 /*
@@ -74,10 +72,6 @@ class EventAdapter(val eventsList:List<EventModel>,val context:Context) :
     }
 
     interface OnEventItemClickListener {
-        fun onEventItemClick(position: Int)
-    }
-
-    override fun getItemCount(): Int {
-        return eventsList.size
+        fun onEventItemClick(ds: DocumentSnapshot?)
     }
 }

@@ -33,7 +33,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private var fusedLocationProviderClient: FusedLocationProviderClient?=null
     //to retrieve the device's last known location. The fused location provider is one of the location APIs in Google Play services
     private lateinit var auth: FirebaseAuth
     private lateinit var callbackManager: CallbackManager
@@ -43,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
 
-        getCurrentLocation()
         //redirect()
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
@@ -76,6 +74,8 @@ class MainActivity : AppCompatActivity() {
             val m_intent = Intent(this@MainActivity, FacebookSignUpActivity::class.java)
             startActivity(m_intent)
         }*/
+
+
     }
 
 
@@ -151,62 +151,5 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun askPermissionLocation(){
-        askPermission(
-            android.Manifest.permission.ACCESS_COARSE_LOCATION,
-            android.Manifest.permission.ACCESS_FINE_LOCATION
-        ) {
-            getCurrentLocation()
-        }.onDeclined { e ->
-            if (e.hasDenied()) {
-                e.denied.forEach{
-                }
-                AlertDialog.Builder(this)
-                    .setMessage("Please enable Location")
-                    .setPositiveButton("Yes") { _, _ ->
-                        e.askAgain()
-                    }
-                    .setNegativeButton("no") { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .show()
-            }
-            if (e.hasForeverDenied()) {
-                e.foreverDenied.forEach {
 
-                }
-                e.goToSettings();
-            } }
-
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun getCurrentLocation() {
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this@MainActivity)
-        try{
-            @SuppressLint("Missing Permission")
-            val location = fusedLocationProviderClient!!.getLastLocation()
-            location.addOnCompleteListener(object: OnCompleteListener<Location> {
-                override fun onComplete(loc: Task<Location>) {
-                    if(loc.isSuccessful){
-                        val currentLocation= loc.result as Location?
-                        if(currentLocation != null){
-                            val geoPoints=GeoPoint(currentLocation.latitude,currentLocation.longitude)
-                            UserManager.userLocation= geoPoints
-
-                        }
-                        else{
-                            askPermissionLocation()
-                        }
-                    }
-                    else{
-                        Toast.makeText(this@MainActivity,"Current Location not found.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            })
-        }
-        catch(se: Exception){
-            Log.e("TAG","Security Exception")
-        }
-    }
 }

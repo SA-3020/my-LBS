@@ -3,25 +3,21 @@ package com.example.notify_around.drawerActivities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.UserManager
 import android.view.View
-import android.widget.Adapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notify_around.EventDetailsActivity
 import com.example.notify_around.UserDashboard
-import com.example.notify_around.UserManager.user
-import com.example.notify_around.adapters.EventAdapter
+import com.example.notify_around.Adapters.MyEventAdapter
 import com.example.notify_around.databinding.ActivityMyEventsBinding
 import com.example.notify_around.models.EventModel
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 
-class MyEventsActivity : AppCompatActivity(), EventAdapter.OnEventItemClickListener {
+class MyEventsActivity : AppCompatActivity(), MyEventAdapter.OnEventItemClickListener {
     private lateinit var b: ActivityMyEventsBinding
-    private lateinit var adapter: EventAdapter
+    private lateinit var adapterMy: MyEventAdapter
     private lateinit var uid: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,10 +42,10 @@ class MyEventsActivity : AppCompatActivity(), EventAdapter.OnEventItemClickListe
 
         b.progressBar.visibility = View.INVISIBLE
 
-        adapter = EventAdapter(options!!, this)
-        adapter.setOnEventItemClickListener(this)
+        adapterMy = MyEventAdapter(options!!, this)
+        adapterMy.setOnEventItemClickListener(this)
         b.myeventsRecview.layoutManager = LinearLayoutManager(this)
-        b.myeventsRecview.adapter = adapter
+        b.myeventsRecview.adapter = adapterMy
 
 
     }
@@ -64,11 +60,11 @@ class MyEventsActivity : AppCompatActivity(), EventAdapter.OnEventItemClickListe
 
     override fun onStart() {
         super.onStart()
-        adapter.startListening()
+        adapterMy.startListening()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        adapter.stopListening()
+        adapterMy.stopListening()
     }
 }

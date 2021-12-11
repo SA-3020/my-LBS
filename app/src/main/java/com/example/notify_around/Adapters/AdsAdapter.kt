@@ -1,9 +1,7 @@
-package com.example.notify_around.adapters
+package com.example.notify_around.Adapters
 
 import android.content.Context
 import android.util.Log
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
@@ -13,16 +11,18 @@ import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.notify_around.models.AdModel
-import com.google.firebase.firestore.DocumentSnapshot
 
-class AdsAdapter(options: FirestoreRecyclerOptions<AdModel?>,val context: Context) :
-    FirestoreRecyclerAdapter<AdModel, AdsAdapter.eViewHolder>(options) {
+class AdsAdapter(val list:List<AdModel>,val context: Context) :
+   RecyclerView.Adapter<AdsAdapter.eViewHolder>() {
     private var listener: OnEventItemClickListener? = null
 
 
 
-    override fun onBindViewHolder(holder: eViewHolder, position: Int, model: AdModel) {
+    override fun onBindViewHolder(holder: eViewHolder, position: Int) {
         Log.d("Adapter", "onBindViewHolder")
+
+        val model= list[position]
+
         holder.tvAdTitle.text = model.title
         holder.tvAdLocation.text = model.address
         holder.tvAdcontact.text = model.contact
@@ -57,13 +57,17 @@ class AdsAdapter(options: FirestoreRecyclerOptions<AdModel?>,val context: Contex
             adImageView = itemView.findViewById(R.id.img_view)
 
 
-            itemView.setOnClickListener { listener?.onAdItemClick(snapshots.getSnapshot(bindingAdapterPosition)) }
+            itemView.setOnClickListener { listener?.onAdItemClick(absoluteAdapterPosition) }
 
         }
     }
 
     interface OnEventItemClickListener {
-        fun onAdItemClick(ds: DocumentSnapshot?)
+        fun onAdItemClick(position: Int)
+    }
+
+    override fun getItemCount(): Int {
+        return list.size
     }
 
 

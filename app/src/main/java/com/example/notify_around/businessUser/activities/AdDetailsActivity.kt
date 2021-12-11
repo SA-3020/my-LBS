@@ -6,12 +6,10 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.example.notify_around.adapters.ViewPagerAdapter
+import com.example.notify_around.Adapters.ViewPagerAdapter
 import com.example.notify_around.models.AdModel
 import com.example.notify_around.databinding.ActivityAdDetailsBinding
-import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.firestore.FirebaseFirestore
-import java.lang.Exception
 
 class AdDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdDetailsBinding

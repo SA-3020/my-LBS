@@ -7,6 +7,7 @@ import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -25,12 +26,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.example.notify_around.models.EventModel
 import com.example.notify_around.databinding.ActivityPostEventBinding
+import com.example.notify_around.models.GeneralUser
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import firebaseNotifications.Message
+import firebaseNotifications.Notification
+import firebaseNotifications.retrofit.ApiClient
+import firebaseNotifications.retrofit.ApiClient.FIRE_BASE_SERVER_KEY
+import firebaseNotifications.retrofit.ApiInterface
+import retrofit2.Call
+import retrofit2.Callback
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -51,6 +60,7 @@ class PostEventActivity : AppCompatActivity() {
     private var mUri: Uri?=null
     private var images:MutableList<Uri> = ArrayList()
     var imagesList: MutableList<String> = ArrayList()
+    var usersList: MutableList<GeneralUser> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -168,6 +178,22 @@ class PostEventActivity : AppCompatActivity() {
             )
         }
 
+        getUsers()
+
+    }
+
+    private fun getUsers(){
+
+        db.collection("users").get().addOnSuccessListener {
+
+            for(user in it){
+
+                val userData = user.toObject(GeneralUser::class.java)
+
+                usersList.add(userData)
+            }
+        }
+
     }
 
     fun getDateFromUser(view: android.view.View) {
@@ -208,6 +234,8 @@ class PostEventActivity : AppCompatActivity() {
     }
 
     fun postNewEvent(v: View) {
+
+        Toast.makeText(this, "Please wait", Toast.LENGTH_LONG).show()
 
 
         if(mUri!=null) {
@@ -257,6 +285,7 @@ class PostEventActivity : AppCompatActivity() {
                     binding.etTitle.text.toString(),
                     binding.etDescription.text.toString(),
                     imagesList,
+                    selectedLatLng,
                     binding.etLocation.text.toString(),
                     Timestamp.now(),
                     uid!!,
@@ -280,6 +309,23 @@ class PostEventActivity : AppCompatActivity() {
 
     private fun showMessage(m: String) {
         Toast.makeText(applicationContext, m, Toast.LENGTH_SHORT).show()
+
+
+        for(user in usersList){
+
+            if(userHaveInterest(user)){
+
+                var distance=getDistanceBetweenTwoPoints(selectedLatLng?.latitude,selectedLatLng?.longitude,user.location?.latitude,user.location?.longitude)
+
+                distance /= 1000
+
+                if(distance<=10){
+                    sendNotification(user.tokenId)
+                }
+
+            }
+
+        }
     }
 
     fun showDialog(view: android.view.View) {
@@ -391,7 +437,76 @@ class PostEventActivity : AppCompatActivity() {
                 }
             }
         }
+
+
     }
 
+
+    private fun sendNotification(tokenId:String) {
+
+        var media = ""
+        val message="New event added"
+
+        val apiClient =
+            ApiClient.getClient("https://fcm.googleapis.com/")?.create(ApiInterface::class.java)
+        val to: String = tokenId
+        val data = Notification(
+            UserManager.user!!.FirstName,
+            message, media,
+            "OPEN_MESSAGES_ACTIVITY"
+        )
+        val notification = Message(to, data)
+        val call: Call<Message?>? = apiClient?.sendMessage("key=$FIRE_BASE_SERVER_KEY", notification)
+
+        try {
+            call?.enqueue(object : Callback<Message?> {
+                override fun onResponse(call: Call<Message?>?, response: retrofit2.Response<Message?>?) {}
+                override fun onFailure(call: Call<Message?>?, t: Throwable?) {}
+            })
+        }catch (e:Exception){
+            Log.e("PostAdError",e.message.toString())
+        }
+
+
+    }
+
+    private fun userHaveInterest(user: GeneralUser):Boolean{
+
+        var have=false
+
+        for(interest in interestsArray){
+
+            if(user.interests.contains(interest)){
+                have=true
+                return have
+            }
+
+
+        }
+
+        return have
+    }
+
+    private fun getDistanceBetweenTwoPoints(
+        lat1: Double?,
+        lon1: Double?,
+        lat2: Double?,
+        lon2: Double?
+    ): Float {
+        val distance = FloatArray(2)
+        if (lat1 != null) {
+            if (lon1 != null) {
+                if (lat2 != null) {
+                    if (lon2 != null) {
+                        Location.distanceBetween(
+                            lat1, lon1,
+                            lat2, lon2, distance
+                        )
+                    }
+                }
+            }
+        }
+        return distance[0]
+    }
 
 }

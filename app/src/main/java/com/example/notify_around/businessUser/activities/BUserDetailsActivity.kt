@@ -23,7 +23,7 @@ class BUserDetailsActivity : AppCompatActivity() {
     private lateinit var docRef: DocumentReference
     private val db = FirebaseFirestore.getInstance()
     private var selectedLatLng:GeoPoint?=null
-    private lateinit var currentUser:GeneralUser
+    private lateinit var currentUser: GeneralUser
 
 
 

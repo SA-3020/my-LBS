@@ -11,6 +11,7 @@ class EventModel(
     var title: String = "",
     var desc: String = "",
     var images:MutableList<String> = arrayListOf(),
+    var geoPoints: GeoPoint?=null,
     var locationAt: String? = null,
     var postedOn: Timestamp? = null,// = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date()),
     var postedBy: String = "",

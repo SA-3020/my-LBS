@@ -5,6 +5,6 @@ import com.google.firebase.firestore.GeoPoint
 
 object UserManager {
 
-    var user:GeneralUser?=null
-    var userLocation:GeoPoint?=null
+    var user: GeneralUser?=null
+
 }

@@ -6,14 +6,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.example.notify_around.adapters.ViewPagerAdapter
-import com.example.notify_around.models.AdModel
-import com.example.notify_around.databinding.ActivityAdDetailsBinding
+import com.example.notify_around.Adapters.ViewPagerAdapter
+
+
 import com.example.notify_around.databinding.ActivityEventDetailsBinding
 import com.example.notify_around.models.EventModel
-import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.firestore.FirebaseFirestore
-import java.lang.Exception
 
 class EventDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEventDetailsBinding
@@ -88,7 +86,7 @@ class EventDetailsActivity : AppCompatActivity() {
 
     private fun initAdapter(){
 
-        val adapter=ViewPagerAdapter(this,model.images)
+        val adapter= ViewPagerAdapter(this,model.images)
         binding.viewPager.adapter=adapter
         binding.viewPager.registerOnPageChangeCallback(pageChangeCallback)
 

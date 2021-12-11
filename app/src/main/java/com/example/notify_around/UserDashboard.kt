@@ -1,8 +1,10 @@
 package com.example.notify_around
 
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Typeface
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -10,6 +12,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.example.notify_around.models.BusinessUser
@@ -21,14 +24,24 @@ import com.example.notify_around.models.GeneralUser
 import com.example.notify_around.businessUser.activities.BUserDashboard
 import com.example.notify_around.databinding.ActivityUserDashboardBinding
 import com.example.notify_around.drawerActivities.MyEventsActivity
+import com.github.florent37.runtimepermission.kotlin.askPermission
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
+import com.google.firebase.messaging.FirebaseMessaging
+import firebaseNotifications.MyFirebaseMessagingService
 import kotlinx.coroutines.*
 import java.io.Serializable
 
 class UserDashboard : AppCompatActivity() {
     private lateinit var binding: ActivityUserDashboardBinding
+
+    private var fusedLocationProviderClient: FusedLocationProviderClient?=null
 
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var auth: FirebaseAuth
@@ -141,6 +154,18 @@ class UserDashboard : AppCompatActivity() {
         }
 
 
+        askPermissionLocation()
+        getCurrentLocation()
+
+
+
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    UserManager.user?.tokenId=task.result.toString()
+                    MyFirebaseMessagingService.newToken(task.result.toString())
+                }
+            }.addOnFailureListener { e -> Log.v("TokenError", e.message!!) }
 
 
     }
@@ -268,6 +293,82 @@ class UserDashboard : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_container, ProblemsFragment())
             .commit()
+    }
+
+
+
+    private fun askPermissionLocation(){
+        askPermission(
+            android.Manifest.permission.ACCESS_COARSE_LOCATION,
+            android.Manifest.permission.ACCESS_FINE_LOCATION
+        ) {
+            getCurrentLocation()
+        }.onDeclined { e ->
+            if (e.hasDenied()) {
+                e.denied.forEach{
+                }
+                AlertDialog.Builder(this)
+                    .setMessage("Please enable Location")
+                    .setPositiveButton("Yes") { _, _ ->
+                        e.askAgain()
+                    }
+                    .setNegativeButton("no") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
+            }
+            if (e.hasForeverDenied()) {
+                e.foreverDenied.forEach {
+
+                }
+                e.goToSettings();
+            } }
+
+    }
+
+
+
+    @SuppressLint("MissingPermission")
+    private fun getCurrentLocation() {
+
+        val db = FirebaseFirestore.getInstance()
+        val   docRef = db.collection("users").document(auth.currentUser?.uid!!)
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this@UserDashboard)
+        try{
+            @SuppressLint("Missing Permission")
+            val location = fusedLocationProviderClient!!.getLastLocation()
+            location.addOnCompleteListener(object: OnCompleteListener<Location> {
+                override fun onComplete(loc: Task<Location>) {
+                    if(loc.isSuccessful){
+                        val currentLocation= loc.result as Location?
+                        if(currentLocation != null){
+                            val geoPoints= GeoPoint(currentLocation.latitude,currentLocation.longitude)
+                            UserManager.user?.location= geoPoints
+
+                            val user: MutableMap<String, Any> = HashMap()
+                            user["location"]=geoPoints
+
+
+                            docRef.update(user).addOnSuccessListener {
+                            }
+                            Log.v("UserDashBoard",currentLocation.latitude.toString())
+                        }
+                        else{
+                            askPermissionLocation()
+                            Log.v("UserDashBoard","currentLocation null")
+
+                        }
+                    }
+                    else{
+                        Toast.makeText(this@UserDashboard,"Current Location not found.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            })
+        }
+        catch(se: Exception){
+            Log.e("TAG","Security Exception")
+        }
     }
 
 }

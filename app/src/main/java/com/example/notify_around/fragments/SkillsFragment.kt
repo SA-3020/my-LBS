@@ -2,15 +2,14 @@ package com.example.notify_around.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notify_around.Adapters.SkillAdapter
-import com.example.notify_around.ProblemDetailsActivity
+import com.example.notify_around.SkillDetailsActivity
 import com.example.notify_around.databinding.FragmentSkillsBinding
-import com.example.notify_around.models.ProblemModel
 import com.example.notify_around.models.SkillModel
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
@@ -48,7 +47,7 @@ class SkillsFragment : Fragment(), SkillAdapter.OnSkillItemClickListener {
         val options: FirestoreRecyclerOptions<SkillModel?> =
             FirestoreRecyclerOptions.Builder<SkillModel>()
                 .setQuery(query, SkillModel::class.java).build()
-        adapter = SkillAdapter(options)
+        adapter = SkillAdapter(options)//SkillAdapter(options)
         binding.skillsRecview.layoutManager = LinearLayoutManager(context)
         binding.skillsRecview.adapter = adapter
 
@@ -56,7 +55,16 @@ class SkillsFragment : Fragment(), SkillAdapter.OnSkillItemClickListener {
             adapter.setOnSkillItemClickListener(this)
         }.start()
         return binding.root
-        return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        adapter.startListening()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        adapter.stopListening()
     }
 
     override fun onDestroyView() {
@@ -65,9 +73,9 @@ class SkillsFragment : Fragment(), SkillAdapter.OnSkillItemClickListener {
     }
 
     override fun onSkillItemClick(ds: DocumentSnapshot?) {
-        val model = ds?.toObject(ProblemModel::class.java)
+        val model = ds?.toObject(SkillModel::class.java)
 
-        val intent = Intent(requireActivity(), ProblemDetailsActivity::class.java)
+        val intent = Intent(requireActivity(), SkillDetailsActivity::class.java)
         intent.putExtra("skillId", model?.id)
         startActivity(intent)
     }

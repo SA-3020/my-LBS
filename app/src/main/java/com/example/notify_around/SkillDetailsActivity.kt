@@ -3,10 +3,10 @@ package com.example.notify_around
 import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.example.notify_around.databinding.ActivitySkillDetailsBinding
 import com.example.notify_around.models.SkillModel
 import com.google.firebase.firestore.FirebaseFirestore
@@ -55,7 +55,7 @@ class SkillDetailsActivity : AppCompatActivity() {
                             b.tvSkillDesc.text = model.description
                             b.tvSkillInt.text = builder.toString()
                             b.tvDate.text = model.postedOn.toString()
-                            b.tvProlemLocation.text = model.locationAt
+                            b.tvSkillLocation.text = model.locationAt
                             b.tvPostedBy.text =
                                 "${it.get("firstName").toString()} ${it.get("lastName").toString()}"
 

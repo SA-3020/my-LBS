@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notify_around.Adapters.ProblemAdapter.pViewHolder
-import com.example.notify_around.models.ProblemModel
 import com.example.notify_around.R
+import com.example.notify_around.models.ProblemModel
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
@@ -16,7 +16,9 @@ import java.text.MessageFormat
 
 class ProblemAdapter(options: FirestoreRecyclerOptions<ProblemModel?>) :
     FirestoreRecyclerAdapter<ProblemModel, pViewHolder>(options) {
+
     private var listener: OnProblemItemClickListener? = null
+
     override fun onBindViewHolder(holder: pViewHolder, position: Int, model: ProblemModel) {
         Log.d("Adapter", "onBindViewHolder")
         holder.tvProblemTitle.text = model.title

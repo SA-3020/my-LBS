@@ -3,19 +3,17 @@ package com.example.notify_around.fragments
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notify_around.Adapters.EventAdapter
 import com.example.notify_around.EventDetailsActivity
-import com.example.notify_around.Adapters.MyEventAdapter
 import com.example.notify_around.UserManager
-import com.example.notify_around.models.EventModel
 import com.example.notify_around.databinding.FragmentEventsBinding
+import com.example.notify_around.models.EventModel
 import com.google.firebase.firestore.FirebaseFirestore
-
 
 
 class EventsFragment : Fragment(), EventAdapter.OnEventItemClickListener {
@@ -25,11 +23,10 @@ class EventsFragment : Fragment(), EventAdapter.OnEventItemClickListener {
     private var eventsList= mutableListOf<EventModel>()
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentEventsBinding.inflate(inflater, container, false)
 
@@ -63,7 +60,6 @@ class EventsFragment : Fragment(), EventAdapter.OnEventItemClickListener {
 
 
                     }
-
                     initAdapter()
                 }
 
@@ -75,16 +71,16 @@ class EventsFragment : Fragment(), EventAdapter.OnEventItemClickListener {
         return binding.root
     }
 
-     private fun initAdapter(){
+     private fun initAdapter() {
 
-        adapterMy = EventAdapter(eventsList,requireContext())
-        adapterMy.setOnEventItemClickListener(this)
-        binding.eventsRecview.layoutManager = LinearLayoutManager(context)
-        binding.eventsRecview.adapter = adapterMy
+         adapterMy =
+             EventAdapter(eventsList, requireActivity().applicationContext)//requireContext())
+         adapterMy.setOnEventItemClickListener(this)
+         binding.eventsRecview.layoutManager = LinearLayoutManager(context)
+         binding.eventsRecview.adapter = adapterMy
 
 
-
-    }
+     }
 
     override fun onDestroyView() {
         super.onDestroyView()

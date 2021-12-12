@@ -1,5 +1,6 @@
 package com.example.notify_around.Adapters
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -7,16 +8,19 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notify_around.R
+import com.example.notify_around.models.AdModel
 import com.example.notify_around.models.SkillModel
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
 
-class SkillAdapter(options: FirestoreRecyclerOptions<SkillModel?>) :
-    FirestoreRecyclerAdapter<SkillModel, SkillAdapter.sViewHolder>(options) {
+class SkillAdapter(val list:List<SkillModel>) :
+   RecyclerView.Adapter<SkillAdapter.sViewHolder>() {
     private var listener: OnSkillItemClickListener? = null
-    override fun onBindViewHolder(holder: sViewHolder, position: Int, model: SkillModel) {
+    override fun onBindViewHolder(holder: sViewHolder, position: Int) {
         Log.d("Adapter", "onBindViewHolder")
+
+        val model= list[position]
         holder.tvSkillTitle.text = model.title
         holder.tvSkillDate.text = model.postedOn.toString()
         holder.tvSkillLocation.text = model.locationAt
@@ -44,17 +48,17 @@ class SkillAdapter(options: FirestoreRecyclerOptions<SkillModel?>) :
             tvSkillDate = itemView.findViewById(R.id.tv_skill_dnt)
 
             itemView.setOnClickListener {
-                listener?.onSkillItemClick(
-                    snapshots.getSnapshot(
-                        bindingAdapterPosition
-                    )
-                )
+                listener?.onSkillItemClick(absoluteAdapterPosition)
             }
 
         }
     }
 
     interface OnSkillItemClickListener {
-        fun onSkillItemClick(ds: DocumentSnapshot?)
+        fun onSkillItemClick(position: Int)
+    }
+
+    override fun getItemCount(): Int {
+        return list.size
     }
 }

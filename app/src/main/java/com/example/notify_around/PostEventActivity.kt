@@ -320,7 +320,8 @@ class PostEventActivity : AppCompatActivity() {
                 distance /= 1000
 
                 if(distance<=10){
-                    sendNotification(user.tokenId)
+                    if(UserManager.user?.tokenId?.equals(user.tokenId) != true){
+                        sendNotification(user.tokenId) }
                 }
 
             }

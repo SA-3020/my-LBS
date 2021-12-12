@@ -1,6 +1,7 @@
 package com.example.notify_around.fragments
 
 import android.content.Intent
+import android.location.Location
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,54 +10,79 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notify_around.Adapters.SkillAdapter
 import com.example.notify_around.ProblemDetailsActivity
+import com.example.notify_around.UserManager
 import com.example.notify_around.databinding.FragmentSkillsBinding
+import com.example.notify_around.models.EventModel
 import com.example.notify_around.models.ProblemModel
 import com.example.notify_around.models.SkillModel
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+
 
 class SkillsFragment : Fragment(), SkillAdapter.OnSkillItemClickListener {
     private var _binding: FragmentSkillsBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: SkillAdapter
+    private var skillsList= mutableListOf<SkillModel>()
 
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSkillsBinding.inflate(inflater, container, false)
 
-        val query = FirebaseFirestore.getInstance()
-            .collection("skills")
-            .orderBy("postedOn")
 
-        val options: FirestoreRecyclerOptions<SkillModel?> =
-            FirestoreRecyclerOptions.Builder<SkillModel>()
-                .setQuery(query, SkillModel::class.java).build()
-        adapter = SkillAdapter(options)
+        UserManager.user?.interests?.let {
+            FirebaseFirestore.getInstance()
+                .collection("skills").whereArrayContainsAny("interests", it)
+                .orderBy("postedOn").get().addOnCompleteListener { documentSnapshot ->
+
+                    for (document in documentSnapshot.result) {
+
+                        val model = document.toObject(SkillModel::class.java)
+
+
+                        val adLocation = model.geoPoints
+                        val userLocation = UserManager.user?.location
+
+                        var distance = getDistanceBetweenTwoPoints(
+                            adLocation?.latitude,
+                            adLocation?.longitude,
+                            userLocation?.latitude,
+                            userLocation?.longitude
+                        )
+
+                        distance /= 1000
+
+                        if (distance <= 10) {
+                            skillsList.add(model)
+                        }
+
+
+
+                    }
+
+                    initAdapter()
+                }
+
+
+
+
+        }
+
+        return binding.root
+
+    }
+
+    private fun initAdapter(){
+
+        adapter = SkillAdapter(skillsList)
         binding.skillsRecview.layoutManager = LinearLayoutManager(context)
         binding.skillsRecview.adapter = adapter
-
-        Thread {
-            adapter.setOnSkillItemClickListener(this)
-        }.start()
-        return binding.root
-        return binding.root
+        adapter.setOnSkillItemClickListener(this)
     }
 
     override fun onDestroyView() {
@@ -64,23 +90,36 @@ class SkillsFragment : Fragment(), SkillAdapter.OnSkillItemClickListener {
         _binding = null
     }
 
-    override fun onSkillItemClick(ds: DocumentSnapshot?) {
-        val model = ds?.toObject(ProblemModel::class.java)
+    override fun onSkillItemClick(position:Int) {
+        val model= skillsList[position]
 
         val intent = Intent(requireActivity(), ProblemDetailsActivity::class.java)
-        intent.putExtra("skillId", model?.id)
+        intent.putExtra("skillId", model.id)
         startActivity(intent)
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SkillsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
+
+    private fun getDistanceBetweenTwoPoints(
+        lat1: Double?,
+        lon1: Double?,
+        lat2: Double?,
+        lon2: Double?
+    ): Float {
+        val distance = FloatArray(2)
+        if (lat1 != null) {
+            if (lon1 != null) {
+                if (lat2 != null) {
+                    if (lon2 != null) {
+                        Location.distanceBetween(
+                            lat1, lon1,
+                            lat2, lon2, distance
+                        )
+                    }
                 }
             }
+        }
+        return distance[0]
     }
 
 }

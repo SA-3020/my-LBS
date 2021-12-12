@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.Intent
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.example.notify_around.Utils.MethodsUtils
 import com.example.notify_around.databinding.ActivityPostSkillBinding
 import com.example.notify_around.models.EventModel
+import com.example.notify_around.models.GeneralUser
 import com.example.notify_around.models.SkillModel
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -20,6 +22,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import firebaseNotifications.Message
+import firebaseNotifications.Notification
+import firebaseNotifications.retrofit.ApiClient
+import firebaseNotifications.retrofit.ApiInterface
+import retrofit2.Call
+import retrofit2.Callback
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -28,6 +36,7 @@ class PostSkillActivity : AppCompatActivity() {
     private var selectedLatLng: GeoPoint? = null
     private var db = FirebaseFirestore.getInstance()
     lateinit var interestsArray: MutableList<String>
+    var usersList: MutableList<GeneralUser> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +84,22 @@ class PostSkillActivity : AppCompatActivity() {
         b.etLocation.setOnClickListener {
             startForResult.launch(Intent(this, MapActivity::class.java))
         }
+
+        getUsers()
+    }
+
+    private fun getUsers(){
+
+        db.collection("users").get().addOnSuccessListener {
+
+            for(user in it){
+
+                val userData = user.toObject(GeneralUser::class.java)
+
+                usersList.add(userData)
+            }
+        }
+
     }
 
     /*fun getDateFromUser(view: android.view.View) {
@@ -110,6 +135,7 @@ class PostSkillActivity : AppCompatActivity() {
                     skillid,
                     b.etTitle.text.toString(),
                     b.etDescription.text.toString(),
+                    selectedLatLng,
                     MultiselectDialog.selectedInterestsArray,
                     Timestamp.now(),
                     uid!!,
@@ -119,6 +145,24 @@ class PostSkillActivity : AppCompatActivity() {
                     .addOnSuccessListener {
                         runOnUiThread {
                             MethodsUtils.makeShortToast(this, "Skill Uploaded successfully")
+                        }
+
+
+                        for(user in usersList){
+
+                            if(userHaveInterest(user)){
+
+                                var distance=getDistanceBetweenTwoPoints(selectedLatLng?.latitude,selectedLatLng?.longitude,user.location?.latitude,user.location?.longitude)
+
+                                distance /= 1000
+
+                                if(distance<=10){
+                                    if(UserManager.user?.tokenId?.equals(user.tokenId) != true){
+                                        sendNotification(user.tokenId) }
+                                }
+
+                            }
+
                         }
                     }
             }.start()
@@ -133,5 +177,72 @@ class PostSkillActivity : AppCompatActivity() {
             supportFragmentManager,
             "interestDialog"
         )
+    }
+
+    private fun sendNotification(tokenId:String) {
+
+        var media = ""
+        val message="New event added"
+
+        val apiClient =
+            ApiClient.getClient("https://fcm.googleapis.com/")?.create(ApiInterface::class.java)
+        val to: String = tokenId
+        val data = Notification(
+            UserManager.user!!.FirstName,
+            message, media,
+            "OPEN_MESSAGES_ACTIVITY"
+        )
+        val notification = Message(to, data)
+        val call: Call<Message?>? = apiClient?.sendMessage("key=${ApiClient.FIRE_BASE_SERVER_KEY}", notification)
+
+        try {
+            call?.enqueue(object : Callback<Message?> {
+                override fun onResponse(call: Call<Message?>?, response: retrofit2.Response<Message?>?) {}
+                override fun onFailure(call: Call<Message?>?, t: Throwable?) {}
+            })
+        }catch (e:Exception){
+            Log.e("PostAdError",e.message.toString())
+        }
+
+
+    }
+
+    private fun userHaveInterest(user: GeneralUser):Boolean{
+
+        var have=false
+
+        for(interest in interestsArray){
+
+            if(user.interests.contains(interest)){
+                have=true
+                return have
+            }
+
+
+        }
+
+        return have
+    }
+
+    private fun getDistanceBetweenTwoPoints(
+        lat1: Double?,
+        lon1: Double?,
+        lat2: Double?,
+        lon2: Double?
+    ): Float {
+        val distance = FloatArray(2)
+        if (lat1 != null) {
+            if (lon1 != null) {
+                if (lat2 != null) {
+                    if (lon2 != null) {
+                        Location.distanceBetween(
+                            lat1, lon1,
+                            lat2, lon2, distance
+                        )
+                    }
+                }
+            }
+        }
+        return distance[0]
     }
 }

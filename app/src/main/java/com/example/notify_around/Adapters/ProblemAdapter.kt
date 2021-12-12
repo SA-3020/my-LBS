@@ -1,5 +1,6 @@
 package com.example.notify_around.Adapters
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,16 +10,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notify_around.Adapters.ProblemAdapter.pViewHolder
 import com.example.notify_around.models.ProblemModel
 import com.example.notify_around.R
+import com.example.notify_around.models.AdModel
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import java.text.MessageFormat
 
-class ProblemAdapter(options: FirestoreRecyclerOptions<ProblemModel?>) :
-    FirestoreRecyclerAdapter<ProblemModel, pViewHolder>(options) {
+class ProblemAdapter(val list:List<ProblemModel>) :
+   RecyclerView.Adapter<pViewHolder>() {
     private var listener: OnProblemItemClickListener? = null
-    override fun onBindViewHolder(holder: pViewHolder, position: Int, model: ProblemModel) {
+    override fun onBindViewHolder(holder: pViewHolder, position: Int) {
         Log.d("Adapter", "onBindViewHolder")
+
+        val model= list[position]
         holder.tvProblemTitle.text = model.title
         holder.tvProblemDatenTime.text =
             MessageFormat.format("{0}  {1}", model.dateAt, model.timeAt)
@@ -50,17 +54,18 @@ class ProblemAdapter(options: FirestoreRecyclerOptions<ProblemModel?>) :
             tvEmergencyLevel = itemView.findViewById(R.id.tv_emergency_level)
 
             itemView.setOnClickListener {
-                listener?.onProblemItemClick(
-                    snapshots.getSnapshot(
-                        bindingAdapterPosition
-                    )
-                )
+                listener?.onProblemItemClick(absoluteAdapterPosition)
+
             }
 
         }
     }
 
     interface OnProblemItemClickListener {
-        fun onProblemItemClick(ds: DocumentSnapshot?)
+        fun onProblemItemClick(position: Int)
+    }
+
+    override fun getItemCount(): Int {
+        return list.size
     }
 }

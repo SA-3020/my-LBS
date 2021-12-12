@@ -4,17 +4,26 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.notify_around.models.ProblemModel
 import com.example.notify_around.Utils.MethodsUtils
 import com.example.notify_around.databinding.ActivityPostProblemBinding
+import com.example.notify_around.models.GeneralUser
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
+import firebaseNotifications.Message
+import firebaseNotifications.Notification
+import firebaseNotifications.retrofit.ApiClient
+import firebaseNotifications.retrofit.ApiInterface
+import retrofit2.Call
+import retrofit2.Callback
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -22,6 +31,7 @@ class PostProblemActivity : AppCompatActivity() {
     private lateinit var b: ActivityPostProblemBinding
     private lateinit var db: FirebaseFirestore
     private var selectedLatLng: GeoPoint? = null
+    var usersList: MutableList<GeneralUser> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +77,22 @@ class PostProblemActivity : AppCompatActivity() {
             supportFragmentManager,
             "interestDialog"
         )
+
+        getUsers()
+    }
+
+    private fun getUsers(){
+
+        db.collection("users").get().addOnSuccessListener {
+
+            for(user in it){
+
+                val userData = user.toObject(GeneralUser::class.java)
+
+                usersList.add(userData)
+            }
+        }
+
     }
 
     fun getDateFromUser(view: android.view.View) {
@@ -124,6 +150,7 @@ class PostProblemActivity : AppCompatActivity() {
                     b.etTitle.text.toString(),
                     b.etDescription.text.toString(),
                     b.tvEmergencyLevel.text.toString(),
+                    selectedLatLng,
                     Timestamp.now(),
                     FirebaseAuth.getInstance().currentUser?.uid.toString(),
                     b.etDate.text.toString(),
@@ -135,11 +162,77 @@ class PostProblemActivity : AppCompatActivity() {
                         runOnUiThread {
                             MethodsUtils.makeShortToast(this, "Event uploaded")
                         }
+
+                        for(user in usersList){
+
+                            var distance=getDistanceBetweenTwoPoints(selectedLatLng?.latitude,selectedLatLng?.longitude,user.location?.latitude,user.location?.longitude)
+
+                            distance /= 1000
+
+                            if(distance<=10){
+                                if(UserManager.user?.tokenId?.equals(user.tokenId) != true){
+                                    sendNotification(user.tokenId) }
+                            }
+
+                        }
                     }
             }.start()
 
             startActivity(Intent(this, UserDashboard::class.java))
             finish()
         }
+    }
+
+
+    private fun sendNotification(tokenId:String) {
+
+        var media = ""
+        val message="New event added"
+
+        val apiClient =
+            ApiClient.getClient("https://fcm.googleapis.com/")?.create(ApiInterface::class.java)
+        val to: String = tokenId
+        val data = Notification(
+            UserManager.user!!.FirstName,
+            message, media,
+            "OPEN_MESSAGES_ACTIVITY"
+        )
+        val notification = Message(to, data)
+        val call: Call<Message?>? = apiClient?.sendMessage("key=${ApiClient.FIRE_BASE_SERVER_KEY}", notification)
+
+        try {
+            call?.enqueue(object : Callback<Message?> {
+                override fun onResponse(call: Call<Message?>?, response: retrofit2.Response<Message?>?) {}
+                override fun onFailure(call: Call<Message?>?, t: Throwable?) {}
+            })
+        }catch (e:Exception){
+            Log.e("PostAdError",e.message.toString())
+        }
+
+
+    }
+
+
+
+    private fun getDistanceBetweenTwoPoints(
+        lat1: Double?,
+        lon1: Double?,
+        lat2: Double?,
+        lon2: Double?
+    ): Float {
+        val distance = FloatArray(2)
+        if (lat1 != null) {
+            if (lon1 != null) {
+                if (lat2 != null) {
+                    if (lon2 != null) {
+                        Location.distanceBetween(
+                            lat1, lon1,
+                            lat2, lon2, distance
+                        )
+                    }
+                }
+            }
+        }
+        return distance[0]
     }
 }

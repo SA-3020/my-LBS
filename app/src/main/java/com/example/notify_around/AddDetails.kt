@@ -7,8 +7,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.notify_around.models.GeneralUser
 import com.example.notify_around.databinding.ActivityAddDetailsBinding
+import com.example.notify_around.models.GeneralUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -73,7 +73,7 @@ class AddDetails : AppCompatActivity() {
                             )
                         )
                         //startActivity(Intent(applicationContext, UserDashboard::class.java))
-                        //finish()
+                        finish()
                     }
                     .addOnFailureListener { e ->
                         Log.w(TAG, "Error writing document", e)

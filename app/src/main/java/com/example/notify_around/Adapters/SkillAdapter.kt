@@ -29,7 +29,7 @@ class SkillAdapter(val list:List<SkillModel>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): sViewHolder {
         Log.d("Adapter", "onCreateViewHolder")
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.single_row_problem, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.single_row_skill, parent, false)
         return sViewHolder(view)
     }
 

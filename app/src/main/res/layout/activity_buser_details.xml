@@ -6,20 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".AddDetails">
 
-    <TextView
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/tv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="15dp"
-        android:fontFamily="sans-serif"
-        android:text="Add Details for Business Profile"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/rellay1"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/colorAccent"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:title="Go Business"
+        app:titleTextColor="@color/white" />
 
     <RelativeLayout
         android:id="@+id/rellay1"
@@ -48,7 +45,10 @@
             android:layout_below="@id/textView2"
             android:layout_marginBottom="10dp"
             android:drawableStart="@drawable/ic_person"
-            android:ems="15" />
+            android:ems="15"
+            android:minHeight="48dp"
+            tools:ignore="SpeakableTextPresentCheck"
+            android:inputType="textShortMessage" />
 
         <TextView
             android:id="@+id/textView3"
@@ -70,7 +70,10 @@
             android:layout_alignStart="@id/textView2"
             android:layout_marginBottom="10dp"
             android:drawableStart="@drawable/ic_phone"
-            android:ems="15" />
+            android:ems="15"
+            android:minHeight="48dp"
+            tools:ignore="SpeakableTextPresentCheck"
+            android:inputType="phone" />
 
         <TextView
             android:id="@+id/textView4"
@@ -94,7 +97,8 @@
             android:layout_marginBottom="10dp"
             android:drawableStart="@drawable/ic_baseline_email_24"
             android:ems="15"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp" />
 
 
         <TextView
@@ -116,9 +120,11 @@
             android:layout_marginBottom="10dp"
             android:drawableStart="@drawable/ic_location"
             android:ems="15"
-            android:lines="1"
+            android:focusable="false"
             android:inputType="text"
-            android:focusable="false"/>
+            android:lines="1"
+            android:minHeight="48dp"
+            tools:ignore="SpeakableTextPresentCheck" />
 
 
     </RelativeLayout>

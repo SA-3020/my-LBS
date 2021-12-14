@@ -1,33 +1,29 @@
 package com.example.notify_around
 
 import android.app.Activity
-import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.location.Location
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.example.notify_around.Utils.MethodsUtils
 import com.example.notify_around.databinding.ActivityPostSkillBinding
-import com.example.notify_around.models.EventModel
 import com.example.notify_around.models.GeneralUser
 import com.example.notify_around.models.SkillModel
-import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import firebaseNotifications.Message
 import firebaseNotifications.Notification
 import firebaseNotifications.retrofit.ApiClient
 import firebaseNotifications.retrofit.ApiInterface
 import retrofit2.Call
 import retrofit2.Callback
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -122,7 +118,7 @@ class PostSkillActivity : AppCompatActivity() {
         dpd.show()
     }*/
 
-    fun postNewSkill(v: View) {
+    public fun postNewSkill(v: View) {
         if (b.etTitle.text.isBlank() || b.etDescription.text.isBlank() || b.tvInterests.text.isBlank() || b.etLocation.text.isBlank())
             MethodsUtils.makeShortToast(this, "All fields are required")
         if (!b.etTitle.text.isBlank() && !b.etDescription.text.isBlank() && !b.etLocation.text.isBlank()) {
@@ -137,7 +133,7 @@ class PostSkillActivity : AppCompatActivity() {
                     b.etDescription.text.toString(),
                     selectedLatLng,
                     MultiselectDialog.selectedInterestsArray,
-                    Timestamp.now(),
+                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date()),
                     uid!!,
                     b.etLocation.text.toString(),
                 )

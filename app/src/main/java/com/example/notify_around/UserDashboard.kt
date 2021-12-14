@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Typeface
-import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
@@ -16,20 +15,18 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import com.example.notify_around.models.BusinessUser
-import com.example.notify_around.drawerActivities.MyInterestsActivity
-import com.example.notify_around.businessUser.activities.BUserDetailsActivity
-import com.example.notify_around.drawerActivities.UserProfile
-import com.example.notify_around.fragments.*
-import com.example.notify_around.models.GeneralUser
 import com.example.notify_around.businessUser.activities.BUserDashboard
+import com.example.notify_around.businessUser.activities.BUserDetailsActivity
 import com.example.notify_around.databinding.ActivityUserDashboardBinding
 import com.example.notify_around.drawerActivities.MyAdsActivity
 import com.example.notify_around.drawerActivities.MyEventsActivity
+import com.example.notify_around.drawerActivities.MyInterestsActivity
+import com.example.notify_around.drawerActivities.UserProfile
+import com.example.notify_around.fragments.*
+import com.example.notify_around.models.BusinessUser
+import com.example.notify_around.models.GeneralUser
 import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.google.android.gms.location.*
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -58,6 +55,12 @@ class UserDashboard : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUserDashboardBinding.inflate(layoutInflater)
         val view = binding.root
+        binding.tvCatEvents.setTextColor(resources.getColor(R.color.black, null))
+        binding.tvCatEvents.typeface = Typeface.DEFAULT_BOLD
+        //for opening default fragment on user dashboard
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, EventsFragment())
+            .commit()
 
         initializeFirebase()
 
@@ -101,11 +104,6 @@ class UserDashboard : AppCompatActivity() {
         //to override the default icon colors with the customised colors
         binding.naview.itemIconTintList = null
 
-
-        //for opening default fragment on user dashboard
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, EventsFragment())
-            .commit()
 
         /* Called when an item in the navigation menu is selected.*/
         binding.naview.setNavigationItemSelectedListener { menuItem ->

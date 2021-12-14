@@ -11,7 +11,6 @@ import androidx.fragment.app.DialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import io.grpc.InternalChannelz.id
 
 class MultiselectDialog(
     var interestsArray: MutableList<String>,
@@ -53,6 +52,7 @@ class MultiselectDialog(
                         selectedInterestsArray.add(interestsArray[index])
                         if (positiveButtonText.equals("OK", true))
                             view?.text = view?.text.toString().plus("${interestsArray[index]}, ")
+
                         else if (positiveButtonText.equals("follow", true))
                             Thread {
                                 val db = FirebaseFirestore.getInstance()
@@ -60,17 +60,17 @@ class MultiselectDialog(
                                     .collection("users")
                                     .document(FirebaseAuth.getInstance().currentUser?.uid.toString())
 
-                                db.collection("interests")
+                                /*db.collection("interests")
                                     .document()
                                     .get()
                                     .addOnSuccessListener {
-                                        if (it.equals(interestsArray[index]))
+                                        if (it.equals(interestsArray[index]))*/
                                             userRef.update(
                                                 "interests",
-                                                FieldValue.arrayUnion(it)
+                                                FieldValue.arrayUnion(interestsArray[index])
                                             )
                                         Log.d(TAG, "ooo ${it}")
-                                    }
+                                //}
 
                             }.start()
                     }

@@ -1,24 +1,22 @@
 package com.example.notify_around.drawerActivities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.notify_around.models.InterestsModel
+import com.example.notify_around.Adapters.CatAdapter
 import com.example.notify_around.MultiselectDialog
 import com.example.notify_around.UserDashboard
-import com.example.notify_around.adapters.InterestAdapter
 import com.example.notify_around.databinding.ActivityMyInterestsBinding
+import com.example.notify_around.models.InterestsModel
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MyInterestsActivity : AppCompatActivity() {
     private lateinit var b: ActivityMyInterestsBinding
-    private var mIAdapter: InterestAdapter? = null
+    private var mIAdapter: CatAdapter? = null//InterestAdapter? = null
     private lateinit var followedInterests: MutableList<String>
     private lateinit var otherInterestsArr: MutableList<String>
     private lateinit var firestore: FirebaseFirestore
@@ -45,8 +43,8 @@ class MyInterestsActivity : AppCompatActivity() {
             otherInterestsArr = ArrayList()
             // for interests that a user is noot following
             firestore
-                .collection("interests")
-                .whereNotIn(FieldPath.documentId(), followedInterests)
+                .collection("interests").whereNotIn("Title", followedInterests)
+                //.whereNotIn(FieldPath.documentId(), followedInterests)
                 .get()
                 .addOnSuccessListener {
                     for (doc in it)
@@ -75,24 +73,24 @@ class MyInterestsActivity : AppCompatActivity() {
         if (followedInterests.isNotEmpty()) {
             //for interests that a user is following
             val query = firestore
-                .collection("interests")
-                .whereIn(FieldPath.documentId(), followedInterests)
+                .collection("interests").whereIn("Title", followedInterests)
+                //.whereIn(FieldPath.documentId(), followedInterests)
                 .orderBy("Title")//? = null
 
             val options = FirestoreRecyclerOptions.Builder<InterestsModel>()
                 .setQuery(query, InterestsModel::class.java)
                 .build()//? = null
             b.progressBar.visibility = View.INVISIBLE
-            mIAdapter = InterestAdapter(options)
+            mIAdapter = CatAdapter(followedInterests)//InterestAdapter(options)
             b.myinterestsRecview.layoutManager = LinearLayoutManager(baseContext)
             b.myinterestsRecview.adapter = mIAdapter
-            mIAdapter!!.startListening()
+            //mIAdapter!!.startListening()
         }
     }
 
     override fun onStop() {
         super.onStop()
-        mIAdapter?.stopListening()
+        //mIAdapter?.stopListening()
     }
 
     //fun followNewEvent(view: android.view.View){ }

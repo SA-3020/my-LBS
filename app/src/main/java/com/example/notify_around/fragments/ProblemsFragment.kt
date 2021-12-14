@@ -80,10 +80,12 @@ class ProblemsFragment : Fragment(), ProblemAdapter.OnProblemItemClickListener {
 
     private fun initAdapter(){
 
-        adapter = ProblemAdapter(problemsList)
-        binding.problemsRecview.layoutManager = LinearLayoutManager(context)
-        binding.problemsRecview.adapter = adapter
-        adapter.setOnProblemItemClickListener(this)
+        if(activity!=null&&activity?.isFinishing != true) {
+            adapter = ProblemAdapter(problemsList)
+            binding.problemsRecview.layoutManager = LinearLayoutManager(context)
+            binding.problemsRecview.adapter = adapter
+            adapter.setOnProblemItemClickListener(this)
+        }
     }
 
     override fun onDestroyView() {

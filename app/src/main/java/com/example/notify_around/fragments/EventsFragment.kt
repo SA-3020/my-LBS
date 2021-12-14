@@ -73,12 +73,12 @@ class EventsFragment : Fragment(), EventAdapter.OnEventItemClickListener {
 
      private fun initAdapter() {
 
-         adapterMy =
-             EventAdapter(eventsList, requireActivity().applicationContext)//requireContext())
-         adapterMy.setOnEventItemClickListener(this)
-         binding.eventsRecview.layoutManager = LinearLayoutManager(context)
-         binding.eventsRecview.adapter = adapterMy
-
+         if(activity!=null&&activity?.isFinishing != true) {
+             adapterMy = EventAdapter(eventsList, requireActivity().applicationContext)//requireContext())
+             adapterMy.setOnEventItemClickListener(this)
+             binding.eventsRecview.layoutManager = LinearLayoutManager(context)
+             binding.eventsRecview.adapter = adapterMy
+         }
 
      }
 

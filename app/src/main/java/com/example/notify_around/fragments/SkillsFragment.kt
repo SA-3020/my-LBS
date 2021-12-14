@@ -82,10 +82,12 @@ class SkillsFragment : Fragment(), SkillAdapter.OnSkillItemClickListener {
 
     private fun initAdapter(){
 
-        adapter = SkillAdapter(skillsList)
-        binding.skillsRecview.layoutManager = LinearLayoutManager(context)
-        binding.skillsRecview.adapter = adapter
-        adapter.setOnSkillItemClickListener(this)
+        if(activity!=null&&activity?.isFinishing != true) {
+            adapter = SkillAdapter(skillsList)
+            binding.skillsRecview.layoutManager = LinearLayoutManager(context)
+            binding.skillsRecview.adapter = adapter
+            adapter.setOnSkillItemClickListener(this)
+        }
     }
 
     override fun onDestroyView() {

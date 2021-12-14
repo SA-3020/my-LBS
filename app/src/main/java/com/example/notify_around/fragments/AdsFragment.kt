@@ -68,9 +68,12 @@ class AdsFragment : Fragment(), AdsAdapter.OnEventItemClickListener {
     }
 
     private fun initAdapter() {
-        adapter = AdsAdapter(adsList, requireActivity().applicationContext)//requireContext())
-        adapter.setOnEventItemClickListener(this)
-        binding.adsRecyclerView.adapter = adapter
+
+        if(activity!=null&&activity?.isFinishing != true) {
+            adapter = AdsAdapter(adsList, requireActivity().applicationContext)//requireContext())
+            adapter.setOnEventItemClickListener(this)
+            binding.adsRecyclerView.adapter = adapter
+        }
 
     }
 

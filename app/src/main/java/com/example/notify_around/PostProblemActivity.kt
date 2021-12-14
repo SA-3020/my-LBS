@@ -170,7 +170,7 @@ class PostProblemActivity : AppCompatActivity() {
                             distance /= 1000
 
                             if(distance>0.0&&distance<=10){
-                                if(UserManager.user?.tokenId?.equals(user.tokenId) != true){
+                                if(UserManager.user?.tokenId?.equals(user.tokenId) == true){
                                     sendNotification(user.tokenId) }
                             }
 
@@ -183,34 +183,6 @@ class PostProblemActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun sendNotification(tokenId:String) {
-
-        var media = ""
-        val message="New problem added"
-
-        val apiClient =
-            ApiClient.getClient("https://fcm.googleapis.com/")?.create(ApiInterface::class.java)
-        val to: String = tokenId
-        val data = Notification(
-            UserManager.user!!.FirstName,
-            message, media,
-            "Problem"
-        )
-        val notification = Message(to, data)
-        val call: Call<Message?>? = apiClient?.sendMessage("key=${ApiClient.FIRE_BASE_SERVER_KEY}", notification)
-
-        try {
-            call?.enqueue(object : Callback<Message?> {
-                override fun onResponse(call: Call<Message?>?, response: retrofit2.Response<Message?>?) {}
-                override fun onFailure(call: Call<Message?>?, t: Throwable?) {}
-            })
-        }catch (e:Exception){
-            Log.e("PostAdError",e.message.toString())
-        }
-
-
-    }
 
 
 

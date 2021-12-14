@@ -37,7 +37,7 @@ class ProblemsFragment : Fragment(), ProblemAdapter.OnProblemItemClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentProblemsBinding.inflate(inflater, container, false)
 
 

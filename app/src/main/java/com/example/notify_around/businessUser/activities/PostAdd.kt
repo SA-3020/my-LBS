@@ -467,7 +467,7 @@ class PostAdd : AppCompatActivity() {
                             if(distance>0.0&&distance<=10){
 
                                 if(UserManager.user?.tokenId?.equals(user.tokenId) != true){
-                                sendNotification(user.tokenId) }
+                                sendNotification(user.tokenId, id) }
                             }
 
                         }
@@ -486,11 +486,10 @@ class PostAdd : AppCompatActivity() {
 
 
 
-    private fun sendNotification(tokenId:String) {
+    private fun sendNotification(tokenId:String,postId:String) {
 
 
 
-        var media = ""
         val message="New post added"
 
         val apiClient =
@@ -498,7 +497,7 @@ class PostAdd : AppCompatActivity() {
         val to: String = tokenId
         val data = Notification(
             UserManager.user!!.businessUser!!.companyName,
-            message, media,
+            message, postId,
             "Ad"
         )
         val notification = Message(to, data)

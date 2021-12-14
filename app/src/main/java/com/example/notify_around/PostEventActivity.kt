@@ -315,6 +315,24 @@ class PostEventActivity : AppCompatActivity() {
                         runOnUiThread {
                             showMessage("Event Uploaded successfully")
                         }
+
+                        for(user in usersList){
+
+                            if(userHaveInterest(user)){
+
+                                var distance=getDistanceBetweenTwoPoints(selectedLatLng?.latitude,selectedLatLng?.longitude,user.location?.latitude,user.location?.longitude)
+
+                                distance /= 1000
+
+                                Log.v("distance",distance.toString())
+                                if(distance>0.0&&distance<=10){
+                                    if(UserManager.user?.tokenId?.equals(user.tokenId) != true){
+                                        sendNotification(user.tokenId,eventid) }
+                                }
+
+                            }
+
+                        }
                     }
 
 
@@ -326,25 +344,6 @@ class PostEventActivity : AppCompatActivity() {
 
     private fun showMessage(m: String) {
         Toast.makeText(applicationContext, m, Toast.LENGTH_SHORT).show()
-
-
-        for(user in usersList){
-
-            if(userHaveInterest(user)){
-
-                var distance=getDistanceBetweenTwoPoints(selectedLatLng?.latitude,selectedLatLng?.longitude,user.location?.latitude,user.location?.longitude)
-
-                distance /= 1000
-
-                Log.v("distance",distance.toString())
-                if(distance>0.0&&distance<=10){
-                    if(UserManager.user?.tokenId?.equals(user.tokenId) != true){
-                        sendNotification(user.tokenId) }
-                }
-
-            }
-
-        }
     }
 
     fun showDialog(view: android.view.View) {
@@ -461,9 +460,9 @@ class PostEventActivity : AppCompatActivity() {
     }
 
 
-    private fun sendNotification(tokenId:String) {
+    private fun sendNotification(tokenId:String,eventId:String) {
 
-        var media = ""
+
         val message="New event added"
 
         val apiClient =
@@ -471,7 +470,7 @@ class PostEventActivity : AppCompatActivity() {
         val to: String = tokenId
         val data = Notification(
             UserManager.user!!.FirstName,
-            message, media,
+            message, eventId,
             "Event"
         )
         val notification = Message(to, data)

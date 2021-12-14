@@ -158,7 +158,7 @@ class PostSkillActivity : AppCompatActivity() {
 
                                 if(distance>0.0&&distance<=10){
                                     if(UserManager.user?.tokenId?.equals(user.tokenId) != true){
-                                        sendNotification(user.tokenId) }
+                                        sendNotification(user.tokenId,skillid) }
                                 }
 
                             }
@@ -179,5 +179,70 @@ class PostSkillActivity : AppCompatActivity() {
         )
     }
 
+    private fun sendNotification(tokenId:String,skillId:String) {
 
+
+        val message="New skill added"
+
+        val apiClient =
+            ApiClient.getClient("https://fcm.googleapis.com/")?.create(ApiInterface::class.java)
+        val to: String = tokenId
+        val data = Notification(
+            UserManager.user!!.FirstName,
+            message, skillId,
+            "Skill"
+        )
+        val notification = Message(to, data)
+        val call: Call<Message?>? = apiClient?.sendMessage("key=${ApiClient.FIRE_BASE_SERVER_KEY}", notification)
+
+        try {
+            call?.enqueue(object : Callback<Message?> {
+                override fun onResponse(call: Call<Message?>?, response: retrofit2.Response<Message?>?) {}
+                override fun onFailure(call: Call<Message?>?, t: Throwable?) {}
+            })
+        }catch (e:Exception){
+            Log.e("PostAdError",e.message.toString())
+        }
+
+
+    }
+
+    private fun userHaveInterest(user: GeneralUser):Boolean{
+
+        var have=false
+
+        for(interest in interestsArray){
+
+            if(user.interests.contains(interest)){
+                have=true
+                return have
+            }
+
+
+        }
+
+        return have
+    }
+
+    private fun getDistanceBetweenTwoPoints(
+        lat1: Double?,
+        lon1: Double?,
+        lat2: Double?,
+        lon2: Double?
+    ): Float {
+        val distance = FloatArray(2)
+        if (lat1 != null) {
+            if (lon1 != null) {
+                if (lat2 != null) {
+                    if (lon2 != null) {
+                        Location.distanceBetween(
+                            lat1, lon1,
+                            lat2, lon2, distance
+                        )
+                    }
+                }
+            }
+        }
+        return distance[0]
+    }
 }

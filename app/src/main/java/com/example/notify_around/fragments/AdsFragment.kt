@@ -67,6 +67,54 @@ class AdsFragment : Fragment(), AdsAdapter.OnEventItemClickListener {
 
     }
 
+    private fun initAdapter() {
 
+        if(activity!=null&&activity?.isFinishing != true) {
+            adapter = AdsAdapter(adsList, requireActivity().applicationContext)//requireContext())
+            adapter.setOnEventItemClickListener(this)
+            binding.adsRecyclerView.adapter = adapter
+        }
+
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onAdItemClick(position: Int
+    ) {
+
+        val model= adsList[position]
+
+        val intent=Intent(requireActivity(),AdDetailsActivity::class.java)
+        intent.putExtra("adId",model.id)
+        startActivity(intent)
+
+    }
+
+
+    private fun getDistanceBetweenTwoPoints(
+        lat1: Double?,
+        lon1: Double?,
+        lat2: Double?,
+        lon2: Double?
+    ): Float {
+        val distance = FloatArray(2)
+        if (lat1 != null) {
+            if (lon1 != null) {
+                if (lat2 != null) {
+                    if (lon2 != null) {
+                        Location.distanceBetween(
+                            lat1, lon1,
+                            lat2, lon2, distance
+                        )
+                    }
+                }
+            }
+        }
+        return distance[0]
+    }
 
 }

@@ -27,7 +27,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     var title: String? = null
     var body: String? = null
     var action: String? = null
-    var media: String? = null
+    var id: String? = null
     var content: String? = null
     override fun onNewToken(s: String) {
         //Log.v("NEW_TOKEN", s);
@@ -40,17 +40,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         try {
             title = `object`.getString("title")
             body = `object`.getString("body")
-            media = `object`.getString("media")
+            id = `object`.getString("id")
             action = `object`.getString("click_action")
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        if (!body!!.isEmpty() && !media!!.isEmpty()) {
-            content = "$media: $body"
+        if (!body!!.isEmpty()) {
+            content = "$$body"
         } else if (!body!!.isEmpty()) {
             content = body
-        } else if (!media!!.isEmpty()) {
-            content = media
         }
         val NOTIFICATION_CHANNEL_ID = resources.getString(R.string.app_name) + " MESSAGING_CHANNEL"
         val pattern = longArrayOf(0, 1000, 500, 1000)
@@ -60,18 +58,19 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
             "Event"->{
                 intent = Intent(this,EventDetailsActivity::class.java)
+                intent.putExtra("eventId",id)
             }
             "Ad"->{
                 intent = Intent(this,AdDetailsActivity::class.java)
-
+                intent.putExtra("adId",id)
             }
             "Problem"->{
                 intent = Intent(this,ProblemDetailsActivity::class.java)
-
+                intent.putExtra("problemId",id)
             }
             "Skill"->{
                 intent = Intent(this,SkillDetailsActivity::class.java)
-
+                intent.putExtra("skillId",id)
             }
         }
 

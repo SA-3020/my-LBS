@@ -12,13 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorAccent"
-        android:titleTextAppearance="@style/TextStyle"
-        android:titleTextColor="@color/white"
-        android:title="My Events"
         android:fontFamily="sans-serif"
         android:navigationIcon="@drawable/ic_arrow_back"
         android:textSize="35sp"
-        android:textStyle="normal" />
+        android:textStyle="normal"
+        android:title="My Events"
+        android:titleTextAppearance="@style/TextStyle"
+        android:titleTextColor="@color/white" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/myevents_recview"

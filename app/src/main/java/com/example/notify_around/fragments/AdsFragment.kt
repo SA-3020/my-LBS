@@ -48,7 +48,7 @@ class AdsFragment : Fragment(), AdsAdapter.OnEventItemClickListener {
 
                         distance /= 1000
 
-                        if(distance<=10){
+                        if(distance>0.0&&distance<=10){
                             adsList.add(model)
                         }
 

@@ -17,6 +17,10 @@
         android:title="Chats"
         android:icon="@drawable/ic_chat" />
     <item
+        android:id="@+id/menu_myads"
+        android:title="My Ads"
+        android:icon="@drawable/ic_ads" />
+    <item
         android:id="@+id/menu_gobusiness"
         android:title="Go Business"
         android:icon="@drawable/ic_business" />

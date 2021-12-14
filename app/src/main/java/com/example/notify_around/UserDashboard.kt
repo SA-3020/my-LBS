@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.location.Location
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -23,10 +24,10 @@ import com.example.notify_around.fragments.*
 import com.example.notify_around.models.GeneralUser
 import com.example.notify_around.businessUser.activities.BUserDashboard
 import com.example.notify_around.databinding.ActivityUserDashboardBinding
+import com.example.notify_around.drawerActivities.MyAdsActivity
 import com.example.notify_around.drawerActivities.MyEventsActivity
 import com.github.florent37.runtimepermission.kotlin.askPermission
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -38,10 +39,12 @@ import firebaseNotifications.MyFirebaseMessagingService
 import kotlinx.coroutines.*
 import java.io.Serializable
 
+
 class UserDashboard : AppCompatActivity() {
     private lateinit var binding: ActivityUserDashboardBinding
 
-    private var fusedLocationProviderClient: FusedLocationProviderClient?=null
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var locationCallback:LocationCallback
 
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var auth: FirebaseAuth
@@ -130,6 +133,10 @@ class UserDashboard : AppCompatActivity() {
                     startActivity(Intent(applicationContext, MyEventsActivity::class.java))
                     showMessage("My Events panel is open")
                 }
+                R.id.menu_myads -> {
+                    startActivity(Intent(applicationContext, MyAdsActivity::class.java))
+                    showMessage("My Ads panel is open")
+                }
                 R.id.menu_chats -> {
 
                 }
@@ -179,9 +186,20 @@ class UserDashboard : AppCompatActivity() {
 
         val menu: Menu = binding.naview.menu
 
-        val menuItem: MenuItem = menu.findItem(R.id.menu_gobusiness)
+        val itemBusiness: MenuItem = menu.findItem(R.id.menu_gobusiness)
+        val itemMyAds: MenuItem = menu.findItem(R.id.menu_myads)
 
-        menuItem.isVisible = UserManager.user?.businessUser==null
+        if( UserManager.user?.businessUser==null){
+            itemBusiness.isVisible=true
+            itemMyAds.isVisible=false
+        }
+        else
+        {
+
+            itemBusiness.isVisible=false
+            itemMyAds.isVisible=true
+        }
+
 
     }
 
@@ -335,40 +353,35 @@ class UserDashboard : AppCompatActivity() {
         val   docRef = db.collection("users").document(auth.currentUser?.uid!!)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this@UserDashboard)
-        try{
-            @SuppressLint("Missing Permission")
-            val location = fusedLocationProviderClient!!.getLastLocation()
-            location.addOnCompleteListener(object: OnCompleteListener<Location> {
-                override fun onComplete(loc: Task<Location>) {
-                    if(loc.isSuccessful){
-                        val currentLocation= loc.result as Location?
-                        if(currentLocation != null){
-                            val geoPoints= GeoPoint(currentLocation.latitude,currentLocation.longitude)
-                            UserManager.user?.location= geoPoints
 
-                            val user: MutableMap<String, Any> = HashMap()
-                            user["location"]=geoPoints
+        val locationRequest = LocationRequest.create()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 20 * 1000
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                Log.v("NewLocation","result")
+
+                for (location in locationResult.locations) {
+                    if (location != null) {
+                        val geoPoints= GeoPoint(location.latitude,location.longitude)
+                        UserManager.user?.location= geoPoints
+
+                        val user: MutableMap<String, Any> = HashMap()
+                        user["location"]=geoPoints
 
 
-                            docRef.update(user).addOnSuccessListener {
-                            }
-                            Log.v("UserDashBoard",currentLocation.latitude.toString())
+                        docRef.update(user).addOnSuccessListener {
+                            fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+                            Log.v("NewLocation","updated")
                         }
-                        else{
-                            askPermissionLocation()
-                            Log.v("UserDashBoard","currentLocation null")
-
-                        }
-                    }
-                    else{
-                        Toast.makeText(this@UserDashboard,"Current Location not found.", Toast.LENGTH_SHORT).show()
                     }
                 }
-            })
+            }
         }
-        catch(se: Exception){
-            Log.e("TAG","Security Exception")
-        }
+
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+
+
     }
 
 }

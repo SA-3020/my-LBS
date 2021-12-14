@@ -13,7 +13,11 @@ import android.app.NotificationChannel
 import android.graphics.Color
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import com.example.notify_around.EventDetailsActivity
+import com.example.notify_around.ProblemDetailsActivity
 import com.example.notify_around.R
+import com.example.notify_around.SkillDetailsActivity
+import com.example.notify_around.businessUser.activities.AdDetailsActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.HashMap
@@ -50,8 +54,27 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
         val NOTIFICATION_CHANNEL_ID = resources.getString(R.string.app_name) + " MESSAGING_CHANNEL"
         val pattern = longArrayOf(0, 1000, 500, 1000)
-        val intent: Intent
-        intent = Intent(action)
+        lateinit var intent: Intent
+
+        when(action){
+
+            "Event"->{
+                intent = Intent(this,EventDetailsActivity::class.java)
+            }
+            "Ad"->{
+                intent = Intent(this,AdDetailsActivity::class.java)
+
+            }
+            "Problem"->{
+                intent = Intent(this,ProblemDetailsActivity::class.java)
+
+            }
+            "Skill"->{
+                intent = Intent(this,SkillDetailsActivity::class.java)
+
+            }
+        }
+
         val contentIntent = PendingIntent.getActivity(
             applicationContext,
             0,
@@ -82,7 +105,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setAutoCancel(true)
 
 
-        //notificationBuilder.setContentIntent(contentIntent);
+        notificationBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(1000, notificationBuilder.build())
     }
 
@@ -90,14 +113,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         fun newToken(token: String) {
             val userId = FirebaseAuth.getInstance().currentUser?.uid
             val db = FirebaseFirestore.getInstance()
-            val   docRef = db.collection("users").document(userId!!)
+            val   docRef = userId?.let { db.collection("users").document(it) }
 
 
             val user: MutableMap<String, Any> = HashMap()
             user["tokenId"]=token
 
 
-            docRef.update(user).addOnSuccessListener {
+            docRef?.update(user)?.addOnSuccessListener {
             }
         }
     }

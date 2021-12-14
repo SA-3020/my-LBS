@@ -3,6 +3,7 @@ package com.example.notify_around.fragments
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +37,7 @@ class SkillsFragment : Fragment(), SkillAdapter.OnSkillItemClickListener {
 
 
         UserManager.user?.interests?.let {
+            
             FirebaseFirestore.getInstance()
                 .collection("skills").whereArrayContainsAny("interests", it)
                 .orderBy("postedOn").get().addOnCompleteListener { documentSnapshot ->
@@ -57,7 +59,7 @@ class SkillsFragment : Fragment(), SkillAdapter.OnSkillItemClickListener {
 
                         distance /= 1000
 
-                        if (distance <= 10) {
+                        if (distance>0.0&&distance <= 10) {
                             skillsList.add(model)
                         }
 
@@ -72,6 +74,7 @@ class SkillsFragment : Fragment(), SkillAdapter.OnSkillItemClickListener {
 
 
         }
+
 
         return binding.root
 

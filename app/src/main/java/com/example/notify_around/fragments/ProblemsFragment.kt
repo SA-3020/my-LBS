@@ -62,7 +62,7 @@ class ProblemsFragment : Fragment(), ProblemAdapter.OnProblemItemClickListener {
 
                     distance /= 1000
 
-                    if (distance <= 10) {
+                    if (distance>0.0&&distance <= 10) {
                         problemsList.add(model)
                     }
 

@@ -169,7 +169,7 @@ class PostProblemActivity : AppCompatActivity() {
 
                             distance /= 1000
 
-                            if(distance<=10){
+                            if(distance>0.0&&distance<=10){
                                 if(UserManager.user?.tokenId?.equals(user.tokenId) != true){
                                     sendNotification(user.tokenId) }
                             }
@@ -187,7 +187,7 @@ class PostProblemActivity : AppCompatActivity() {
     private fun sendNotification(tokenId:String) {
 
         var media = ""
-        val message="New event added"
+        val message="New problem added"
 
         val apiClient =
             ApiClient.getClient("https://fcm.googleapis.com/")?.create(ApiInterface::class.java)
@@ -195,7 +195,7 @@ class PostProblemActivity : AppCompatActivity() {
         val data = Notification(
             UserManager.user!!.FirstName,
             message, media,
-            "OPEN_MESSAGES_ACTIVITY"
+            "Problem"
         )
         val notification = Message(to, data)
         val call: Call<Message?>? = apiClient?.sendMessage("key=${ApiClient.FIRE_BASE_SERVER_KEY}", notification)

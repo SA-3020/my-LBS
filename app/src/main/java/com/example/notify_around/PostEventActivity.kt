@@ -61,6 +61,7 @@ class PostEventActivity : AppCompatActivity() {
     private var images:MutableList<Uri> = ArrayList()
     var imagesList: MutableList<String> = ArrayList()
     var usersList: MutableList<GeneralUser> = ArrayList()
+    lateinit var userName:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -179,7 +180,23 @@ class PostEventActivity : AppCompatActivity() {
         }
 
         getUsers()
+        getUser()
 
+    }
+
+    fun getUser() {
+
+        val docRef = db.collection("users").document(FirebaseAuth.getInstance().currentUser!!.uid)
+        docRef
+            .get()
+            .addOnSuccessListener {
+                val currentUser = it.toObject(GeneralUser::class.java)!!
+                userName=currentUser.FirstName+" "+currentUser.LastName
+
+            }
+            .addOnFailureListener {
+                Toast.makeText(applicationContext, "Data not found", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun getUsers(){
@@ -288,7 +305,7 @@ class PostEventActivity : AppCompatActivity() {
                     selectedLatLng,
                     binding.etLocation.text.toString(),
                     Timestamp.now(),
-                    uid!!,
+                    userName,
                     MultiselectDialog.selectedInterestsArray,
                     binding.etDate.text.toString(),
                     binding.etTime.text.toString()
@@ -319,7 +336,8 @@ class PostEventActivity : AppCompatActivity() {
 
                 distance /= 1000
 
-                if(distance<=10){
+                Log.v("distance",distance.toString())
+                if(distance>0.0&&distance<=10){
                     if(UserManager.user?.tokenId?.equals(user.tokenId) != true){
                         sendNotification(user.tokenId) }
                 }
@@ -454,7 +472,7 @@ class PostEventActivity : AppCompatActivity() {
         val data = Notification(
             UserManager.user!!.FirstName,
             message, media,
-            "OPEN_MESSAGES_ACTIVITY"
+            "Event"
         )
         val notification = Message(to, data)
         val call: Call<Message?>? = apiClient?.sendMessage("key=$FIRE_BASE_SERVER_KEY", notification)

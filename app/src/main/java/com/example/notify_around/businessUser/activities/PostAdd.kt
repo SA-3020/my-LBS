@@ -464,7 +464,7 @@ class PostAdd : AppCompatActivity() {
 
                             distance /= 1000
 
-                            if(distance<=10){
+                            if(distance>0.0&&distance<=10){
 
                                 if(UserManager.user?.tokenId?.equals(user.tokenId) != true){
                                 sendNotification(user.tokenId) }
@@ -497,9 +497,9 @@ class PostAdd : AppCompatActivity() {
             ApiClient.getClient("https://fcm.googleapis.com/")?.create(ApiInterface::class.java)
         val to: String = tokenId
         val data = Notification(
-            UserManager.user!!.FirstName,
+            UserManager.user!!.businessUser!!.companyName,
             message, media,
-            "OPEN_MESSAGES_ACTIVITY"
+            "Ad"
         )
         val notification = Message(to, data)
         val call: Call<Message?>? = apiClient?.sendMessage("key=$FIRE_BASE_SERVER_KEY", notification)

@@ -156,7 +156,7 @@ class PostSkillActivity : AppCompatActivity() {
 
                                 distance /= 1000
 
-                                if(distance<=10){
+                                if(distance>0.0&&distance<=10){
                                     if(UserManager.user?.tokenId?.equals(user.tokenId) != true){
                                         sendNotification(user.tokenId) }
                                 }
@@ -182,7 +182,7 @@ class PostSkillActivity : AppCompatActivity() {
     private fun sendNotification(tokenId:String) {
 
         var media = ""
-        val message="New event added"
+        val message="New skill added"
 
         val apiClient =
             ApiClient.getClient("https://fcm.googleapis.com/")?.create(ApiInterface::class.java)
@@ -190,7 +190,7 @@ class PostSkillActivity : AppCompatActivity() {
         val data = Notification(
             UserManager.user!!.FirstName,
             message, media,
-            "OPEN_MESSAGES_ACTIVITY"
+            "Skill"
         )
         val notification = Message(to, data)
         val call: Call<Message?>? = apiClient?.sendMessage("key=${ApiClient.FIRE_BASE_SERVER_KEY}", notification)

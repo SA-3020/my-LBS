@@ -14,6 +14,7 @@ import com.example.notify_around.fragments.HomeFragment
 import com.example.notify_around.MainActivity
 import com.example.notify_around.R
 import com.example.notify_around.databinding.ActivityBusinessUserDashboardBinding
+import com.example.notify_around.drawerActivities.MyAdsActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class BUserDashboard : AppCompatActivity() {
@@ -76,8 +77,8 @@ class BUserDashboard : AppCompatActivity() {
 
                 }
                 R.id.menu_myads -> {
-                    /*startActivity(Intent(applicationContext, BUserDetailsActivity::class.java))
-                    finish()*/
+                    startActivity(Intent(applicationContext, MyAdsActivity::class.java))
+
                 }
                 R.id.menu_logout -> {
                     FirebaseAuth.getInstance().signOut()

@@ -46,7 +46,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             e.printStackTrace()
         }
         if (!body!!.isEmpty()) {
-            content = "$$body"
+            content = "$body"
         } else if (!body!!.isEmpty()) {
             content = body
         }

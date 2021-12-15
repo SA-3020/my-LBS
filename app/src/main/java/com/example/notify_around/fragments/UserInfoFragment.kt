@@ -4,18 +4,15 @@ import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.content.DialogInterface
 import android.os.Bundle
-import com.example.notify_around.UserManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.notify_around.Utils.MethodsUtils
+import com.example.notify_around.UserManager
 import com.example.notify_around.databinding.FragmentUserInfoBinding
-import com.example.notify_around.models.GeneralUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 
 private const val ARG_PARAM1 = "param1"
@@ -49,29 +46,29 @@ class UserInfoFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         val user = auth.currentUser!!
 
-        Thread {
-            val userInterests = UserManager.user!!.interests as MutableList<String>
-            FirebaseFirestore.getInstance()
-                .collection("interests")
-                .whereIn(FieldPath.documentId(), userInterests)
-                .get()
-                .addOnSuccessListener {
-                    //requireActivity().runOnUiThread {
-                    var string = ""
-                    val ds = it.documents
-                    var i = 0;
-                    while (ds.iterator().hasNext() && i < ds.size) {
-                        string = string + ds[i].get("Title") + " , "
-                        i++
-                    }
-                    Log.d(TAG, "hhh")
-                    binding.tvEmail.text = UserManager.user!!.Email//user?.Email
-                    binding.tvContact.text = UserManager.user!!.PhoneNo//user?.PhoneNo
-                    binding.myinterests.text = string.dropLast(2)
-                    binding.progressBar.visibility = View.INVISIBLE
-                    binding.myrellay.visibility = View.VISIBLE
-                }
-        }.start()
+        //Thread {
+        val userInterests = UserManager.user!!.interests.toString()//MutableList<String>
+        /*FirebaseFirestore.getInstance()
+            .collection("interests")
+            .whereIn(FieldPath.documentId(), userInterests)
+            .get()
+            .addOnSuccessListener {
+                //requireActivity().runOnUiThread {
+                var string = ""
+                val ds = it.documents
+                var i = 0;
+                while (ds.iterator().hasNext() && i < ds.size) {
+                    string = string + ds[i].get("Title") + " , "
+                    i++
+                }*/
+        Log.d(TAG, "hhh")
+        binding.tvEmail.text = UserManager.user!!.Email//user?.Email
+        binding.tvContact.text = UserManager.user!!.PhoneNo//user?.PhoneNo
+        binding.myinterests.text = userInterests.drop(1).dropLast(1)//string.dropLast(2)
+        binding.progressBar.visibility = View.INVISIBLE
+        binding.myrellay.visibility = View.VISIBLE
+        // }
+        //}.start()
 
         binding.btnEdit.setOnClickListener {
             val nextFrag = EditUserInfoFragment()

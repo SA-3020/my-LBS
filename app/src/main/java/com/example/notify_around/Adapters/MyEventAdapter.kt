@@ -2,23 +2,24 @@ package com.example.notify_around.Adapters
 
 import android.content.Context
 import android.util.Log
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import com.example.notify_around.models.EventModel
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter
-import com.example.notify_around.Adapters.MyEventAdapter.eViewHolder
-import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
-import com.example.notify_around.R
-import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.notify_around.Adapters.MyEventAdapter.eViewHolder
+import com.example.notify_around.R
+import com.example.notify_around.models.EventModel
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import java.text.MessageFormat
 
 class MyEventAdapter(options: FirestoreRecyclerOptions<EventModel?>, val context:Context) :
     FirestoreRecyclerAdapter<EventModel, eViewHolder>(options) {
+
     private var listener: OnEventItemClickListener? = null
     override fun onBindViewHolder(holder: eViewHolder, position: Int, model: EventModel) {
         Log.d("Adapter", "onBindViewHolder")

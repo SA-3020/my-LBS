@@ -5,8 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ProblemsFragment">
 
-    \
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/problems_recview"
         android:layout_width="match_parent"

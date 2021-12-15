@@ -2,14 +2,15 @@ package com.example.notify_around.businessUser.activities
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.example.notify_around.MapActivity
+import com.example.notify_around.UserDashboard
 import com.example.notify_around.UserManager
-import com.example.notify_around.models.BusinessUser
 import com.example.notify_around.databinding.ActivityBuserDetailsBinding
+import com.example.notify_around.models.BusinessUser
 import com.example.notify_around.models.GeneralUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
@@ -36,22 +37,28 @@ class BUserDetailsActivity : AppCompatActivity() {
 
         docRef.get().addOnSuccessListener {
 
-            currentUser= it.toObject(GeneralUser::class.java)!!
+            currentUser = it.toObject(GeneralUser::class.java)!!
         }
 
+        binding.tv1.setNavigationOnClickListener {
+            startActivity(Intent(this, UserDashboard::class.java))
+            this.finish()
+        }
 
         binding.btnSave.setOnClickListener {
 
-            val businessUser=BusinessUser(binding.etCompanyName.text.toString(),
+            val businessUser = BusinessUser(
+                binding.etCompanyName.text.toString(),
                 binding.etEmail.text.toString(),
                 binding.etContactNum.text.toString(),
-                selectedLatLng)
+                selectedLatLng
+            )
 
-            val userType="Business"
+            val userType = "Business"
 
             val user: MutableMap<String, Any> = HashMap()
             user["businessUser"] = businessUser
-            user["userType"]=userType
+            user["userType"] = userType
 
 
 

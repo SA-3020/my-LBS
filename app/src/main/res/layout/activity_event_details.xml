@@ -1,237 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="8dp"
     android:elevation="8dp"
-    app:cardCornerRadius="3dp"
-  >
+    app:cardCornerRadius="3dp">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="50dp"
         android:clipToPadding="false"
+        android:paddingBottom="50dp"
 
         >
 
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical"
-       android:layout_marginVertical="30dp"
-       android:layout_marginHorizontal="20dp">
-       <LinearLayout
-           android:background="@drawable/image_bg"
-           android:layout_width="120dp"
-           android:layout_height="120dp"
-           android:layout_marginLeft="0dp"
-           android:orientation="vertical"
-           android:layout_gravity="center"
-           >
-           <de.hdodenhof.circleimageview.CircleImageView
-               android:id="@+id/img_view"
-               android:layout_width="120dp"
-               android:layout_height="120dp"
-               />
-       </LinearLayout>
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="vertical"
-           android:layout_marginTop="20dp"
-           android:layout_marginLeft="10dp">
-           <TextView
-               android:id="@+id/tv_event_title"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:hint="Business Title"
-               android:textColor="@color/black"
-               android:textSize="20sp"
-               android:textStyle="bold"
-               android:gravity="center"
-               app:drawableTint="@color/light_grey" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="30dp"
+            android:orientation="vertical">
 
-                 <LinearLayout
-               android:id="@+id/linearLayout"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_below="@id/divider"
-               android:orientation="horizontal"
-               android:layout_marginTop="20dp"
-               >
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:background="@drawable/image_bg"
+                android:orientation="vertical">
 
-               <TextView
-                   android:layout_width="100dp"
-                   android:layout_height="wrap_content"
-                   android:text="Location: "
-                   android:textSize="16sp"
-                   android:layout_marginEnd="5sp"
-                   android:textStyle="bold" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_view"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp" />
+            </LinearLayout>
 
-               <TextView
-                   android:id="@+id/tv_event_location"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:hint="Business location goes here"
-                   android:textSize="16sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
 
-           </LinearLayout>
-           <LinearLayout
-               android:id="@+id/linearLayout2"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal"
-               android:layout_marginTop="10dp">
+                <TextView
+                    android:id="@+id/tv_event_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="Business Title"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:drawableTint="@color/light_grey" />
 
-               <TextView
-                   android:layout_width="100dp"
-                   android:layout_height="wrap_content"
-                   android:text="Date:"
-                   android:textSize="16sp"
-                   android:layout_marginEnd="5sp"
-                   android:textStyle="bold" />
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/divider"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
 
-               <TextView
-                   android:id="@+id/tv_date"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:hint="Contact details here"
-                   android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5sp"
+                        android:text="Location: "
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-           </LinearLayout>
-           <LinearLayout
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal"
-               android:layout_marginTop="10dp">
+                    <TextView
+                        android:id="@+id/tv_event_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Business location goes here"
+                        android:textSize="16sp" />
 
-               <TextView
-                   android:layout_width="100dp"
-                   android:layout_height="wrap_content"
-                   android:text="Time:"
-                   android:textSize="16sp"
-                   android:layout_marginEnd="5sp"
-                   android:textStyle="bold" />
+                </LinearLayout>
 
-               <TextView
-                   android:id="@+id/tv_time"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:hint="Contact details here"
-                   android:textSize="16sp" />
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
-           </LinearLayout>
-           <LinearLayout
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal"
-               android:layout_marginTop="10dp">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5sp"
+                        android:text="Date:"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-               <TextView
-                   android:layout_width="100dp"
-                   android:layout_height="wrap_content"
-                   android:text="Description:"
-                   android:textSize="16sp"
-                   android:layout_marginEnd="5sp"
-                   android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Contact details here"
+                        android:textSize="16sp" />
 
-               <TextView
-                   android:id="@+id/tv_description"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:hint="Contact details here"
-                   android:textSize="16sp" />
+                </LinearLayout>
 
-           </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
-           <LinearLayout
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal"
-               android:layout_marginTop="10dp">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5sp"
+                        android:text="Time:"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-               <TextView
-                   android:layout_width="100dp"
-                   android:layout_height="wrap_content"
-                   android:text="Interests:"
-                   android:textSize="16sp"
-                   android:layout_marginEnd="5sp"
-                   android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Contact details here"
+                        android:textSize="16sp" />
 
-               <TextView
-                   android:id="@+id/tv_interests"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:hint="Contact details here"
-                   android:textSize="16sp" />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
-           </LinearLayout>
-           <LinearLayout
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal"
-               android:layout_marginTop="10dp">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5sp"
+                        android:text="Description:"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-               <TextView
-                   android:layout_width="100dp"
-                   android:layout_height="wrap_content"
-                   android:text="Posted By:"
-                   android:textSize="16sp"
-                   android:layout_marginEnd="5sp"
-                   android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tv_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Contact details here"
+                        android:textSize="16sp" />
 
-               <TextView
-                   android:id="@+id/tv_postedBy"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:hint="Contact details here"
-                   android:textSize="16sp" />
+                </LinearLayout>
 
-           </LinearLayout>
-       </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
-       <RelativeLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="50dp"
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5sp"
+                        android:text="Interests:"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-           >
-
-           <androidx.viewpager2.widget.ViewPager2
-               android:id="@+id/view_pager"
-               android:layout_width="match_parent"
-               android:layout_height="200dp"
-
-               />
-
-           <ImageView
-               android:id="@+id/backBtn"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_centerVertical="true"
-               android:layout_marginStart="5dp"
-               android:visibility="invisible"
-               android:src="@drawable/ic_back" />
-
-           <ImageView
-               android:id="@+id/nextBtn"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_alignParentEnd="true"
-               android:layout_centerVertical="true"
-               android:layout_marginEnd="5dp"
-               android:visibility="invisible"
-               android:src="@drawable/ic_next" />
-       </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tv_interests"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Contact details here"
+                        android:textSize="16sp" />
 
 
-   </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5sp"
+                        android:text="Posted By:"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_postedBy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Contact details here"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+
+                >
+                <!-- The initial height of viewpager was 200dp -->
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/backBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="5dp"
+                    android:src="@drawable/ic_back"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/nextBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/ic_next"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
     </ScrollView>
 
-
+    <ImageButton
+        android:id="@+id/btn_dialer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:layout_gravity="center|bottom"
+        android:layout_marginVertical="20dp"
+        android:background="@drawable/button_background"
+        android:src="@drawable/ic_call_white" />
 
 </androidx.cardview.widget.CardView>
